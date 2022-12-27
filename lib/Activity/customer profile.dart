@@ -1,3 +1,5 @@
+import 'package:chrome_pay_mobile_flutter/Activity/login.dart';
+import 'package:chrome_pay_mobile_flutter/TabsViewer/personal.dart';
 import 'package:flutter/material.dart';
 
 class CustomerProfile extends StatefulWidget {
@@ -15,9 +17,7 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
 
     TabController _tabController = TabController(length: 3, vsync: this);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -35,7 +35,7 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,v
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
@@ -57,89 +57,78 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                           ),
                         ],
                       ),
-                      Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(top: 40.0),
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                children: [
-                                  Padding(padding: EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(10.0))
-                                          ),
-                                          elevation: 10,
-                                          child: Container(
-                                            width: MediaQuery.of(context).size.width,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(10.0),
-                                            ),
-                                            child: TabBar(
-                                              controller: _tabController,
-                                              isScrollable: true,
-                                              indicator: BoxDecoration(
-                                                color: Color(0xff0D5085),
-                                                borderRadius: BorderRadius.circular(10.0),
-                                              ),
-                                              labelColor: Colors.white,
-                                              unselectedLabelColor: Colors.black,
-                                              tabs: [
-                                                Tab(
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      Image.asset('images/home_page_icon_18.png',width: 18, height: 18,),
-                                                      const SizedBox(width: 8,),
-                                                      Text('Profile')
-                                                    ],
-                                                  ),
-                                                ),
-                                                Tab(
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      Image.asset('images/home_page_icon_15.png',width: 18, height: 18,),
-                                                      const SizedBox(width: 8,),
-                                                      Text('Land')
-                                                    ],
-                                                  ),
-                                                ),
-                                                Tab(
-                                                  child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Image.asset('images/home_page_icon_16.png',width: 18, height: 18,),
-                                                    const SizedBox(width: 8,),
-                                                    Text('Financial')
-                                                  ],
-                                                ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        TabBarView(
-                                              controller: _tabController,
-                                                  children: [
-                                                    Center(child: Text('Presnol'),),
-                                                    Center(child: Text('Presnol'),),
-                                                    Center(child: Text('Presnol'),)
-                                                  ],
-                                                ),
-                                      ],
+                    Container(
+                         margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 10.0, right: 10.0),
+                         child: Card(
+                           elevation: 5,
+                           shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.all(Radius.circular(10.0))
+                           ),
+                                  child: TabBar(
+                                    controller: _tabController,
+                                    labelColor: Colors.white,
+                                    unselectedLabelColor: Colors.black,
+                                    indicator: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                      color: Color(0xff0D5085)
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
+                                    tabs: [
+                                      Tab(
+                                        child: Row(
+                                          children: [
+                                            Image.asset('images/home_page_icon_18.png', width: 18, height: 18,),
+                                            Text('Personal') ,
 
+                                          ],
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Row(
+                                          children: [
+                                            Image.asset('images/home_page_icon_15.png', width: 18, height: 18,),
+                                            Text('Land'),
+                                          ],
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Row(
+                                          children: [
+
+                                            Image.asset('images/home_page_icon_16.png', width: 18, height: 18,),
+                                            Text('Financial')
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                         ),
+                       ),
+                      Expanded(
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                Personal(),
+                                Center(
+                                  child: Text(
+                                    'Land',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    'Financial',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                       ),
                       Container(
-                        // alignment: Alignment.bottomCenter,
+                        alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.fromLTRB(50, 20, 50, 10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -170,8 +159,7 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
             ],
           ),
         ),
-      ),
-    );
+      );
 
   }
 }

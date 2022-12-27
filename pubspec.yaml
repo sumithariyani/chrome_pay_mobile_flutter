@@ -90,6 +90,10 @@ flutter:
     - images/home_page_icon_15.png
     - images/home_page_icon_16.png
     - images/home_page_icon_18.png
+    - images/home_page_icon_20.png
+    - images/home_page_icon_21.png
+    - images/address__1_.png
+    - images/icons_16.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

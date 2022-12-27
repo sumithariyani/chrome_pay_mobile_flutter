@@ -158,20 +158,22 @@ class _LoginFormState extends State <Login> {
                                 height: 50,
                                 child: MaterialButton(
                                   onPressed: () {
-                                    if(email.toString().isEmpty){
-                                      Fluttertoast.showToast(
-                                          msg: 'Please Enter email',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER);
-                                    }else if(password.toString().isEmpty){
-                                      Fluttertoast.showToast(
-                                          msg: 'Please Enter password',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER);
+                                    setState(() {
+                                      if(email.toString().isEmpty){
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Enter email',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER);
+                                      }else if(password.toString().isEmpty){
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Enter password',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER);
 
-                                    }else {
-                                      navigaterUser();
-                                    }
+                                      }else {
+                                        navigaterUser();
+                                      }
+                                    });
                                   },
                                   textColor: Colors.white,
                                   child: Padding(
