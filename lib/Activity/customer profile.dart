@@ -1,6 +1,7 @@
-import 'package:chrome_pay_mobile_flutter/Activity/login.dart';
 import 'package:chrome_pay_mobile_flutter/TabsViewer/personal.dart';
 import 'package:flutter/material.dart';
+
+import '../TabsViewer/land.dart';
 
 class CustomerProfile extends StatefulWidget {
   const CustomerProfile({super.key});
@@ -108,17 +109,10 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                               controller: _tabController,
                               children: [
                                 Personal(),
+                                LandCertificate(),
                                 Center(
                                   child: Text(
-                                    'Land',
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                ),
-                                Center(
-                                  child: Text(
-                                    'Financial',
+                                    'Financial Coming Soon',
                                     style: TextStyle(
                                       fontSize: 30,
                                     ),

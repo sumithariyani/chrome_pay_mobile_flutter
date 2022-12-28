@@ -16,12 +16,9 @@ class _personalState extends State<Personal> {
          height: MediaQuery.of(context).size.height,
          margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
          color: Colors.transparent,
-         child: Stack(
-           children: [
-             SingleChildScrollView(
+             child: SingleChildScrollView(
                child: Container(
-                 width: MediaQuery.of(context).size.width,
-                 height: MediaQuery.of(context).size.height,
+                 margin: EdgeInsets.all(10.0),
                  color: Colors.transparent,
                  child: Column(
                    mainAxisAlignment: MainAxisAlignment.start,
@@ -207,15 +204,18 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
-                                           child: Text('Date of Birth',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Date of Birth',
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),),
+                                           ),
                                          ),
-                                         Spacer(),
-                                         Container(
-                                           child: Text('14-06-1999',),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('14-06-1999',),
+                                           ),
                                          )
                                        ],
                                      ),
@@ -224,15 +224,18 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
-                                           child: Text('Profession',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Profession',
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),),
+                                           ),
                                          ),
-                                         Spacer(),
-                                         Container(
-                                           child: Text('Student',),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Student',),
+                                           ),
                                          )
                                        ],
                                      ),
@@ -241,16 +244,19 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
-                                           child: Text('Gender',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Gender',
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),),
+                                           ),
                                          ),
-                                         Spacer(),
-                                         Container(
+                                         Expanded(
+                                             child: Container(
                                            child: Text('Female',),
-                                         )
+                                         )),
+
                                        ],
                                      ),
                                    ),
@@ -258,15 +264,18 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
-                                           child: Text('Next of Kin(Name)',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Next of Kin(Name)',
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),),
+                                           ),
                                          ),
-                                         Spacer(),
-                                         Container(
-                                           child: Text('Daniela Saunyama',),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Daniela Saunyama',),
+                                           ),
                                          )
                                        ],
                                      ),
@@ -275,15 +284,19 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
+                                         Expanded(
+                                           child: Container(
                                            child: Text('Next of Kin(Phone No.)',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),
+                                           ),
                                          ),
-                                         Spacer(),
-                                         Container(
-                                           child: Text('5848744167',),
+                                         ),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('5848744167',),
+                                           ),
                                          )
                                        ],
                                      ),
@@ -292,15 +305,18 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
-                                           child: Text('Nationality',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Nationality',
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),),
+                                           ),
                                          ),
-                                         Spacer(),
-                                         Container(
-                                           child: Text('Israeli',),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Israeli',),
+                                           ),
                                          )
                                        ],
                                      ),
@@ -309,15 +325,81 @@ class _personalState extends State<Personal> {
                                      margin: EdgeInsets.symmetric(vertical: 10.0),
                                      child: Row(
                                        children: [
-                                         Container(
+                                         Expanded(
+                                             child: Container(
                                            child: Text('Address',
-                                           style: TextStyle(
-                                               color: Color(0xff98A6F4)
-                                           ),),
+                                             style: TextStyle(
+                                                 color: Color(0xff98A6F4)
+                                             ),),
+                                         )
                                          ),
-                                         Spacer(),
-                                         Container(
-                                           child: Text('Sydney NAW 2025 Australia',),
+                                         Expanded(
+                                           child: Container(
+                                             child: Text('Sydney NAW 2025 Australia',),
+                                           ),
+                                         )
+                                       ],
+                                     ),
+                                   ),
+                                   Container(
+                                     margin: EdgeInsets.symmetric(vertical: 10.0),
+                                     child: Row(
+                                       children: [
+                                         Expanded(
+                                             child: Card(
+                                               elevation: 5,
+                                               color: Color(0xff234e67),
+                                               shape: RoundedRectangleBorder(
+                                                   borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                               ),
+                                               margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                                               child: Container(
+                                                 height: 50,
+                                                 margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                 child: Row(
+                                                   children: [
+                                                     Container(
+                                                       margin: EdgeInsets.symmetric(vertical: 10.0),
+                                                       child: Image.asset('images/home_page_icon_24.png',
+                                                       ),
+                                                     ),
+                                                     Container(
+                                                       margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                       child: Text('National Id'
+                                                       ),
+                                                     )
+                                                   ],
+                                                 ),
+                                               ),
+                                             ),
+                                         ),
+                                         Expanded(
+                                           child:Card(
+                                             elevation: 5,
+                                             color: Color(0xff234e67),
+                                             shape: RoundedRectangleBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                             ),
+                                             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                                             child: Container(
+                                               height: 50,
+                                               margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                               child: Row(
+                                                 children: [
+                                                   Container(
+                                                     margin: EdgeInsets.symmetric(vertical: 10.0),
+                                                     child: Image.asset('images/home_page_icon_25.png',
+                                                     ),
+                                                   ),
+                                                   Container(
+                                                     margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                     child: Text('Proof of \n Residence'
+                                                     ),
+                                                   )
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
                                          )
                                        ],
                                      ),
@@ -333,8 +415,7 @@ class _personalState extends State<Personal> {
                  ),
                ),
              )
-           ],
-         ),
+
        ),
    );
   }

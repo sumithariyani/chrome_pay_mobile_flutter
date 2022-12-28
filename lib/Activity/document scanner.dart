@@ -26,9 +26,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   @override
   Widget build(BuildContext context) {
-   return MaterialApp(
-     debugShowCheckedModeBanner: false,
-     home: Scaffold(
+   return  Scaffold(
        resizeToAvoidBottomInset: false,
        body: Stack(
          children: [
@@ -318,7 +316,6 @@ class _DocumentScanerState extends State <DocumentScanner> {
            )
          ],
        ),
-     ),
    );
   }
 
