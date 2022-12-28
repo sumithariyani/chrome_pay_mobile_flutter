@@ -352,7 +352,7 @@ class _personalState extends State<Personal> {
                                                shape: RoundedRectangleBorder(
                                                    borderRadius: BorderRadius.all(Radius.circular(10.0))
                                                ),
-                                               margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                                               margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 5.0),
                                                child: Container(
                                                  height: 50,
                                                  margin: EdgeInsets.symmetric(horizontal: 10.0),
@@ -365,7 +365,8 @@ class _personalState extends State<Personal> {
                                                      ),
                                                      Container(
                                                        margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                       child: Text('National Id'
+                                                       child: Text('National Id',
+                                                         style: TextStyle(color: Colors.white),
                                                        ),
                                                      )
                                                    ],
@@ -380,7 +381,7 @@ class _personalState extends State<Personal> {
                                              shape: RoundedRectangleBorder(
                                                  borderRadius: BorderRadius.all(Radius.circular(10.0))
                                              ),
-                                             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                                             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0, right: 0.0),
                                              child: Container(
                                                height: 50,
                                                margin: EdgeInsets.symmetric(horizontal: 10.0),
@@ -393,7 +394,8 @@ class _personalState extends State<Personal> {
                                                    ),
                                                    Container(
                                                      margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                     child: Text('Proof of \n Residence'
+                                                     child: Text('Proof of \n Residence',
+                                                       style: TextStyle(color: Colors.white),
                                                      ),
                                                    )
                                                  ],

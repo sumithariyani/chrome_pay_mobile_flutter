@@ -204,9 +204,9 @@ class _LandCertifyState extends State<LandCertificate> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(Radius.circular(10.0))
                                   ),
-                                  margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                                  margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
                                   child: Container(
-                                    height: 50,
+                                    height: 55,
                                     margin: EdgeInsets.symmetric(horizontal: 10.0),
                                     child: Row(
                                       children: [
@@ -217,8 +217,16 @@ class _LandCertifyState extends State<LandCertificate> {
                                         ),
                                         Container(
                                           margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                          child: Text('Proof of Residence'
+                                          child: Text('Land Crtificate',
+                                            style: TextStyle(color: Colors.white),
                                           ),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          alignment: Alignment.centerRight,
+                                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                                          child: Icon(Icons.arrow_forward_ios,
+                                          color: Colors.white,)
                                         )
                                       ],
                                     ),

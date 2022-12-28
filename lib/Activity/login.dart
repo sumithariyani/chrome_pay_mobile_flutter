@@ -1,5 +1,8 @@
+import 'package:chrome_pay_mobile_flutter/Models/Login%20Model.dart';
+import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'agent.dart';
 
@@ -14,6 +17,32 @@ class _LoginFormState extends State <Login> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  late LoginModel loginModel;
+  Future<void> LoginMethod(String Email, String Password)  async {
+    loginModel = await Services.LoginCredentials(Email, Password);
+
+    if (loginModel.status!){
+      Fluttertoast.showToast(msg: "Login successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Agent(),));
+    }
+    else{
+      Fluttertoast.showToast(msg: "Invalid Credentials",
+        toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -158,22 +187,20 @@ class _LoginFormState extends State <Login> {
                                 height: 50,
                                 child: MaterialButton(
                                   onPressed: () {
-                                    setState(() {
-                                      if(email.toString().isEmpty){
-                                        Fluttertoast.showToast(
-                                            msg: 'Please Enter email',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER);
-                                      }else if(password.toString().isEmpty){
-                                        Fluttertoast.showToast(
-                                            msg: 'Please Enter password',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER);
-
-                                      }else {
-                                        navigaterUser();
-                                      }
-                                    });
+                                    if(email.text.isEmpty){
+                                      Fluttertoast.showToast(
+                                          msg: "Enter Email",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM);
+                                    }else if(password.text.isEmpty){
+                                      Fluttertoast.showToast(
+                                          msg: "Enter Password",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM);
+                                    }else{
+                                      LoginMethod(email.text, password.text);
+                                      print("print"+email.text+password.text);
+                                    }
                                   },
                                   textColor: Colors.white,
                                   child: Padding(

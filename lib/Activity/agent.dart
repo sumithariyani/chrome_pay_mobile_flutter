@@ -1,3 +1,5 @@
+import 'package:chrome_pay_mobile_flutter/Activity/customer%20profile.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/login.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/register_customer.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,8 @@ class _AgentDashBoard extends State<Agent> {
   @override
   Widget build(BuildContext context) {
 
-    var names = ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
+    List<Widget> routes = [CustomerProfile()];
+    var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
     var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -147,6 +150,12 @@ class _AgentDashBoard extends State<Agent> {
                           Container(
                             child: ListView.builder(
                               itemBuilder: (context, index){
+                                InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => routes[1]));
+                                  },
+                                );
                                 return  Container(
                                   child: Card(
                                     margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
