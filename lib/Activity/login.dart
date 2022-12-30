@@ -1,3 +1,4 @@
+import 'package:chrome_pay_mobile_flutter/Activity/customer%20profile.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Login%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +21,33 @@ class _LoginFormState extends State <Login> {
   late LoginModel loginModel;
   Future<void> LoginMethod(String Email, String Password)  async {
     loginModel = await Services.LoginCredentials(Email, Password);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (loginModel.status!){
       Fluttertoast.showToast(msg: "Login successfully",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
+     
+    }
+    if (loginModel.Login_status!.contains("agent")){
+      prefs.setString('ID', loginModel.ID.toString());
+      prefs.setString('orgID', loginModel.orgID.toString());
+      prefs.setString('token', loginModel.token.toString());
+      prefs.setBool('islogin', true);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => Agent(),));
     }
+    // if (loginModel.Login_status!.contains("customer")){
+    //   prefs.setString('custID', loginModel.ID.toString());
+    //   prefs.setString('token', loginModel.token.toString());
+    //   prefs.setBool('islogin', true);
+    //   Navigator.of(context).pushReplacement(
+    //       MaterialPageRoute(
+    //         builder: (context) => CustomerProfile(),));
+    // }
     else{
+      prefs.setBool('islogin', false);
       Fluttertoast.showToast(msg: "Invalid Credentials",
         toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);

@@ -4,14 +4,21 @@ import 'package:flutter/material.dart';
 import '../TabsViewer/land.dart';
 
 class CustomerProfile extends StatefulWidget {
-  const CustomerProfile({super.key});
+
+  String id="";
+  CustomerProfile(this.id);
+
 
   @override
-  _CustomerProfileState createState() => _CustomerProfileState();
+  _CustomerProfileState createState() => _CustomerProfileState(id);
 
 }
 
 class _CustomerProfileState extends State<CustomerProfile> with TickerProviderStateMixin{
+
+  String id;
+
+  _CustomerProfileState(this.id);
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +115,7 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                             child: TabBarView(
                               controller: _tabController,
                               children: [
-                                Personal(),
+                                Personal(id),
                                 LandCertificate(),
                                 Center(
                                   child: Text(

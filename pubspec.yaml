@@ -98,6 +98,9 @@ flutter:
     - images/home_page_icon_25.png
     - images/address__1_.png
     - images/icons_16.png
+    - images/all_dids_07.png
+    - images/all_dids_10.png
+    - images/all_dids_06.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -3,6 +3,8 @@ import 'package:chrome_pay_mobile_flutter/Activity/login.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/register_customer.dart';
 import 'package:flutter/material.dart';
 
+import 'all-did.dart';
+
 class Agent extends StatefulWidget {
   @override
   _AgentDashBoard createState() => _AgentDashBoard();
@@ -13,7 +15,7 @@ class _AgentDashBoard extends State<Agent> {
   @override
   Widget build(BuildContext context) {
 
-    List<Widget> routes = [CustomerProfile()];
+    List<Widget> routes = [Active_Did(),];
     var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
     var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];
     return MaterialApp(
@@ -150,65 +152,65 @@ class _AgentDashBoard extends State<Agent> {
                           Container(
                             child: ListView.builder(
                               itemBuilder: (context, index){
-                                InkWell(
+                                return    InkWell(
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => routes[1]));
+                                        builder: (context) => routes[index]));
                                   },
-                                );
-                                return  Container(
-                                  child: Card(
-                                    margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                    elevation: 20,
-                                    color: Colors.transparent,
-                                    shadowColor: Colors.black,
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                          color: Colors.white
-                                      ),
+                                      child: Card(
+                                        margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                        elevation: 20,
+                                        color: Colors.transparent,
+                                        shadowColor: Colors.black,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                              color: Colors.white
+                                          ),
 
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 70,
-                                      child: Row(
-                                        /* mainAxisAlignment: MainAxisAlignment.start,
+                                          width: MediaQuery.of(context).size.width,
+                                          height: 70,
+                                          child: Row(
+                                            /* mainAxisAlignment: MainAxisAlignment.start,
                                            crossAxisAlignment: CrossAxisAlignment.start,*/
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(20.0))
-                                            ),
-                                            child:
-                                            Card(
-                                              margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                              elevation: 8,
-                                              color: Colors.transparent,
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.white,
-                                                child: Image.asset(images[index],
-                                                  height: 20,),
-                                              ),),
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(20.0))
+                                                ),
+                                                child:
+                                                Card(
+                                                  margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                                  elevation: 8,
+                                                  color: Colors.transparent,
+                                                  child: CircleAvatar(
+                                                    backgroundColor: Colors.white,
+                                                    child: Image.asset(images[index],
+                                                      height: 20,),
+                                                  ),),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                alignment: Alignment.center,
+                                                child: Text(names[index],
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w500)),
+                                              ),
+                                              const Spacer(),
+                                              Container(
+                                                  alignment: Alignment.centerRight,
+                                                  margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                  child: Image.asset('images/login_stuff_11.png',
+                                                    height: 30,)
+                                              )
+                                            ],
                                           ),
-                                          Container(
-                                            margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                            alignment: Alignment.center,
-                                            child: Text(names[index],
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w500)),
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                              alignment: Alignment.centerRight,
-                                              margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                              child: Image.asset('images/login_stuff_11.png',
-                                                height: 30,)
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    )
                                 );
                               },
                               itemCount: names.length,
@@ -219,8 +221,6 @@ class _AgentDashBoard extends State<Agent> {
                         ],
                       )
                   )
-
-
               ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:chrome_pay_mobile_flutter/Activity/agent.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Activity/login.dart';
 
@@ -107,8 +109,19 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-void naviagteUser(BuildContext context) async{
-  Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (context) => Login(),));
+void naviagteUser(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool? status = prefs.getBool('islogin');
+  if (status == true) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => Agent(),
+    )
+    );
+  } else {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => Login(),
+    )
+    );
+  }
 }
 

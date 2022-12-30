@@ -1,12 +1,33 @@
+import 'package:chrome_pay_mobile_flutter/Models/Cust%20dash%20Model.dart';
+import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class Personal extends StatefulWidget {
+  String id = "";
+  Personal(this.id);
+
   @override
-  _personalState createState ()=> _personalState();
+  _personalState createState ()=> _personalState(id);
 
 }
 
 class _personalState extends State<Personal> {
+
+  String id;
+  _personalState(this.id);
+  late CustDetailModel custDetailModel;
+  Future<void> getCustomer() async {
+    custDetailModel = await Services.GetCustDetail(id);
+
+    if(custDetailModel.status!){
+      Fluttertoast.showToast(msg: "Login successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(

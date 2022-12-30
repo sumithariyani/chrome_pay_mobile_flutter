@@ -1,4 +1,3 @@
-import 'package:chrome_pay_mobile_flutter/Activity/customer%20profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -319,9 +318,9 @@ class _DocumentScanerState extends State <DocumentScanner> {
    );
   }
 
-  void navigaterUser(){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(),));
-  }
+  // void navigaterUser(){
+  //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(),));
+  // }
 
   void _verifyDialog(){
     showDialog(context: context, builder: (context){
@@ -610,7 +609,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
                               height: 50,
                               child: MaterialButton(
                                 onPressed: () {
-                                  navigaterUser();
+                                  // navigaterUser();
                                   Fluttertoast.showToast(
                                       msg: 'Coming Soon',
                                       toastLength: Toast.LENGTH_SHORT,
