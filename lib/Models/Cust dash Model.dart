@@ -72,7 +72,7 @@ class Obj {
   String? id;
   String? fullname;
   String? iDphoto;
-  DateTime? dateOfBirth;
+  String? dateOfBirth;
   int? biometric;
   int? fingerPrint;
   int? facialIdentification;
@@ -111,7 +111,7 @@ class Obj {
     id: json["_id"] == null ? null : json["_id"],
     iDphoto: json["IDphoto"] == null ? null : json["IDphoto"],
     fullname: json["fullname"] == null ? null : json["fullname"],
-    dateOfBirth: json["dateOfBirth"] == null ? null : DateTime.parse(json["dateOfBirth"]),
+    dateOfBirth: json["dateOfBirth"] == null ? null : json["dateOfBirth"],
     biometric: json["biometric"] == null ? null : json["biometric"],
     fingerPrint: json["fingerPrint"] == null ? null : json["fingerPrint"],
     facialIdentification: json["facialIdentification"] == null ? null : json["facialIdentification"],
@@ -151,7 +151,7 @@ class Obj {
     "_id": id == null ? null : id,
     "IDphoto": iDphoto == null ? null : iDphoto,
     "fullname": fullname == null ? null : fullname,
-    "dateOfBirth": dateOfBirth == null ? null : "${dateOfBirth?.year.toString().padLeft(4, '0')}-${dateOfBirth?.month.toString().padLeft(2, '0')}-${dateOfBirth?.day.toString().padLeft(2, '0')}",
+    "dateOfBirth": dateOfBirth == null ? null : dateOfBirth,
     "biometric": biometric == null ? null : biometric,
     "fingerPrint": fingerPrint == null ? null : fingerPrint,
     "facialIdentification": facialIdentification == null ? null : facialIdentification,

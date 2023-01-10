@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final allDidModel = allDidModelFromJson(jsonString);
+//     final awatingDidModel = awatingDidModelFromJson(jsonString);
 
 import 'dart:convert';
 
-AllDidModel allDidModelFromJson(String str) => AllDidModel.fromJson(json.decode(str));
+AwatingDidModel awatingDidModelFromJson(String str) => AwatingDidModel.fromJson(json.decode(str));
 
-String allDidModelToJson(AllDidModel data) => json.encode(data.toJson());
+String awatingDidModelToJson(AwatingDidModel data) => json.encode(data.toJson());
 
-class AllDidModel {
-  AllDidModel({
+class AwatingDidModel {
+  AwatingDidModel({
     this.status,
     this.totlaRow,
     this.currenPage,
@@ -18,20 +18,20 @@ class AllDidModel {
 
   bool? status;
   int? totlaRow;
-  dynamic? currenPage;
+  int? currenPage;
   List<Filter>? filter;
 
-  factory AllDidModel.fromJson(Map<String, dynamic> json) => AllDidModel(
+  factory AwatingDidModel.fromJson(Map<String, dynamic> json) => AwatingDidModel(
     status: json["status"] == null ? null : json["status"],
     totlaRow: json["totlaRow"] == null ? null : json["totlaRow"],
-    currenPage: json["currenPage"],
+    currenPage: json["currenPage"] == null ? null : json["currenPage"],
     filter: json["filter"] == null ? null : List<Filter>.from(json["filter"].map((x) => Filter.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status == null ? null : status,
     "totlaRow": totlaRow == null ? null : totlaRow,
-    "currenPage": currenPage,
+    "currenPage": currenPage == null ? null : currenPage,
     "filter": filter == null ? null : List<dynamic>.from(filter!.map((x) => x.toJson())),
   };
 }
@@ -46,13 +46,12 @@ class Filter {
     this.email,
     this.gender,
     this.nationality,
+    this.professoin,
     this.address,
     this.latitude,
     this.longitude,
     this.biometric,
     this.fingerPrint,
-    this.city,
-    this.age,
     this.status,
     this.hash,
     this.owner,
@@ -76,16 +75,13 @@ class Filter {
     this.digitalId,
     this.digitalrefId,
     this.location,
-    this.assetType,
-    this.assetId,
     this.password,
     this.wrongOtp,
     this.wrongPass,
     this.createdAt,
     this.updatedAt,
     this.v,
-    this.professoin,
-    this.loginOtp,
+    this.linekdServiceOtp,
   });
 
   String? id;
@@ -96,13 +92,12 @@ class Filter {
   String? email;
   String? gender;
   String? nationality;
+  String? professoin;
   String? address;
   String? latitude;
   String? longitude;
   int? biometric;
   int? fingerPrint;
-  String? city;
-  int? age;
   String? status;
   String? hash;
   String? owner;
@@ -126,16 +121,13 @@ class Filter {
   String? digitalId;
   String? digitalrefId;
   int? location;
-  String? assetType;
-  String? assetId;
   String? password;
   int? wrongOtp;
   int? wrongPass;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
-  String? professoin;
-  int? loginOtp;
+  String? linekdServiceOtp;
 
   factory Filter.fromJson(Map<String, dynamic> json) => Filter(
     id: json["_id"] == null ? null : json["_id"],
@@ -146,13 +138,12 @@ class Filter {
     email: json["email"] == null ? null : json["email"],
     gender: json["gender"] == null ? null : json["gender"],
     nationality: json["nationality"] == null ? null : json["nationality"],
+    professoin: json["professoin"] == null ? null : json["professoin"],
     address: json["address"] == null ? null : json["address"],
     latitude: json["Latitude"] == null ? null : json["Latitude"],
     longitude: json["Longitude"] == null ? null : json["Longitude"],
     biometric: json["biometric"] == null ? null : json["biometric"],
     fingerPrint: json["fingerPrint"] == null ? null : json["fingerPrint"],
-    city: json["city"] == null ? null : json["city"],
-    age: json["age"] == null ? null : json["age"],
     status: json["status"] == null ? null : json["status"],
     hash: json["hash"] == null ? null : json["hash"],
     owner: json["owner"] == null ? null : json["owner"],
@@ -176,16 +167,13 @@ class Filter {
     digitalId: json["digitalID"] == null ? null : json["digitalID"],
     digitalrefId: json["digitalrefID"] == null ? null : json["digitalrefID"],
     location: json["Location"] == null ? null : json["Location"],
-    assetType: json["assetType"] == null ? null : json["assetType"],
-    assetId: json["assetID"] == null ? null : json["assetID"],
     password: json["password"] == null ? null : json["password"],
     wrongOtp: json["wrongOTP"] == null ? null : json["wrongOTP"],
     wrongPass: json["wrong_pass"] == null ? null : json["wrong_pass"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"] == null ? null : json["__v"],
-    professoin: json["professoin"] == null ? null : json["professoin"],
-    loginOtp: json["login_otp"] == null ? null : json["login_otp"],
+    linekdServiceOtp: json["Linekd_Service_OTP"] == null ? null : json["Linekd_Service_OTP"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -197,13 +185,12 @@ class Filter {
     "email": email == null ? null : email,
     "gender": gender == null ? null : gender,
     "nationality": nationality == null ? null : nationality,
+    "professoin": professoin == null ? null : professoin,
     "address": address == null ? null : address,
     "Latitude": latitude == null ? null : latitude,
     "Longitude": longitude == null ? null : longitude,
     "biometric": biometric == null ? null : biometric,
     "fingerPrint": fingerPrint == null ? null : fingerPrint,
-    "city": city == null ? null : city,
-    "age": age == null ? null : age,
     "status": status == null ? null : status,
     "hash": hash == null ? null : hash,
     "owner": owner == null ? null : owner,
@@ -227,15 +214,12 @@ class Filter {
     "digitalID": digitalId == null ? null : digitalId,
     "digitalrefID": digitalrefId == null ? null : digitalrefId,
     "Location": location == null ? null : location,
-    "assetType": assetType == null ? null : assetType,
-    "assetID": assetId == null ? null : assetId,
     "password": password == null ? null : password,
     "wrongOTP": wrongOtp == null ? null : wrongOtp,
     "wrong_pass": wrongPass == null ? null : wrongPass,
-    "createdAt": createdAt == null ? null : createdAt?.toIso8601String(),
-    "updatedAt": updatedAt == null ? null : updatedAt?.toIso8601String(),
+    "createdAt": createdAt == null ? null : createdAt!.toIso8601String(),
+    "updatedAt": updatedAt == null ? null : updatedAt!.toIso8601String(),
     "__v": v == null ? null : v,
-    "professoin": professoin == null ? null : professoin,
-    "login_otp": loginOtp == null ? null : loginOtp,
+    "Linekd_Service_OTP": linekdServiceOtp == null ? null : linekdServiceOtp,
   };
 }

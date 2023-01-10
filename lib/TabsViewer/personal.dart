@@ -9,23 +9,29 @@ class Personal extends StatefulWidget {
   Personal(this.id);
 
   @override
-  _personalState createState ()=> _personalState(id);
+  _personalState createState ()=> _personalState();
 
 }
 
 class _personalState extends State<Personal> {
 
-  String id;
-  _personalState(this.id);
-  late CustDetailModel custDetailModel;
-  Future<void> getCustomer() async {
-    custDetailModel = await Services.GetCustDetail(id);
+ CustDetailModel? custDetailModel;
 
-    if(custDetailModel.status!){
-      Fluttertoast.showToast(msg: "Login successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER);
+  Future<void> getCustomer() async {
+    custDetailModel = await Services.GetCustDetail(widget.id);
+
+    if(custDetailModel!.status!){
+      print("personal"+widget.id);
+      print("personal ${custDetailModel!.obj!.fullname}");
     }
+    setState(() {
+    });
+  }
+
+  @override
+  void initState() {
+    getCustomer();
+    super.initState();
   }
 
   @override
@@ -64,8 +70,9 @@ class _personalState extends State<Personal> {
                                alignment: AlignmentDirectional.center,
                                margin: EdgeInsets.only(left: 20.0, right: 10.0),
                                child: CircleAvatar(
+                                 backgroundColor: Colors.black,
+                                 backgroundImage: NetworkImage("${custDetailModel?.obj?.iDphoto ??""}"),
                                  radius: 50,
-                                  child: Image.asset('images/login_new_10.png',),
                                ),
                              ),
                              Expanded(
@@ -76,7 +83,7 @@ class _personalState extends State<Personal> {
                                      children: [
                                        Container(
                                          // margin: EdgeInsets.only(top: 30),
-                                         child: Text('Rachel Berk',
+                                         child: Text("${custDetailModel?.obj?.fullname ??""}",
                                          style: TextStyle(fontWeight: FontWeight.bold,
                                          fontSize: 20,
                                          color: Colors.white),),
@@ -85,7 +92,7 @@ class _personalState extends State<Personal> {
                                          children: [
                                            Image.asset('images/home_page_icon_20.png',
                                            height: 10,),
-                                           Text('+919009474569',
+                                           Text("${custDetailModel?.obj?.phone??""}",
                                              style: TextStyle(
                                                  fontSize: 12,
                                                  color: Colors.white),),
@@ -138,7 +145,7 @@ class _personalState extends State<Personal> {
                          child: Column(
                            crossAxisAlignment: CrossAxisAlignment.start,
                            mainAxisAlignment: MainAxisAlignment.start,
-                           children: [
+                           children: <Widget>[
                              Card(
                                elevation: 10,
                                color: Colors.white,
@@ -160,7 +167,26 @@ class _personalState extends State<Personal> {
                                        margin: EdgeInsets.symmetric(horizontal: 10.0),
                                        child: Text('Fingerprint'
                                        ),
-                                     )
+                                     ),
+                                     Spacer(),
+
+                                     if(custDetailModel?.obj?.fingerPrint == 0)
+                                       Container(
+                                         width: 30,
+                                         height: 30,
+                                         alignment: Alignment.centerRight,
+                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                         child: Image.asset('images/cross.png',
+                                         ),
+                                       ),
+                                     if (custDetailModel?.obj?.fingerPrint == 1)
+                                       Container(
+                                         width: 30,
+                                         height: 30,
+                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                         child: Image.asset('images/home_page_icon_22.png',
+                                         ),
+                                       ),
                                    ],
                                  ),
                                ),
@@ -186,7 +212,26 @@ class _personalState extends State<Personal> {
                                        margin: EdgeInsets.symmetric(horizontal: 10.0),
                                        child: Text('Facial Identification'
                                        ),
-                                     )
+                                     ),
+                                     Spacer(),
+
+                                     if(custDetailModel?.obj?.facialIdentification == 0)
+                                       Container(
+                                         width: 30,
+                                         height: 30,
+                                         alignment: Alignment.centerRight,
+                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                         child: Image.asset('images/cross.png',
+                                         ),
+                                       ),
+                                     if (custDetailModel?.obj?.facialIdentification == 1)
+                                       Container(
+                                         width: 30,
+                                         height: 30,
+                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                         child: Image.asset('images/home_page_icon_22.png',
+                                         ),
+                                       ),
                                    ],
                                  ),
                                ),
@@ -212,7 +257,26 @@ class _personalState extends State<Personal> {
                                        margin: EdgeInsets.symmetric(horizontal: 10.0),
                                        child: Text('Location'
                                        ),
-                                     )
+                                     ),
+                                     Spacer(),
+
+                                     if(custDetailModel?.obj?.location == 0)
+                                       Container(
+                                         width: 30,
+                                         height: 30,
+                                         alignment: Alignment.centerRight,
+                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                         child: Image.asset('images/cross.png',
+                                         ),
+                                       ),
+                                     if (custDetailModel?.obj?.location == 1)
+                                       Container(
+                                         width: 30,
+                                         height: 30,
+                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                         child: Image.asset('images/home_page_icon_22.png',
+                                         ),
+                                       ),
                                    ],
                                  ),
                                ),
@@ -235,7 +299,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                            child: Container(
-                                             child: Text('14-06-1999',),
+                                             child: Text("${custDetailModel?.obj?.dateOfBirth??""}",),
                                            ),
                                          )
                                        ],
@@ -255,7 +319,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                            child: Container(
-                                             child: Text('Student',),
+                                             child: Text("${custDetailModel?.obj?.professoin??""}",),
                                            ),
                                          )
                                        ],
@@ -275,7 +339,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                              child: Container(
-                                           child: Text('Female',),
+                                           child: Text("${custDetailModel?.obj?.gender??""}",),
                                          )),
 
                                        ],
@@ -295,7 +359,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                            child: Container(
-                                             child: Text('Daniela Saunyama',),
+                                             child: Text("${custDetailModel?.obj?.nextFoKinName??""}",),
                                            ),
                                          )
                                        ],
@@ -316,7 +380,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                            child: Container(
-                                             child: Text('5848744167',),
+                                             child: Text("${custDetailModel?.obj?.nextFoKniPhone??""}",),
                                            ),
                                          )
                                        ],
@@ -336,7 +400,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                            child: Container(
-                                             child: Text('Israeli',),
+                                             child: Text("${custDetailModel?.obj?.nationality??""}",),
                                            ),
                                          )
                                        ],
@@ -356,7 +420,7 @@ class _personalState extends State<Personal> {
                                          ),
                                          Expanded(
                                            child: Container(
-                                             child: Text('Sydney NAW 2025 Australia',),
+                                             child: Text("${custDetailModel?.obj?.address??""}",),
                                            ),
                                          )
                                        ],
@@ -367,36 +431,45 @@ class _personalState extends State<Personal> {
                                      child: Row(
                                        children: [
                                          Expanded(
-                                             child: Card(
-                                               elevation: 5,
-                                               color: Color(0xff234e67),
-                                               shape: RoundedRectangleBorder(
-                                                   borderRadius: BorderRadius.all(Radius.circular(10.0))
-                                               ),
-                                               margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 5.0),
-                                               child: Container(
-                                                 height: 50,
-                                                 margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                 child: Row(
-                                                   children: [
-                                                     Container(
-                                                       margin: EdgeInsets.symmetric(vertical: 10.0),
-                                                       child: Image.asset('images/home_page_icon_24.png',
+                                             child: InkWell(
+                                               onTap: (){
+                                                 _nationalIdDialog();
+                                           },
+                                               child: Card(
+                                                 elevation: 5,
+                                                 color: Color(0xff234e67),
+                                                 shape: RoundedRectangleBorder(
+                                                     borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                                 ),
+                                                 margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 5.0),
+                                                 child: Container(
+                                                   height: 50,
+                                                   margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                   child: Row(
+                                                     children: [
+                                                       Container(
+                                                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                                                         child: Image.asset('images/home_page_icon_24.png',
+                                                         ),
                                                        ),
-                                                     ),
-                                                     Container(
-                                                       margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                       child: Text('National Id',
-                                                         style: TextStyle(color: Colors.white),
-                                                       ),
-                                                     )
-                                                   ],
+                                                       Container(
+                                                         margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                         child: Text('National Id',
+                                                           style: TextStyle(color: Colors.white),
+                                                         ),
+                                                       )
+                                                     ],
+                                                   ),
                                                  ),
                                                ),
-                                             ),
+                                             )
                                          ),
                                          Expanded(
-                                           child:Card(
+                                           child: InkWell(
+                                             onTap: (){
+                                               _residenceDialog();
+                                             },
+                                             child: Card(
                                              elevation: 5,
                                              color: Color(0xff234e67),
                                              shape: RoundedRectangleBorder(
@@ -422,7 +495,8 @@ class _personalState extends State<Personal> {
                                                  ],
                                                ),
                                              ),
-                                           ),
+                                           ),)
+
                                          )
                                        ],
                                      ),
@@ -442,5 +516,88 @@ class _personalState extends State<Personal> {
        ),
    );
   }
+
+ void _nationalIdDialog(){
+   showDialog(context: context, builder: (context){
+     return Container(
+       child: Dialog(
+         child: SingleChildScrollView(
+           child: Column(
+             children: [
+               Container(
+                 alignment: Alignment.topRight,
+                 padding: EdgeInsets.all(10.0),
+                 child: Image.asset('images/login_stuff_28.png',
+                   height: 20,),
+               ),
+               Container(
+                 height: 400,
+                 decoration: const BoxDecoration(
+                   borderRadius: BorderRadius.all(
+                       Radius.circular(40.0)),
+                 ),
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Center(
+                       child: Container(
+                         alignment: Alignment.center,
+                         padding: EdgeInsets.all(10.0),
+                         child: Image.network("${custDetailModel?.obj?.locaDocument??""}",),
+                       ),
+                     ),
+                   ],
+                 ),
+               ),
+             ],
+           ),
+         ),
+       ),
+     );
+   });
+ }
+
+ void _residenceDialog(){
+   showDialog(context: context, builder: (context){
+     return Container(
+       child: Dialog(
+         child: SingleChildScrollView(
+           child: Column(
+             children: [
+               Container(
+                 alignment: Alignment.topRight,
+                 padding: EdgeInsets.all(10.0),
+                 child: Image.asset('images/login_stuff_28.png',
+                   height: 20,),
+               ),
+               Container(
+                 height: 400,
+                 decoration: const BoxDecoration(
+                   borderRadius: BorderRadius.all(
+                       Radius.circular(40.0)),
+                 ),
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+
+                     Center(
+                       child: Container(
+                         alignment: Alignment.center,
+                         padding: EdgeInsets.all(10.0),
+                         child: Image.network("${custDetailModel?.obj?.residance??""}",),
+                       ),
+                     ),
+                   ],
+                 ),
+               ),
+             ],
+           ),
+         ),
+       ),
+     );
+   });
+ }
 
 }

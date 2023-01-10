@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.2.2
+  charts_flutter: ^0.12.0
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,7 @@ flutter:
     - images/login_new_10.png
     - images/agent_dashboard_stuff_01.png
     - images/agent_dashboard_stuff_03.png
+    - images/agent_dashboard_stuff_04.png
     - images/agent_dashboard_stuff_08.png
     - images/agent_dashboard_stuff_10.png
     - images/agent_dashboard_stuff_11.png
@@ -92,12 +94,15 @@ flutter:
     - images/home_page_icon_15.png
     - images/home_page_icon_16.png
     - images/home_page_icon_18.png
+    - images/home_page_icon_19.png
     - images/home_page_icon_20.png
     - images/home_page_icon_21.png
     - images/home_page_icon_24.png
     - images/home_page_icon_25.png
+    - images/home_page_icon_22.png
     - images/address__1_.png
     - images/icons_16.png
+    - images/cross.png
     - images/all_dids_07.png
     - images/all_dids_10.png
     - images/all_dids_06.png

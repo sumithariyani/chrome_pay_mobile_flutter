@@ -1,6 +1,9 @@
-import 'package:chrome_pay_mobile_flutter/Activity/customer%20profile.dart';
-import 'package:chrome_pay_mobile_flutter/Activity/login.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/agency%20banking.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/agent%20commission.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/agent%20performance.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/awating%20did.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/register_customer.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/setting.dart';
 import 'package:flutter/material.dart';
 
 import 'all-did.dart';
@@ -15,7 +18,7 @@ class _AgentDashBoard extends State<Agent> {
   @override
   Widget build(BuildContext context) {
 
-    List<Widget> routes = [Active_Did(),];
+    List<Widget> routes = [Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
     var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
     var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];
     return MaterialApp(

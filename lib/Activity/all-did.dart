@@ -12,14 +12,16 @@ class Active_Did extends StatefulWidget {
 
 class _ActiveDidState extends State<Active_Did> {
 
-  late SharedPreferences prefs;
+  SharedPreferences? prefs;
   List<String> customerList = [];
+  int? page = 1;
+  bool isPageLoading = false;
 
   late AllDidModel allDidModel;
 
   Future<void> getCustomer() async {
     prefs = await SharedPreferences.getInstance();
-    allDidModel = await Services.CustomerList(prefs.getString('ID').toString());
+    allDidModel = await Services.CustomerList(prefs!.getString('ID').toString());
     setState(() {
       for (int i = 0; i<allDidModel.filter!.length; i++){
         customerList.add(allDidModel.filter![i].id ??"");
@@ -108,7 +110,7 @@ class _ActiveDidState extends State<Active_Did> {
                                           Container(
                                             margin: EdgeInsets.only(bottom: 50.0),
                                             child: FutureBuilder<AllDidModel>(
-                                              future: Services.CustomerList(prefs.getString('ID').toString()),
+                                              future: Services.CustomerList(prefs!.getString('ID').toString()),
                                               builder: (mcontext, snapshot){
                                                 if (snapshot.hasData){
                                                   return Container(
