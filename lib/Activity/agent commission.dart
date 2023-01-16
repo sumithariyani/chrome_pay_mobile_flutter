@@ -140,7 +140,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                                           print('Date Selecte : ${fromDate?.day}-${fromDate?.month}-${fromDate?.year}');
                                         }
                                         setState(() {
-                                          selectedFromDate='${fromDate?.day}-${fromDate?.month}-${fromDate?.year}';
+                                          selectedFromDate='${fromDate?.year}-${fromDate?.month}-${fromDate?.day}';
                                           print("selectedFromDate ${selectedFromDate}");
                                         });
                                       },
@@ -173,7 +173,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                                     if(toDate != null){
                                       print('toDate : ${toDate?.day}-${toDate?.month}-${toDate?.year}');
                                       setState(() {
-                                         selectedToDate='${toDate?.day}-${toDate?.month}-${toDate?.year}';
+                                         selectedToDate='${toDate?.year}-${toDate?.month}-${toDate?.day}';
                                         print("selectedToDate ${selectedToDate}");
                                       });
                                     }

@@ -86,12 +86,14 @@ class _AgencyBankingState extends State<AgencyBanking> {
                                                 borderRadius: BorderRadius.circular(100.0)
                                             ),
                                             child: Container(
+                                              width: 50,
+                                              height: 50,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                   gradient: LinearGradient(colors: [
                                                     Color(0xff2CABBB),
                                                     Color(0xff0B527E),
-                                                  ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                                                  ],begin: Alignment.topLeft,end: Alignment.centerRight)
 
                                               ),
                                               child: CircleAvatar(
@@ -104,6 +106,7 @@ class _AgencyBankingState extends State<AgencyBanking> {
                                       ),
 
                                     Container(
+                                      margin: EdgeInsets.only(top: 10.0),
                                       child: Text('Microloans',
                                         style: TextStyle(
                                             fontSize: 16,
@@ -125,5 +128,4 @@ class _AgencyBankingState extends State<AgencyBanking> {
       )
     );
   }
-
 }

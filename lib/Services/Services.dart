@@ -4,27 +4,36 @@ import 'package:chrome_pay_mobile_flutter/Models/Agent%20Commisssion%20%20Model.
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Profile%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Update%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Awating%20Did%20Model.dart';
+import 'package:chrome_pay_mobile_flutter/Models/Financial%20Model.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:io';
+
 
 import '../Models/All Did Model.dart';
-import '../Models/Bar Chart Model.dart';
 import '../Models/Cust dash Model.dart';
+import '../Models/Document Scanner Model.dart';
 import '../Models/Login Model.dart';
+import '../Models/Verify Cust Model.dart';
+import '../Models/customer Register Model.dart';
 
 class Services {
 
-  static String BaseUrl = "http://192.168.1.158:3300/";
-  // static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
+  // static String BaseUrl = "http://192.168.1.158:3300/";
+  static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
 
   static String Login = BaseUrl+"agent_login_new";
   static String AllDid = BaseUrl+"agentcustomerList/";
   static String CustomerDash = BaseUrl+"custdetail/";
+  static String FinancialActivities = BaseUrl+"calculate_final_activities/";
   static String AwatingDid = BaseUrl+"AgentAwaiting/";
   static String AgentCommisssion = BaseUrl+"commissionlist/";
   static String AgentProfile = BaseUrl+"agentProfile/";
   static String UpdateProfile = BaseUrl+"agentProfileUpdate/";
   static String AgentPerformance = BaseUrl+"get_agent_cut_month/";
+  static String CustomerRegistration = BaseUrl+"createCustomerByOrg1/";
+  static String DocumentScanner = BaseUrl+"createCustomerByOrg2";
+  static String VerifyCustOtp = BaseUrl+"new_verify_customer";
 
   // ignore: non_constant_identifier_names
   static Future<LoginModel> LoginCredentials(String EMAIL, String PASSWORD) async{
@@ -63,12 +72,13 @@ class Services {
     // return LoginModel();
   }
 
-  static Future<AllDidModel> CustomerList(String agent_id) async {
+  static Future<AllDidModel> CustomerList(String agent_id, int page) async {
     final params = {
       "adminID": agent_id,
+      "page": page.toString(),
     };
 
-    print("agent_id "+agent_id);
+    print(params);
     http.Response response = await http.post(Uri.parse(AllDid+agent_id), body: params);
     print("all Did "+response.body);
 
@@ -103,9 +113,10 @@ class Services {
     }
   }
 
-  static Future<AwatingDidModel> PendingList(String token) async {
+  static Future<AwatingDidModel> PendingList(String token, int page) async {
     final params = {
       "token": token,
+      "page": page.toString()
     };
     print(params);
     http.Response response = await http.post(Uri.parse(AwatingDid+token), body: params);
@@ -190,17 +201,104 @@ class Services {
     return user;
   }
 
-  static Future<BarChartModel> AgentGraph(String token,) async {
-    Map<String, String> requestHeaders = {
-      "token": token
-    };
+  static Future<Object> CustRegister(String id, String orgId, File image, String name,
+      String number, String dob, String gender, String email, String nationality, String profession, String kinName, String kinPhone,) async {
+    var uri = CustomerRegistration+id+"/"+orgId;
+    var request = new http.MultipartRequest("POST", Uri.parse(uri));
+    var multipart = await http.MultipartFile.fromPath("IDphoto",image.path);
+    request.fields["fullname"] = name;
+    request.fields["dateOfBirth"] = dob;
+    request.fields["phone"] = number;
+    request.fields["email"] = email;
+    request.fields["gender"] = gender;
+    request.fields["nationality"] = nationality;
+    request.fields["professoin"] = profession;
+    request.fields["address"] = name;
+    request.fields["nextFOKniPhone"] = kinPhone;
+    request.fields["nextFOKinName"] = kinName;
+    request.files.add(multipart);
 
-    http.Response response = await http.get(Uri.parse(AgentPerformance+token), headers: requestHeaders);
-    print("AgentPerformance "+response.body);
+    print('request ${multipart}');
+
+
+    var response = await request.send();
+    var response2 = await http.Response.fromStream(response);
+
+    if (response2.statusCode == 201){
+      var data = json.decode(response2.body);
+      print(data);
+      CustomerRegisterModel user = CustomerRegisterModel.fromJson(data);
+      return user;
+    }else{
+      print(response2);
+      throw Error();
+    }
+  }
+
+  static Future<DocumentScannerModel> DocumentScan(File residace, File local,File land, String landSize,
+      String assetType, String assetID, String phone, String age, String city, String email) async {
+
+    var uri = DocumentScanner;
+    var request = new http.MultipartRequest("POST", Uri.parse(uri));
+    var residenceMulti = await http.MultipartFile.fromPath("residace", residace.path);
+    var localMulti = await http.MultipartFile.fromPath("residace", local.path);
+    var landMulti = await http.MultipartFile.fromPath("residace", land.path);
+
+    request.files.add(residenceMulti);
+    request.files.add(localMulti);
+    request.files.add(landMulti);
+    request.fields['landSize'] = landSize;
+    request.fields['assetType'] = assetType;
+    request.fields['assetID'] = assetID;
+    request.fields['phone'] = phone;
+    request.fields['age'] = age;
+    request.fields['city'] = city;
+    request.fields['email'] = email;
+
+    var response = await request.send();
+    var response2 = await http.Response.fromStream(response);
+
+    if (response2.statusCode == 200){
+      var data = json.decode(response2.body);
+      print(data);
+      DocumentScannerModel user = DocumentScannerModel.fromJson(data);
+      return user;
+    }else{
+      print(response2);
+      throw Error();
+    }
+
+  }
+  static Future<VerifyCustModel> VerifyCust(String otp, String phone) async {
+    final params = {
+      "OTP": otp,
+      "phoneNo": phone,
+    };
+    print(params);
+    http.Response response = await http.post(Uri.parse(VerifyCustOtp), body: params);
+    print("VerifyCust "+response.body);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      BarChartModel user = BarChartModel.fromJson(data);
+      VerifyCustModel user = VerifyCustModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
+
+  static Future<FinancialModel> Finance(String custID) async {
+    final params = {
+      "custID": custID,
+    };
+
+    http.Response response = await http.post(Uri.parse(FinancialActivities+custID), body: params);
+    print("cust_dash " + response.body);
+
+    if (response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      FinancialModel user = FinancialModel.fromJson(data);
       return user;
     }else{
       print(response.body);

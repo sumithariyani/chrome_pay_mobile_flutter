@@ -14,14 +14,17 @@ class _ActiveDidState extends State<Active_Did> {
 
   SharedPreferences? prefs;
   List<String> customerList = [];
-  int? page = 1;
-  bool isPageLoading = false;
+  int? _page = 1;
+  bool _isPageLoading = false;
+  final _scrollController = ScrollController();
+
 
   late AllDidModel allDidModel;
 
   Future<void> getCustomer() async {
+    _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
-    allDidModel = await Services.CustomerList(prefs!.getString('ID').toString());
+    allDidModel = await Services.CustomerList(prefs!.getString('ID').toString(), _page!);
     setState(() {
       for (int i = 0; i<allDidModel.filter!.length; i++){
         customerList.add(allDidModel.filter![i].id ??"");
@@ -34,6 +37,7 @@ class _ActiveDidState extends State<Active_Did> {
     getCustomer();
     super.initState();
     getAsync();
+    _scrollController.addListener(_scrollListener) ;
   }
   getAsync() async {
     try{
@@ -105,14 +109,17 @@ class _ActiveDidState extends State<Active_Did> {
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
                                     child: SingleChildScrollView(
+                                      controller: _scrollController,
                                       child: Column(
                                         children: [
                                           Container(
                                             margin: EdgeInsets.only(bottom: 50.0),
                                             child: FutureBuilder<AllDidModel>(
-                                              future: Services.CustomerList(prefs!.getString('ID').toString()),
+                                              future: Services.CustomerList(prefs!.getString('ID').toString(), _page!),
                                               builder: (mcontext, snapshot){
                                                 if (snapshot.hasData){
+                                                  _isPageLoading = false;
+
                                                   return Container(
                                                     width: double.infinity,
                                                     child: ListView.builder(
@@ -248,6 +255,18 @@ class _ActiveDidState extends State<Active_Did> {
         ),
       ),
     );
+  }
+
+  void _scrollListener(){
+    print("working");
+    if(_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _page = _page!+1;
+      getCustomer().then((data) {
+      });
+    } else {
+      print('Dont');
+    }
   }
 
 }

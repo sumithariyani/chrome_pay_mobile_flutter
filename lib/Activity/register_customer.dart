@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'address.dart';
 
@@ -12,12 +17,33 @@ class RegisterCustomer extends StatefulWidget{
 
 class _RegisterCustomerState extends State <RegisterCustomer>{
 
+  File? selectedImage;
+  String base64Image = "";
+  var stream;
+  var length;
+
+  Future<void> pickImage() async {
+    var _image;
+
+    _image = await ImagePicker().
+    pickImage(source: ImageSource.camera);
+
+    if(_image != null){
+      setState(() {
+        selectedImage = File(_image.path);
+        base64Image = base64Encode(selectedImage!.readAsBytesSync());
+        print('base64Image ${base64Image}');
+      });
+    }
+  }
   TextEditingController fullName = TextEditingController();
   TextEditingController mobileNumber = TextEditingController();
   TextEditingController day = TextEditingController();
   TextEditingController month = TextEditingController();
   TextEditingController year = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController age = TextEditingController();
+  TextEditingController city = TextEditingController();
   TextEditingController profession = TextEditingController();
   TextEditingController nameKin = TextEditingController();
   TextEditingController numberKin = TextEditingController();
@@ -28,6 +54,8 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   String? selectedNationality = 'Ethiopian';
   int _radioSelected = 0;
   String? _radioVal;
+  String? _phone;
+  String? _dob;
   DateTime? datePicked;
 
   @override
@@ -101,20 +129,26 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                crossAxisAlignment: CrossAxisAlignment.start,
                                children: [
                                  Container(
+                                   height: 70,
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
 
-                                        child: PhysicalModel(color: Colors.transparent,
+                                        child: CircleAvatar(
+                                          radius: 60,
+                                          backgroundColor: Colors.transparent,
                                           child: InkWell(
                                             onTap: (){
-                                              Fluttertoast.showToast(
-                                                  msg: 'Coming Soon',
-                                                  toastLength: Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.CENTER);
-
+                                              pickImage();
                                             },
-                                              child: Image.asset('images/login_new_10.png',
-                                                height: 70,)
+                                              child: ClipOval(
+                                                child: selectedImage!=null
+                                                ?Image.file(
+                                                  selectedImage!,
+                                                  fit: BoxFit.cover,
+                                                  height: 70,
+                                                ): Image.asset('images/login_new_10.png',
+                                                  height: 70,)
+                                              )
                                           ),
                                         ),
 
@@ -213,6 +247,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                          Row(
                                            children: [
                                              Container(
+                                               alignment: Alignment.center,
                                                height: 30,
                                                width: 50,
                                                margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -224,6 +259,9 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                        firstDate: DateTime(1950),
                                                        lastDate: DateTime.now());
                                                    if(datePicked != null){
+                                                     day.text = '${datePicked?.day}';
+                                                     month.text = '${datePicked?.month}';
+                                                     year.text = '${datePicked?.year}';
                                                      print('Date Selecte : ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}');
                                                    }
                                                  },
@@ -319,6 +357,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                      setState((){
                                                        _radioSelected = value as int;
                                                        _radioVal = 'male';
+                                                       print(_radioVal);
                                                      });
                                                    },),
                                                Text('Male'),
@@ -329,6 +368,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                    onChanged: (value) {
                                                      setState((){
                                                        _radioVal = 'female';
+                                                       print(_radioVal);
                                                        _radioSelected = value as int;
                                                      });
                                                    }),
@@ -360,6 +400,44 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                    width: 2.0,),
                                                ),
                                                hintText: 'Email',
+                                             ),
+                                             style: const TextStyle(fontSize: 18.0),
+                                           ),
+                                         ),
+                                         Container(
+                                           margin: EdgeInsets.only(top: 10.0),
+                                           child: TextField(
+                                             controller: age,
+                                             keyboardType: TextInputType.number,
+                                             decoration: InputDecoration(
+                                               counterText: "",
+                                               prefixIcon: Container(
+                                                 padding: EdgeInsets.all(5.0),
+                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                 child: Image.asset('images/login_stuff_17.png',
+                                                   height: 2.0,
+                                                   width: 2.0,),
+                                               ),
+                                               hintText: 'Age',
+                                             ),
+                                             style: const TextStyle(fontSize: 18.0),
+                                           ),
+                                         ),
+                                         Container(
+                                           margin: EdgeInsets.only(top: 10.0),
+                                           child: TextField(
+                                             controller: city,
+                                             keyboardType: TextInputType.text,
+                                             decoration: InputDecoration(
+                                               counterText: "",
+                                               prefixIcon: Container(
+                                                 padding: EdgeInsets.all(5.0),
+                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                 child: Image.asset('images/login_stuff_20.png',
+                                                   height: 2.0,
+                                                   width: 2.0,),
+                                               ),
+                                               hintText: 'City',
                                              ),
                                              style: const TextStyle(fontSize: 18.0),
                                            ),
@@ -442,8 +520,8 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                          ),
                                          Container(
                                            child: TextField(
-                                             controller: nameKin,
-                                             keyboardType: TextInputType.text,
+                                             controller: numberKin,
+                                             keyboardType: TextInputType.number,
                                              decoration: InputDecoration(
                                                counterText: "",
                                                prefixIcon: Container(
@@ -506,7 +584,13 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   }
 
   void navigaterUser(){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MapSample(),));
+    _phone = selectedCode!.substring(1)! + mobileNumber.text;
+    print(_phone);
+    _dob =' ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}';
+    print(_dob);
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => MapSample(selectedImage!, fullName.text, _phone.toString(), _dob.toString(), _radioVal.toString(),
+          email.text, age.text, city.text, selectedNationality.toString(), profession.text, nameKin.text, numberKin.text),));
   }
 
 }

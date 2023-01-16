@@ -14,12 +14,16 @@ class _AwatingState extends State<AwatingDid>{
 
   SharedPreferences? prefs;
   List<String> customerList = [];
-
+  int _page = 1;
+  final int _limit = 20;
+  final _scrollController = ScrollController();
+  bool _isPageLoading = false;
   late AwatingDidModel awatingDidModel;
 
   Future<void> getCustomer() async {
+    _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
-    awatingDidModel = await Services.PendingList(prefs?.getString("token").toString()??"");
+    awatingDidModel = await Services.PendingList(prefs?.getString("token").toString()??"", _page);
     setState(() {
       for (int i = 0; i<awatingDidModel.filter!.length; i++){
         customerList.add(awatingDidModel.filter![i].id ??"");
@@ -32,6 +36,7 @@ class _AwatingState extends State<AwatingDid>{
     getCustomer();
     super.initState();
     getAsync();
+    _scrollController.addListener(_scrollListener) ;
   }
   getAsync() async {
     try{
@@ -70,6 +75,7 @@ class _AwatingState extends State<AwatingDid>{
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: SingleChildScrollView(
+                        controller: _scrollController,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,9 +112,11 @@ class _AwatingState extends State<AwatingDid>{
                                     Container(
                                       margin: EdgeInsets.only(bottom: 50.0),
                                       child: FutureBuilder<AwatingDidModel>(
-                                        future: Services.PendingList(prefs?.getString('token').toString()??""),
+                                        future: Services.PendingList(prefs?.getString('token').toString()??"", _page),
                                         builder: (mcontext, snapshot){
                                           if (snapshot.hasData){
+                                            _isPageLoading = false;
+
                                             return Container(
                                               width: double.infinity,
                                               child: ListView.builder(
@@ -234,4 +242,15 @@ class _AwatingState extends State<AwatingDid>{
   );
   }
 
+  void _scrollListener(){
+    print("working");
+    if(_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _page = _page+1;
+      getCustomer().then((data) {
+      });
+    } else {
+      print('Dont');
+    }
+  }
 }

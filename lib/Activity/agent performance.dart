@@ -1,8 +1,7 @@
 import 'dart:core';
 import 'dart:math';
+import 'package:fl_chart/fl_chart.dart';
 
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:chrome_pay_mobile_flutter/Models/Bar%20Chart%20Model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,30 +16,27 @@ class AgentPerformance extends StatefulWidget {
 }
 class _AgentPerformanceState extends State<AgentPerformance> {
 
-  List<charts.Series>? seriesList;
+  SharedPreferences? prefs;
 
-  // static List<charts.Series<Sales, String>> _createRandomData(){
-  //   final random = Random();
-  //   final desktopSalesData = [
-  //     // Sales('2015', random.nextInt(100)),
-  //     // Sales('2016', random.nextInt(100)),
-  //     // Sales('2017', random.nextInt(100)),
-  //     // Sales('2018', random.nextInt(100)),
-  //     // Sales('2019', random.nextInt(100)),
-  //   ];
-  //
-  //   // return [charts.Series<Sales, String>(
-  //   //   id: 'Sales',
-  //   //   domainFn: (Sales sales, _) => sales.year,
-  //   //   measureFn: (Sales sales, _) => sales.sales,
-  //   //   data: desktopSalesData,
-  //   // )];
-  // }
+  var showingTooltipIndicators;
+
+
+  getAsync() async {
+    try{
+      prefs = await SharedPreferences.getInstance();
+      setState(() {
+
+      });
+    }catch (e) {
+      print(e);
+    }
+  }
+
 
   @override
   void initState() {
     super.initState();
-    // seriesList = _createRandomData();
+    getAsync();
   }
   Widget build(BuildContext context) {
    return Scaffold(
@@ -188,17 +184,43 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                  ],
                ),
              ),
+           ),
+           Expanded(
+             child: Container(
+               child: BarChart(
+                 BarChartData(
+                     barGroups: [
+                       BarChartGroupData(x: 0, barRods:
+                       [BarChartRodData(toY: 30,width: 15)],showingTooltipIndicators: [0]),
+                       BarChartGroupData(x: 1, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [1]),
+                       BarChartGroupData(x: 2, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [2]),
+                       BarChartGroupData(x: 3, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [3]),
+                       BarChartGroupData(x: 4, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [4]),
+                       BarChartGroupData(x: 5, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [5]),
+                       BarChartGroupData(x: 6, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [6]),
+                       BarChartGroupData(x: 7, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [7]),
+                       BarChartGroupData(x: 8, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [8]),
+                       BarChartGroupData(x: 9, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [9]),
+                       BarChartGroupData(x: 10, barRods:
+                       [BarChartRodData(toY: 25,width: 15)],showingTooltipIndicators: [10]),
+                     ]
+                 ),
+               ),
+             ),
            )
+
          ],
        ),
      ),
    );
   }
-}
-
-class Sales{
-   String year;
-   String sales;
-
-  Sales(this.year, this.sales);
 }

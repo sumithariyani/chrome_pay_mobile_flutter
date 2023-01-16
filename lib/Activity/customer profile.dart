@@ -3,6 +3,7 @@ import 'package:chrome_pay_mobile_flutter/Models/Cust%20dash%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
 
+import '../TabsViewer/financial.dart';
 import '../TabsViewer/land.dart';
 
 class CustomerProfile extends StatefulWidget {
@@ -139,20 +140,15 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                     ),
                   ),
                   Expanded(
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        Personal(widget.id),
-                        LandCertificate(widget.id),
-                        Center(
-                          child: Text(
-                            'Financial Coming Soon',
-                            style: TextStyle(
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Container(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          Personal(widget.id),
+                          LandCertificate(widget.id),
+                          FinancialActivites(widget.id),
+                        ],
+                      ),
                     ),
                   ),
                   Container(

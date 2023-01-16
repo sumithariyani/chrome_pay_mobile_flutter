@@ -1,17 +1,75 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:chrome_pay_mobile_flutter/Activity/document%20scanner.dart';
+import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
+import '../Models/customer Register Model.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapSample extends StatefulWidget {
-  const MapSample({Key? key}) : super(key: key);
+
+  File image;
+  String name = "";
+  String number = "";
+  String dob = "";
+  String gender = "";
+  String email = "";
+  String age = "";
+  String city = "";
+  String nationality = "";
+  String profession = "";
+  String kinName = "";
+  String kinPhone = "";
+
+  MapSample(this.image, this.name, this.number, this.dob, this.gender,
+      this.email, this.age, this.city, this.nationality, this.profession, this.kinName, this.kinPhone,);
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  MapSampleState createState() => MapSampleState();
+
 }
 
 class MapSampleState extends State<MapSample> {
+
+  CustomerRegisterModel? _customerRegisterModel;
+  SharedPreferences? prefs;
+
+  Future<void> register() async{
+
+    print('widget.image${widget.image}');
+    prefs = await SharedPreferences.getInstance();
+    _customerRegisterModel = (await Services.CustRegister(prefs!.getString("ID").toString(), prefs!.getString("orgID").toString(),
+        widget.image, widget!.name, widget!.number, widget!.dob, widget!.gender, widget!.email, widget!.nationality, widget!.profession, widget!.kinName, widget!.kinPhone)) as CustomerRegisterModel?;
+
+    if(_customerRegisterModel!.status == true){
+
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => DocumentScanner(widget.number, widget.email, widget.age, widget.city),));
+    }
+  }
+
+  @override
+  void initState() {
+    register();
+    super.initState();
+    getAsync();
+  }
+  getAsync() async {
+    try{
+      prefs = await SharedPreferences.getInstance();
+      setState(() {
+
+      });
+    }catch (e) {
+      print(e);
+    }
+  }
+
+
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   TextEditingController _searchController = TextEditingController();
 
@@ -130,7 +188,7 @@ class MapSampleState extends State<MapSample> {
                       height: 50,
                       child: MaterialButton(
                         onPressed: () {
-                          navigaterUser();
+                          register();
                         },
                         textColor: Colors.white,
                         child: const Padding(
@@ -155,9 +213,9 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  void navigaterUser(){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DocumentScanner(),));
-  }
+  // void navigaterUser(){
+  //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => DocumentScanner(),));
+  // }
 
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
