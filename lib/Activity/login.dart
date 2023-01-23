@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Customer/customer_dash.dart';
 import 'agent.dart';
 
 class Login extends StatefulWidget {
@@ -38,14 +39,14 @@ class _LoginFormState extends State <Login> {
           MaterialPageRoute(
             builder: (context) => Agent(),));
     }
-    // if (loginModel.Login_status!.contains("customer")){
-    //   prefs.setString('custID', loginModel.ID.toString());
-    //   prefs.setString('token', loginModel.token.toString());
-    //   prefs.setBool('islogin', true);
-    //   Navigator.of(context).pushReplacement(
-    //       MaterialPageRoute(
-    //         builder: (context) => CustomerProfile(),));
-    // }
+    if (loginModel.Login_status!.contains("customer")){
+      prefs.setString('custID', loginModel.ID.toString());
+      prefs.setString('token', loginModel.token.toString());
+      prefs.setBool('islogin', true);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => CustomerDash(),));
+    }
     else{
       prefs.setBool('islogin', false);
       Fluttertoast.showToast(msg: "Invalid Credentials",

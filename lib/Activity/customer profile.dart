@@ -86,7 +86,7 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                        top: 20.0, bottom: 20.0, left: 10.0, right: 10.0),
+                        top: 20.0, bottom: 10.0, left: 10.0, right: 10.0),
                     child: Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -109,7 +109,10 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                                 Image.asset(
                                   'images/home_page_icon_18.png', width: 18,
                                   height: 18,),
-                                Text('Personal'),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Text('Personal'),
+                                ),
 
                               ],
                             ),
@@ -120,7 +123,10 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                                 Image.asset(
                                   'images/home_page_icon_15.png', width: 18,
                                   height: 18,),
-                                Text('Land'),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Text('Land'),
+                                ),
                               ],
                             ),
                           ),
@@ -131,7 +137,10 @@ class _CustomerProfileState extends State<CustomerProfile> with TickerProviderSt
                                 Image.asset(
                                   'images/home_page_icon_16.png', width: 18,
                                   height: 18,),
-                                Text('Financial')
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                                  child: Text('Financial'),
+                                )
                               ],
                             ),
                           )

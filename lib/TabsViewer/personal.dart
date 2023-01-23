@@ -524,11 +524,16 @@ class _personalState extends State<Personal> {
          child: SingleChildScrollView(
            child: Column(
              children: [
-               Container(
-                 alignment: Alignment.topRight,
-                 padding: EdgeInsets.all(10.0),
-                 child: Image.asset('images/login_stuff_28.png',
-                   height: 20,),
+               InkWell(
+                 onTap: (){
+                   Navigator.pop(context);
+                 },
+                 child: Container(
+                   alignment: Alignment.topRight,
+                   padding: EdgeInsets.all(10.0),
+                   child: Image.asset('images/login_stuff_28.png',
+                     height: 20,),
+                 ),
                ),
                Container(
                  height: 400,
@@ -565,11 +570,16 @@ class _personalState extends State<Personal> {
          child: SingleChildScrollView(
            child: Column(
              children: [
-               Container(
-                 alignment: Alignment.topRight,
-                 padding: EdgeInsets.all(10.0),
-                 child: Image.asset('images/login_stuff_28.png',
-                   height: 20,),
+               InkWell(
+                 onTap: (){
+                   Navigator.pop(context);
+                 },
+                 child: Container(
+                   alignment: Alignment.topRight,
+                   padding: EdgeInsets.all(10.0),
+                   child: Image.asset('images/login_stuff_28.png',
+                     height: 20,),
+                 ),
                ),
                Container(
                  height: 400,

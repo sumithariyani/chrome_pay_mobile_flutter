@@ -9,12 +9,13 @@ import 'package:image_picker/image_picker.dart';
 import '../Models/Document Scanner Model.dart';
 import '../Models/Verify Cust Model.dart';
 import '../Services/Services.dart';
+import 'linked_services.dart';
 
 class DocumentScanner extends StatefulWidget {
 
   String phone = "";
   String email = "";
-  String age = "";
+  int age;
   String city = "";
 
   DocumentScanner(this.phone, this.email, this.age, this.city);
@@ -49,46 +50,73 @@ class _DocumentScanerState extends State <DocumentScanner> {
   var stream;
   var length;
 
+
   Future<void> pickImage() async {
-    var _resImage;
+    try{
+      var _resImage;
 
-    _resImage = await ImagePicker().
-    pickImage(source: ImageSource.camera);
+      _resImage = await ImagePicker().
+      pickImage(source: ImageSource.camera);
 
-    if(_resImage != null){
-      setState(() {
-        _residnceImage = File(_resImage.path);
-        // base64Image = base64Encode(selectedImage!.readAsBytesSync());
-        // print('base64Image ${base64Image}');
+      setState((){
+        if(_resImage != null){
+          setState(() {
+            _residnceImage = File(_resImage.path);
+            // base64Image = base64Encode(selectedImage!.readAsBytesSync());
+            // print('base64Image ${base64Image}');
+          });
+        }else{
+          print('No image capture');
+        }
       });
+    }catch(e){
+      print(e);
     }
+
   }
 
-  Future<void> pickDocumentImage() async {
-    var _docImage;
-    _docImage = await ImagePicker().
-    pickImage(source: ImageSource.camera);
+  void pickDocumentImage() async {
+    try{
+      var _docImage;
+      _docImage = await ImagePicker().
+      pickImage(source: ImageSource.camera);
 
-    if(_docImage != null){
-      setState(() {
-        _documentImage = File(_docImage.path);
-        // base64Image = base64Encode(selectedImage!.readAsBytesSync());
-        // print('base64Image ${base64Image}');
+      setState((){
+        if(_docImage != null){
+          setState(() {
+            _documentImage = File(_docImage.path);
+            // base64Image = base64Encode(selectedImage!.readAsBytesSync());
+            // print('base64Image ${base64Image}');
+          });
+        }else{
+          print('No image capture');
+        }
       });
+    }catch(e){
+      print(e);
     }
+
   }
 
   Future<void> pickRegisterImage() async {
-    var _regImage;
-    _regImage = await ImagePicker().
-    pickImage(source: ImageSource.camera);
+    try{
+      var _regImage;
+      _regImage = await ImagePicker().
+      pickImage(source: ImageSource.camera);
 
-    if(_regImage != null){
-      setState(() {
-        _registerImage = File(_regImage.path);
-        // base64Image = base64Encode(selectedImage!.readAsBytesSync());
-        // print('base64Image ${base64Image}');
+      setState((){
+        if(_regImage != null){
+          setState(() {
+            _registerImage = File(_regImage.path);
+            // base64Image = base64Encode(selectedImage!.readAsBytesSync());
+            // print('base64Image ${base64Image}');
+          });
+        }else{
+          print('No image capture');
+        }
       });
+    }catch(e){
+      print(e);
     }
 
   }
@@ -97,18 +125,27 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
     _documentScannerModel = await Services.DocumentScan(_residnceImage!, _documentImage!, _registerImage!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email, widget.age, widget.city,);
 
-    if(_documentScannerModel!.status == true){
-      print('true>>>>>>>>');
-      _verifyDialog();
+    if(_documentScannerModel!.service?.allMatches("Linked") != null){
 
+      _linkedDialog();
       Fluttertoast.showToast(msg: "${_documentScannerModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
 
     }else{
-      Fluttertoast.showToast(msg: "${_documentScannerModel?.msg}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER);
+      if(_documentScannerModel!.status == true) {
+        print('true>>>>>>>>');
+        _verifyDialog();
+
+        Fluttertoast.showToast(msg: "${_documentScannerModel?.msg}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER);
+
+      }else{
+        Fluttertoast.showToast(msg: "${_documentScannerModel?.msg}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER);
+      }
     }
   }
 
@@ -134,7 +171,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   @override
   Widget build(BuildContext context) {
-   return  Scaffold(
+    print('fghsdsdssgfh////////////////////////////////////////''''''''''''''///////////');
+    return  Scaffold(
        resizeToAvoidBottomInset: false,
        body: Stack(
          children: [
@@ -307,6 +345,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                            child:_residnceImage!= null?
                                                                Image.file(
                                                                  _residnceImage!,
+                                                                 // _residnceImage!,
                                                                  fit: BoxFit.cover,
                                                                  height: 50,
                                                                ): Image.asset('images/register_customer_05.png',
@@ -477,11 +516,16 @@ class _DocumentScanerState extends State <DocumentScanner> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    alignment: Alignment.topRight,
-                    padding: EdgeInsets.all(10.0),
-                    child: Image.asset('images/login_stuff_28.png',
-                    height: 20,),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      padding: EdgeInsets.all(10.0),
+                      child: Image.asset('images/login_stuff_28.png',
+                        height: 20,),
+                    ),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -770,6 +814,88 @@ class _DocumentScanerState extends State <DocumentScanner> {
         ),
       );
     });
+  }
+
+  void _linkedDialog() {
+    showDialog(context: context, builder: (context){
+      return Container(
+        child: Dialog(
+            child: Container(
+              height: 400,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(40.0)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
+                    child: Image.asset('images/handshake_06.png',
+                      height: 70,),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    alignment: Alignment.center,
+                    child: Text('This customer already has an active D-ID. Would you like to link it to other services?',
+                      style: TextStyle(fontSize: 18,
+                        fontWeight: FontWeight.bold,),
+                    textAlign: TextAlign.center,),
+                  ),
+                  Spacer(),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xff2CABBB),
+                                  Color(0xff0B527E),
+                                ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                            ),
+                            child: ButtonTheme(
+                              minWidth: 400,
+                              height: 50,
+                              child: MaterialButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) =>  LinkedServices(widget.phone)));
+                                },
+                                textColor: Colors.white,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: const Text('Yes', style: const TextStyle(fontSize: 18,),),
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text('Cancel',
+                                style: TextStyle(fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+        ),
+      );
+    });
+
   }
 }
 

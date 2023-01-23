@@ -167,10 +167,11 @@ class _ActiveDidState extends State<Active_Did> {
                                                                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
                                                                             color: Colors.white,
                                                                           ),
-                                                                          child: const Padding(
+                                                                          child: Padding(
                                                                             padding: EdgeInsets.all(8.0),
-                                                                            child: Text('D-ID Ref. ######844',
-                                                                              style: TextStyle(),),
+                                                                            child: Text(
+                                                                              "D-ID Ref. ######${snapshot.data!.filter![index].digitalrefId!.substring(7,10)}",
+                                                                             ),
                                                                           ),
                                                                         ),
                                                                         Padding(

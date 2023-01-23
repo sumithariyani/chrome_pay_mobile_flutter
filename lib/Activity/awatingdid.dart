@@ -153,9 +153,9 @@ class _AwatingState extends State<AwatingDid>{
                                                                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                                                                       color: Colors.white,
                                                                     ),
-                                                                    child: const Padding(
+                                                                    child:  Padding(
                                                                       padding: EdgeInsets.all(8.0),
-                                                                      child: Text('D-ID Ref. ######844',
+                                                                      child: Text('D-ID Ref. ######${snapshot.data!.filter![index].digitalrefId!.substring(7,10)}',
                                                                         style: TextStyle(),),
                                                                     ),
                                                                   ),
@@ -227,7 +227,6 @@ class _AwatingState extends State<AwatingDid>{
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                       ),
@@ -244,9 +243,9 @@ class _AwatingState extends State<AwatingDid>{
 
   void _scrollListener(){
     print("working");
-    if(_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      _page = _page+1;
+    if(_scrollController.position.extentAfter ==
+        _scrollController.position.minScrollExtent) {
+       _page+1;
       getCustomer().then((data) {
       });
     } else {

@@ -29,10 +29,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0"
-  charts_flutter:
+  charts_flutter_new:
     dependency: "direct main"
     description:
-      name: charts_flutter
+      name: charts_flutter_new
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0"

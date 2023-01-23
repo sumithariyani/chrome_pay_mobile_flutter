@@ -35,7 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.2.2
-  charts_flutter: ^0.12.0
+  charts_flutter_new: ^0.12.0
   image_picker: ^0.8.6
   fl_chart: ^0.55.2
 
@@ -108,6 +108,7 @@ flutter:
     - images/all_dids_07.png
     - images/all_dids_10.png
     - images/all_dids_06.png
+    - handshake_06.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,12 +1,12 @@
-import 'package:chrome_pay_mobile_flutter/Activity/agency%20banking.dart';
-import 'package:chrome_pay_mobile_flutter/Activity/agent%20commission.dart';
-import 'package:chrome_pay_mobile_flutter/Activity/agent%20performance.dart';
-import 'package:chrome_pay_mobile_flutter/Activity/awating%20did.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/register_customer.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/setting.dart';
 import 'package:flutter/material.dart';
 
+import 'agencybanking.dart';
+import 'agentcommission.dart';
+import 'agentperformance.dart';
 import 'all-did.dart';
+import 'awatingdid.dart';
 
 class Agent extends StatefulWidget {
   @override
@@ -150,7 +150,7 @@ class _AgentDashBoard extends State<Agent> {
                                     fontWeight: FontWeight.bold)),
                           ),
                           SizedBox(
-                            height: 30,
+                            height: 20,
                           ),
                           Container(
                             child: ListView.builder(

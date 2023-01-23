@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:chrome_pay_mobile_flutter/Activity/document%20scanner.dart';
+import 'package:chrome_pay_mobile_flutter/Activity/documentscanner.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
 import '../Models/customer Register Model.dart';
@@ -42,19 +42,19 @@ class MapSampleState extends State<MapSample> {
     print('widget.image${widget.image}');
     prefs = await SharedPreferences.getInstance();
     _customerRegisterModel = (await Services.CustRegister(prefs!.getString("ID").toString(), prefs!.getString("orgID").toString(),
-        widget.image, widget!.name, widget!.number, widget!.dob, widget!.gender, widget!.email, widget!.nationality, widget!.profession, widget!.kinName, widget!.kinPhone)) as CustomerRegisterModel?;
+        widget.image, widget!.name, widget!.number, widget!.dob, widget!.gender, widget!.email, widget!.nationality, widget!.profession, widget!.kinName, widget!.kinPhone, widget!.age, widget!.city)) as CustomerRegisterModel?;
 
     if(_customerRegisterModel!.status == true){
 
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => DocumentScanner(widget.number, widget.email, widget.age, widget.city),));
+            builder: (context) => DocumentScanner(widget.number, widget.email,int.parse(widget.age) , widget.city),));
     }
   }
 
   @override
   void initState() {
-    register();
+    // register();
     super.initState();
     getAsync();
   }

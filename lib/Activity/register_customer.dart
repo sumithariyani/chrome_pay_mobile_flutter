@@ -23,17 +23,25 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   var length;
 
   Future<void> pickImage() async {
-    var _image;
+    try{
+      var _image;
 
-    _image = await ImagePicker().
-    pickImage(source: ImageSource.camera);
-
-    if(_image != null){
-      setState(() {
-        selectedImage = File(_image.path);
-        base64Image = base64Encode(selectedImage!.readAsBytesSync());
-        print('base64Image ${base64Image}');
+      _image = await ImagePicker().
+      pickImage(source: ImageSource.camera);
+      setState((){
+        if(_image != null){
+          setState(() {
+            selectedImage = File(_image.path);
+            // base64Image = base64Encode(selectedImage!.readAsBytesSync());
+            // print('base64Image ${base64Image}');
+          });
+        }else{
+          print('No image capture');
+        }
       });
+      
+    }catch(e){
+      print(e);
     }
   }
   TextEditingController fullName = TextEditingController();
@@ -60,9 +68,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
 
   @override
   Widget build(BuildContext context) {
-   return MaterialApp(
-     debugShowCheckedModeBanner: false,
-     home: Scaffold(
+   return  Scaffold(
        resizeToAvoidBottomInset: false,
        body: Stack(
          children: <Widget>[
@@ -144,10 +150,10 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                 child: selectedImage!=null
                                                 ?Image.file(
                                                   selectedImage!,
-                                                  fit: BoxFit.cover,
-                                                  height: 70,
+                                                  // fit: BoxFit.cover,
+                                                  height: 100,
                                                 ): Image.asset('images/login_new_10.png',
-                                                  height: 70,)
+                                                  height: 70,),
                                               )
                                           ),
                                         ),
@@ -250,7 +256,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                alignment: Alignment.center,
                                                height: 30,
                                                width: 50,
-                                               margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                               // margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                                child: TextField(
                                                  onTap: () async{
                                                    datePicked = await showDatePicker(
@@ -267,7 +273,8 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                  },
                                                  controller: day,
                                                  textAlign: TextAlign.center,
-                                                 keyboardType: TextInputType.number,
+                                                   readOnly: true,
+                                                   keyboardType: TextInputType.number,
                                                  decoration: InputDecoration(
                                                    border: OutlineInputBorder(
                                                      borderSide: BorderSide(
@@ -288,10 +295,11 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                height: 30,
                                                width: 50,
                                                decoration: BoxDecoration(),
-                                               margin: const EdgeInsets.only(top: 10.0),
+                                               // margin: const EdgeInsets.only(top: 10.0),
                                                child: TextField(
                                                  controller: month,
-                                                 textAlign: TextAlign.center,
+                                                   readOnly: true,
+                                                   textAlign: TextAlign.center,
                                                  keyboardType: TextInputType.number,
                                                  decoration: InputDecoration(
                                                    border: OutlineInputBorder(
@@ -312,10 +320,11 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              Container(
                                                height: 30,
                                                width: 60,
-                                               margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                               // margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                                child: TextField(
                                                  controller: year,
                                                  textAlign: TextAlign.center,
+                                                 readOnly: true,
                                                  keyboardType: TextInputType.number,
                                                  decoration: InputDecoration(
                                                    border: OutlineInputBorder(
@@ -579,8 +588,8 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
            )
          ],
        )
-     ),
-   );
+     );
+
   }
 
   void navigaterUser(){
