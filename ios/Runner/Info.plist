@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Camera Permission Description</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 	<key>CFBundleDisplayName</key>
 	<string>Chrome Pay Mobile Flutter</string>
 	<key>CFBundleExecutable</key>

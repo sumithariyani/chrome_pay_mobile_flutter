@@ -1,10 +1,16 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:image_picker/image_picker.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/agent.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Activity/login.dart';
+import 'Customer/customer_dash.dart';
 
 void main() {
   runApp(MyApp());
@@ -111,13 +117,36 @@ class _SplashScreenState extends State<SplashScreen> {
 
 void naviagteUser(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? status = prefs.getBool('islogin');
-  if (status == true) {
+  SharedPreferences custPrefs = await SharedPreferences.getInstance();
+  bool? status = prefs.getBool('agentislogin');
+  bool? custStatus = custPrefs.getBool('custislogin');
+  var type = prefs.getString('loginStatus');
+  // var custType = prefs.getString('custLoginStatus');
+  // var type = prefs.getString('loginStatus');
+  // var ctype = prefs.getString('loginStatus');
+  print(status);
+  print(custStatus);
+  print(type);
+
+  if(custStatus == true){
+    if(type?.matchAsPrefix("customer") != null) {
+      print("CustomerLogein");
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => CustomerDash(),
+      )
+      );
+    }
+  }
+  else if (status == true ) {
+    if(type?.matchAsPrefix("agent") != null){
+    print("Agent Logging");
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => Agent(),
     )
     );
+    }
   } else {
+    print("login");
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => Login(),
     )
@@ -125,3 +154,75 @@ void naviagteUser(BuildContext context) async {
   }
 }
 
+// class MyApp extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+//
+// class _MyAppState extends State<MyApp> {
+//   File? file;
+//   ImagePicker image = ImagePicker();
+//   // getImage() async {
+//   //   var img = await image.pickImage(source: ImageSource.gallery);
+//   //
+//   //   setState(() {
+//   //     file = File(img?.path ??'');
+//   //   });
+//   // }
+//
+//   getImagecam() async {
+//     var img = await image.pickImage(source: ImageSource.camera);
+//
+//     setState(() {
+//       file = File(img!.path);
+//       print("file ${file}");
+//
+//     });
+//   }
+//
+//   Future<Uint8List> _generatePdf(PdfPageFormat format, file) async {
+//     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
+//     final font = await PdfGoogleFonts.nunitoExtraLight();
+//
+//     final showimage = pw.MemoryImage(file.readAsBytesSync());
+//     print("showimage${showimage}");
+//     pdf.addPage(
+//       pw.Page(
+//         pageFormat: format,
+//         build: (context) {
+//           return pw.Center(
+//             child: pw.Image(showimage, fit: pw.BoxFit.contain),
+//           );
+//         },
+//       ),
+//     );
+//
+//     return pdf.save();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text(" WEB FUN pdf maker"),
+//           actions: [
+//             // IconButton(
+//             //   onPressed: getImage,
+//             //   icon: Icon(Icons.image),
+//             // ),
+//             IconButton(
+//               onPressed: getImagecam,
+//               icon: Icon(Icons.camera),
+//             ),
+//           ],
+//         ),
+//         body: file == null
+//             ? Container()
+//             : PdfPreview(
+//           build: (format) => _generatePdf(format, file),
+//         ),
+//       ),
+//     );
+//   }
+// }

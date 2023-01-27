@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'agencybanking.dart';
 import 'agentcommission.dart';
 import 'agentperformance.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'all-did.dart';
 import 'awatingdid.dart';
 
@@ -15,9 +16,22 @@ class Agent extends StatefulWidget {
 }
 
 class _AgentDashBoard extends State<Agent> {
+
+  SharedPreferences? prefs;
+  getAsync() async {
+    try{
+      prefs = await SharedPreferences.getInstance();
+      setState(() {
+
+      });
+    }catch (e) {
+      print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
-
+    bool? status = prefs?.getBool('agentislogin');
+    print("agentStaus ${status}");
     List<Widget> routes = [Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
     var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
     var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];

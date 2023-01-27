@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../Models/Document Scanner Model.dart';
+import '../Models/Image Upload Model.dart';
 import '../Models/Verify Cust Model.dart';
 import '../Services/Services.dart';
 import 'linked_services.dart';
@@ -49,7 +50,58 @@ class _DocumentScanerState extends State <DocumentScanner> {
   String? otp;
   var stream;
   var length;
+  var residanceUrl;
+  var documentUrl;
+  var registrationUrl;
+  ImageUploadModel? _imageUploadModel;
 
+  Future<void> residenceImage() async{
+    print("function");
+    try {
+      if (_residnceImage != null) {
+        print("condition");
+        _imageUploadModel = await Services.ResidenceImage(_residnceImage!);
+        if(_imageUploadModel?.status!=false){
+          print("residanceUrl ${_imageUploadModel?.data}");
+          residanceUrl = _imageUploadModel?.data;
+        }
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
+  Future<void> documentImage() async{
+    print("function");
+    try {
+      if (_documentImage != null) {
+        print("condition");
+        _imageUploadModel = await Services.DocumentImage(_documentImage!);
+        if(_imageUploadModel?.status!=false){
+          print("documentUrl ${_imageUploadModel?.data}");
+          documentUrl = _imageUploadModel?.data;
+        }
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
+  Future<void> registraionImage() async{
+    print("function");
+    try {
+      if (_registerImage != null) {
+        print("condition");
+        _imageUploadModel = await Services.RegistrationImage(_registerImage!);
+        if(_imageUploadModel?.status!=false){
+          print("registrationUrl ${_imageUploadModel?.data}");
+          registrationUrl = _imageUploadModel?.data;
+        }
+      }
+    }catch(e){
+      print(e);
+    }
+  }
 
   Future<void> pickImage() async {
     try{
@@ -62,6 +114,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
         if(_resImage != null){
           setState(() {
             _residnceImage = File(_resImage.path);
+            residenceImage();
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
             // print('base64Image ${base64Image}');
           });
@@ -85,6 +138,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
         if(_docImage != null){
           setState(() {
             _documentImage = File(_docImage.path);
+            documentImage();
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
             // print('base64Image ${base64Image}');
           });
@@ -108,6 +162,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
         if(_regImage != null){
           setState(() {
             _registerImage = File(_regImage.path);
+            registraionImage();
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
             // print('base64Image ${base64Image}');
           });
@@ -123,7 +178,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   Future<void> scan() async{
 
-    _documentScannerModel = await Services.DocumentScan(_residnceImage!, _documentImage!, _registerImage!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email, widget.age, widget.city,);
+    _documentScannerModel = await Services.DocumentScan(residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email, widget.age, widget.city,);
 
     if(_documentScannerModel!.service?.allMatches("Linked") != null){
 

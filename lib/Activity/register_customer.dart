@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chrome_pay_mobile_flutter/Models/Image%20Upload%20Model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../Services/Services.dart';
 import 'address.dart';
 
 class RegisterCustomer extends StatefulWidget{
@@ -21,6 +23,30 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   String base64Image = "";
   var stream;
   var length;
+  var imageUrl;
+  ImageUploadModel? _imageUploadModel;
+
+  Future<void> uploadImage() async{
+    print("function");
+    try {
+      if (selectedImage != null) {
+        print("condition");
+        _imageUploadModel = await Services.ProfileImage(selectedImage!);
+        if(_imageUploadModel?.status!=false){
+          print("imageUrl ${_imageUploadModel?.data}");
+          imageUrl = _imageUploadModel?.data;
+        }
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // uploadImage();
+    super.initState();
+  }
 
   Future<void> pickImage() async {
     try{
@@ -32,6 +58,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
         if(_image != null){
           setState(() {
             selectedImage = File(_image.path);
+            uploadImage();
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
             // print('base64Image ${base64Image}');
           });
@@ -69,7 +96,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   @override
   Widget build(BuildContext context) {
    return  Scaffold(
-       resizeToAvoidBottomInset: false,
        body: Stack(
          children: <Widget>[
            Container(
@@ -129,427 +155,435 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                          color: Colors.white,
                          shadowColor: Colors.black,
                          child: SingleChildScrollView(
+                           reverse: true,
                            child: Container(
-                             child: Column(
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                 Container(
-                                   height: 70,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                             child: Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Column(
+                                 mainAxisAlignment: MainAxisAlignment.start,
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Container(
+                                     height: 70,
+                                          alignment: Alignment.center,
+                                          margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
 
-                                        child: CircleAvatar(
-                                          radius: 60,
-                                          backgroundColor: Colors.transparent,
-                                          child: InkWell(
-                                            onTap: (){
-                                              pickImage();
-                                            },
-                                              child: ClipOval(
-                                                child: selectedImage!=null
-                                                ?Image.file(
-                                                  selectedImage!,
-                                                  // fit: BoxFit.cover,
-                                                  height: 100,
-                                                ): Image.asset('images/login_new_10.png',
-                                                  height: 70,),
-                                              )
+                                          child: CircleAvatar(
+                                            radius: 60,
+                                            backgroundColor: Colors.transparent,
+                                            child: InkWell(
+                                              onTap: (){
+                                                pickImage();
+                                              },
+                                                child: ClipOval(
+                                                  child: selectedImage!=null
+                                                  ?Image.file(
+                                                    selectedImage!,
+                                                    // fit: BoxFit.cover,
+                                                    height: 100,
+                                                  ): Image.asset('images/login_new_10.png',
+                                                    height: 70,),
+                                                )
+                                            ),
                                           ),
+
                                         ),
-
-                                      ),
-                                 Container(
-                                     alignment: Alignment.center,
-                                     margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                     child: const Text('Facial Scan',
-                                     style: TextStyle(
-                                       fontSize: 14,
-                                     ),)
-                                   ),
-                                 Container(
-                                   margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-                                     child: Column(
-                                       children: [
-                                         Container(
-                                           child: TextField(
-                                             controller: fullName,
-                                             keyboardType: TextInputType.text,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(5.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_17.png',
-                                                 height: 2.0,
-                                                 width: 2.0,),
-                                               ),
-                                               hintText: 'Full Name',
-                                             ),
-                                             style: const TextStyle(fontSize: 18.0),
-                                           ),
-                                         ),
-                                         Container(
-                                           decoration: BoxDecoration(
-                                               border: Border(
-                                                   bottom: BorderSide(
-                                                       color: Colors.grey
-                                                   )
-                                               )
-                                           ),
-                                           margin: const EdgeInsets.only(top: 10.0),
-                                           child: Row(
-                                             children: [
-                                               Container(
-                                                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-                                                 child: Image.asset('images/login_stuff_18.png',
-                                                 height: 20,
-                                                 width: 20,),
-                                               ),
-                                               Container(
-                                                 width: 60,
-                                                   child: DropdownButtonFormField<String>(
-                                                     decoration: InputDecoration(
-                                                       border: InputBorder.none
-                                                     ),
-                                                     value: selectedCode,
-                                                     items: countryCodes.
-                                                     map((item) => DropdownMenuItem<String>(
-                                                       value: item,
-                                                         child: Text(item, style: const TextStyle(fontSize: 15),)
-                                                     ))
-                                                         .toList(),
-                                                     onChanged: (item) => setState(() => selectedCode = item),
-                                                   ),
-                                                 ),
-                                               Expanded(
-                                                 child: Container(
-                                                   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                                   child: TextField(
-                                                     controller: mobileNumber,
-                                                     keyboardType: TextInputType.phone,
-                                                     maxLength: 10,
-                                                     decoration: const InputDecoration(
-                                                       counterText: "",
-                                                       hintText: 'Mobile Number',
-                                                       border: InputBorder.none
-                                                     ),
-                                                     style: const TextStyle(fontSize: 18.0),
-                                                   ),
-                                                 ),
-                                               )
-                                             ],
-                                           ),
-                                         ),
-                                         Container(
-                                           alignment: Alignment.centerLeft,
-                                           margin: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                                           child: const Text('Date of birth :',
-                                             style: TextStyle(
-                                                 fontSize: 18,
-                                                 fontWeight: FontWeight.bold
-                                             ),),
-                                         ),
-                                         Row(
-                                           children: [
-                                             Container(
-                                               alignment: Alignment.center,
-                                               height: 30,
-                                               width: 50,
-                                               // margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                               child: TextField(
-                                                 onTap: () async{
-                                                   datePicked = await showDatePicker(
-                                                       context: context,
-                                                       initialDate: DateTime.now(),
-                                                       firstDate: DateTime(1950),
-                                                       lastDate: DateTime.now());
-                                                   if(datePicked != null){
-                                                     day.text = '${datePicked?.day}';
-                                                     month.text = '${datePicked?.month}';
-                                                     year.text = '${datePicked?.year}';
-                                                     print('Date Selecte : ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}');
-                                                   }
-                                                 },
-                                                 controller: day,
-                                                 textAlign: TextAlign.center,
-                                                   readOnly: true,
-                                                   keyboardType: TextInputType.number,
-                                                 decoration: InputDecoration(
-                                                   border: OutlineInputBorder(
-                                                     borderSide: BorderSide(
-                                                       color: Colors.black,
-                                                       width: 5.0)
-                                                   ),
-                                                   hintText: 'DD',
-                                                 ),
-                                                 style: TextStyle(fontSize: 12.0
-                                                 ),
-                                                   inputFormatters: [
-                                                     new LengthLimitingTextInputFormatter(2)
-                                                   ]
-
-                                               ),
-                                             ),
-                                             Container(
-                                               height: 30,
-                                               width: 50,
-                                               decoration: BoxDecoration(),
-                                               // margin: const EdgeInsets.only(top: 10.0),
-                                               child: TextField(
-                                                 controller: month,
-                                                   readOnly: true,
-                                                   textAlign: TextAlign.center,
-                                                 keyboardType: TextInputType.number,
-                                                 decoration: InputDecoration(
-                                                   border: OutlineInputBorder(
-                                                       borderSide: BorderSide(
-                                                           color: Colors.black,
-                                                           width: 5.0)
-                                                   ),
-                                                   counterText: "",
-                                                   hintText: 'MM',
-                                                 ),
-                                                 style: TextStyle(fontSize: 12.0),
-                                                   inputFormatters: [
-                                                     new LengthLimitingTextInputFormatter(2)
-                                                   ]
-
-                                               ),
-                                             ),
-                                             Container(
-                                               height: 30,
-                                               width: 60,
-                                               // margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                               child: TextField(
-                                                 controller: year,
-                                                 textAlign: TextAlign.center,
-                                                 readOnly: true,
-                                                 keyboardType: TextInputType.number,
-                                                 decoration: InputDecoration(
-                                                   border: OutlineInputBorder(
-                                                       borderSide: BorderSide(
-                                                           color: Colors.black,
-                                                           width: 5.0)
-                                                   ),
-                                                   counterText: "",
-                                                   hintText: 'YYYY',
-                                                 ),
-                                                 style: TextStyle(fontSize: 12.0),
-                                                   inputFormatters: [
-                                                     new LengthLimitingTextInputFormatter(4)
-                                                   ]
-
-                                               ),
-                                             )
-                                           ],
-                                         ),
-
-                                         Container(
-                                           margin: const EdgeInsets.fromLTRB(5, 15, 0, 0),
-                                           child: Row(
-                                             crossAxisAlignment: CrossAxisAlignment.center,
-                                             children: [
-                                               Container(
-                                                 alignment: Alignment.centerLeft,
-                                                 child: const Text('Gender :',
-                                                   style: TextStyle(
-                                                       fontSize: 18,
-                                                       fontWeight: FontWeight.bold
-                                                   ),),
-                                               ),
-                                               Radio(
-                                                 activeColor: Colors.greenAccent,
-                                                   value: 1,
-                                                   groupValue: _radioSelected,
-                                                   onChanged: (value) {
-                                                     setState((){
-                                                       _radioSelected = value as int;
-                                                       _radioVal = 'male';
-                                                       print(_radioVal);
-                                                     });
-                                                   },),
-                                               Text('Male'),
-                                               Radio(
-                                                   activeColor: Colors.greenAccent,
-                                                   value: 2,
-                                                   groupValue: _radioSelected,
-                                                   onChanged: (value) {
-                                                     setState((){
-                                                       _radioVal = 'female';
-                                                       print(_radioVal);
-                                                       _radioSelected = value as int;
-                                                     });
-                                                   }),
-                                               Text('Female')
-                                             ],
-                                           ),
-                                         ),
-                                         Container(
-                                           alignment: Alignment.centerLeft,
-                                           margin: const EdgeInsets.fromLTRB(5, 15, 0, 0),
-                                           child: const Text('Other Information',
-                                             style: TextStyle(
-                                                 fontSize: 18,
-                                                 fontWeight: FontWeight.bold
-                                             ),),
-                                         ),
-                                         Container(
-                                           margin: EdgeInsets.only(top: 10.0),
-                                           child: TextField(
-                                             controller: email,
-                                             keyboardType: TextInputType.text,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(5.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_04.png',
+                                   Container(
+                                       alignment: Alignment.center,
+                                       margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                       child: const Text('Facial Scan',
+                                       style: TextStyle(
+                                         fontSize: 14,
+                                       ),)
+                                     ),
+                                   Container(
+                                     margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                                       child: Column(
+                                         children: [
+                                           Container(
+                                             child: TextField(
+                                               controller: fullName,
+                                               keyboardType: TextInputType.text,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(5.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_17.png',
                                                    height: 2.0,
                                                    width: 2.0,),
+                                                 ),
+                                                 hintText: 'Full Name',
                                                ),
-                                               hintText: 'Email',
+                                               style: const TextStyle(fontSize: 18.0),
                                              ),
-                                             style: const TextStyle(fontSize: 18.0),
                                            ),
-                                         ),
-                                         Container(
-                                           margin: EdgeInsets.only(top: 10.0),
-                                           child: TextField(
-                                             controller: age,
-                                             keyboardType: TextInputType.number,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(5.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_17.png',
-                                                   height: 2.0,
-                                                   width: 2.0,),
-                                               ),
-                                               hintText: 'Age',
+                                           Container(
+                                             decoration: BoxDecoration(
+                                                 border: Border(
+                                                     bottom: BorderSide(
+                                                         color: Colors.grey
+                                                     )
+                                                 )
                                              ),
-                                             style: const TextStyle(fontSize: 18.0),
-                                           ),
-                                         ),
-                                         Container(
-                                           margin: EdgeInsets.only(top: 10.0),
-                                           child: TextField(
-                                             controller: city,
-                                             keyboardType: TextInputType.text,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(5.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_20.png',
-                                                   height: 2.0,
-                                                   width: 2.0,),
-                                               ),
-                                               hintText: 'City',
-                                             ),
-                                             style: const TextStyle(fontSize: 18.0),
-                                           ),
-                                         ),
-                                         Container(
-                                           decoration: BoxDecoration(
-                                             border: Border(
-                                               bottom: BorderSide(
-                                                 color: Colors.grey
-                                               )
-                                             )
-                                           ),
-                                           width: MediaQuery.of(context).size.width,
-                                           margin: const EdgeInsets.only(top: 10.0),
-                                           child: Row(
-                                             children: [
-                                               Container(
-                                                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-                                                 child: Image.asset('images/login_stuff_20.png',
+                                             margin: const EdgeInsets.only(top: 10.0),
+                                             child: Row(
+                                               children: [
+                                                 Container(
+                                                   margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+                                                   child: Image.asset('images/login_stuff_18.png',
                                                    height: 20,
                                                    width: 20,),
-                                               ),
-                                               Expanded(
-                                                 child: Container(
-                                                   alignment: Alignment.center,
-                                                   child: DropdownButtonFormField<String>(
-                                                     decoration: InputDecoration(
-                                                       border: InputBorder.none
-                                                     ),
-                                                     icon: Icon(Icons.keyboard_arrow_down),
-                                                     value: selectedNationality,
-                                                     items: nationality.
-                                                     map((item) => DropdownMenuItem<String>(
+                                                 ),
+                                                 Container(
+                                                   width: 60,
+                                                     child: DropdownButtonFormField<String>(
+                                                       decoration: InputDecoration(
+                                                         border: InputBorder.none
+                                                       ),
+                                                       value: selectedCode,
+                                                       items: countryCodes.
+                                                       map((item) => DropdownMenuItem<String>(
                                                          value: item,
-                                                         child: Text(item, style: const TextStyle(fontSize: 18),)
-                                                     ))
-                                                         .toList(),
-                                                     onChanged: (item) => setState(() => selectedNationality = item),
+                                                           child: Text(item, style: const TextStyle(fontSize: 15),)
+                                                       ))
+                                                           .toList(),
+                                                       onChanged: (item) => setState(() => selectedCode = item),
+                                                     ),
                                                    ),
+                                                 Expanded(
+                                                   child: Container(
+                                                     margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                                     child: TextField(
+                                                       controller: mobileNumber,
+                                                       keyboardType: TextInputType.phone,
+                                                       maxLength: 10,
+                                                       decoration: const InputDecoration(
+                                                         counterText: "",
+                                                         hintText: 'Mobile Number',
+                                                         border: InputBorder.none
+                                                       ),
+                                                       style: const TextStyle(fontSize: 18.0),
+                                                     ),
+                                                   ),
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                           Container(
+                                             alignment: Alignment.centerLeft,
+                                             margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                             child: const Text('Date of birth :',
+                                               style: TextStyle(
+                                                   fontSize: 18,
+                                                   fontWeight: FontWeight.bold
+                                               ),),
+                                           ),
+                                           Row(
+                                             children: [
+                                               Container(
+                                                 alignment: Alignment.center,
+                                                 height: 30,
+                                                 width: 50,
+                                                 margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                                 child: TextField(
+                                                   onTap: () async{
+                                                     datePicked = await showDatePicker(
+                                                         context: context,
+                                                         initialDate: DateTime.now(),
+                                                         firstDate: DateTime(1950),
+                                                         lastDate: DateTime.now());
+                                                     if(datePicked != null){
+                                                       day.text = '${datePicked?.day}';
+                                                       month.text = '${datePicked?.month}';
+                                                       year.text = '${datePicked?.year}';
+                                                       print('Date Selecte : ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}');
+                                                     }
+                                                   },
+                                                   controller: day,
+                                                   textAlign: TextAlign.center,
+                                                     readOnly: true,
+                                                     keyboardType: TextInputType.number,
+                                                   decoration: InputDecoration(
+                                                     contentPadding: EdgeInsets.zero,
+                                                     border: OutlineInputBorder(
+                                                       borderSide: BorderSide(
+                                                         color: Colors.black,
+                                                         width: 5.0)
+                                                     ),
+                                                     hintText: 'DD',
+                                                   ),
+                                                   style: TextStyle(fontSize: 12.0
+                                                   ),
+                                                     inputFormatters: [
+                                                       new LengthLimitingTextInputFormatter(2)
+                                                     ]
+
                                                  ),
                                                ),
+                                               Container(
+                                                 height: 30,
+                                                 width: 50,
+                                                 decoration: BoxDecoration(),
+                                                 margin: const EdgeInsets.fromLTRB(10,10,10,0),
+                                                 child: TextField(
+                                                   controller: month,
+                                                     readOnly: true,
+                                                     textAlign: TextAlign.center,
+                                                   keyboardType: TextInputType.number,
+                                                   decoration: InputDecoration(
+                                                     contentPadding: EdgeInsets.zero,
+                                                     border: OutlineInputBorder(
+                                                         borderSide: BorderSide(
+                                                             color: Colors.black,
+                                                             width: 5.0)
+                                                     ),
+                                                     counterText: "",
+                                                     hintText: 'MM',
+                                                   ),
+                                                   style: TextStyle(fontSize: 12.0,),
+                                                     inputFormatters: [
+                                                       new LengthLimitingTextInputFormatter(2)
+                                                     ]
+
+                                                 ),
+                                               ),
+                                               Container(
+                                                 alignment: Alignment.center,
+                                                 height: 30,
+                                                 width: 60,
+                                                 margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                                 child: TextField(
+                                                   controller: year,
+                                                   textAlign: TextAlign.center,
+                                                   readOnly: true,
+                                                   keyboardType: TextInputType.number,
+                                                   decoration: InputDecoration(
+                                                     contentPadding: EdgeInsets.zero,
+                                                     border: OutlineInputBorder(
+                                                         borderSide: BorderSide(
+                                                             color: Colors.black,
+                                                             width: 5.0)
+                                                     ),
+                                                     counterText: "",
+                                                     hintText: 'YYYY',
+                                                   ),
+                                                   style: TextStyle(fontSize: 12.0),
+                                                     inputFormatters: [
+                                                       new LengthLimitingTextInputFormatter(4)
+                                                     ]
+
+                                                 ),
+                                               )
                                              ],
                                            ),
-                                         ),
-                                         Container(
-                                           child: TextField(
-                                             controller: profession,
-                                             keyboardType: TextInputType.text,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(5.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_21.png',
-                                                   height: 2.0,
-                                                   width: 2.0,),
-                                               ),
-                                               hintText: 'Profession',
-                                             ),
-                                             style: const TextStyle(fontSize: 18.0),
-                                           ),
-                                         ),
-                                         Container(
-                                           child: TextField(
-                                             controller: nameKin,
-                                             keyboardType: TextInputType.text,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(5.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_17.png',
-                                                   height: 2.0,
-                                                   width: 2.0,),
-                                               ),
-                                               hintText: 'Name of Kin (Name)',
-                                             ),
-                                             style: const TextStyle(fontSize: 18.0),
-                                           ),
-                                         ),
-                                         Container(
-                                           child: TextField(
-                                             controller: numberKin,
-                                             keyboardType: TextInputType.number,
-                                             decoration: InputDecoration(
-                                               counterText: "",
-                                               prefixIcon: Container(
-                                                 padding: EdgeInsets.all(8.0),
-                                                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                 child: Image.asset('images/login_stuff_23.png',
-                                                   height: 2.0,
-                                                   width: 2.0,),
-                                               ),
-                                               hintText: 'Number of Kin (Phone no.)',
-                                             ),
-                                             style: const TextStyle(fontSize: 18.0),
-                                           ),
-                                         )
-                                       ],
 
-                                     ),
-                                 )
-                               ],
+                                           Container(
+                                             margin: const EdgeInsets.fromLTRB(5, 15, 0, 0),
+                                             child: Row(
+                                               crossAxisAlignment: CrossAxisAlignment.center,
+                                               children: [
+                                                 Container(
+                                                   alignment: Alignment.centerLeft,
+                                                   child: const Text('Gender :',
+                                                     style: TextStyle(
+                                                         fontSize: 18,
+                                                         fontWeight: FontWeight.bold
+                                                     ),),
+                                                 ),
+                                                 Radio(
+                                                   activeColor: Colors.greenAccent,
+                                                     value: 1,
+                                                     groupValue: _radioSelected,
+                                                     onChanged: (value) {
+                                                       setState((){
+                                                         _radioSelected = value as int;
+                                                         _radioVal = 'male';
+                                                         print(_radioVal);
+                                                       });
+                                                     },),
+                                                 Text('Male'),
+                                                 Radio(
+                                                     activeColor: Colors.greenAccent,
+                                                     value: 2,
+                                                     groupValue: _radioSelected,
+                                                     onChanged: (value) {
+                                                       setState((){
+                                                         _radioVal = 'female';
+                                                         print(_radioVal);
+                                                         _radioSelected = value as int;
+                                                       });
+                                                     }),
+                                                 Text('Female')
+                                               ],
+                                             ),
+                                           ),
+                                           Container(
+                                             alignment: Alignment.centerLeft,
+                                             margin: const EdgeInsets.fromLTRB(5, 15, 0, 0),
+                                             child: const Text('Other Information',
+                                               style: TextStyle(
+                                                   fontSize: 18,
+                                                   fontWeight: FontWeight.bold
+                                               ),),
+                                           ),
+                                           Container(
+                                             margin: EdgeInsets.only(top: 10.0),
+                                             child: TextField(
+                                               controller: email,
+                                               keyboardType: TextInputType.text,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(5.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_04.png',
+                                                     height: 2.0,
+                                                     width: 2.0,),
+                                                 ),
+                                                 hintText: 'Email',
+                                               ),
+                                               style: const TextStyle(fontSize: 18.0),
+                                             ),
+                                           ),
+                                           Container(
+                                             margin: EdgeInsets.only(top: 10.0),
+                                             child: TextField(
+                                               controller: age,
+                                               keyboardType: TextInputType.number,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(5.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_17.png',
+                                                     height: 2.0,
+                                                     width: 2.0,),
+                                                 ),
+                                                 hintText: 'Age',
+                                               ),
+                                               style: const TextStyle(fontSize: 18.0),
+                                             ),
+                                           ),
+                                           Container(
+                                             margin: EdgeInsets.only(top: 10.0),
+                                             child: TextField(
+                                               controller: city,
+                                               keyboardType: TextInputType.text,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(5.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_20.png',
+                                                     height: 2.0,
+                                                     width: 2.0,),
+                                                 ),
+                                                 hintText: 'City',
+                                               ),
+                                               style: const TextStyle(fontSize: 18.0),
+                                             ),
+                                           ),
+                                           Container(
+                                             decoration: BoxDecoration(
+                                               border: Border(
+                                                 bottom: BorderSide(
+                                                   color: Colors.grey
+                                                 )
+                                               )
+                                             ),
+                                             width: MediaQuery.of(context).size.width,
+                                             margin: const EdgeInsets.only(top: 10.0),
+                                             child: Row(
+                                               children: [
+                                                 Container(
+                                                   margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+                                                   child: Image.asset('images/login_stuff_20.png',
+                                                     height: 20,
+                                                     width: 20,),
+                                                 ),
+                                                 Expanded(
+                                                   child: Container(
+                                                     alignment: Alignment.center,
+                                                     child: DropdownButtonFormField<String>(
+                                                       decoration: InputDecoration(
+                                                         border: InputBorder.none
+                                                       ),
+                                                       icon: Icon(Icons.keyboard_arrow_down),
+                                                       value: selectedNationality,
+                                                       items: nationality.
+                                                       map((item) => DropdownMenuItem<String>(
+                                                           value: item,
+                                                           child: Text(item, style: const TextStyle(fontSize: 18),)
+                                                       ))
+                                                           .toList(),
+                                                       onChanged: (item) => setState(() => selectedNationality = item),
+                                                     ),
+                                                   ),
+                                                 ),
+                                               ],
+                                             ),
+                                           ),
+                                           Container(
+                                             child: TextField(
+                                               controller: profession,
+                                               keyboardType: TextInputType.text,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(5.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_21.png',
+                                                     height: 2.0,
+                                                     width: 2.0,),
+                                                 ),
+                                                 hintText: 'Profession',
+                                               ),
+                                               style: const TextStyle(fontSize: 18.0),
+                                             ),
+                                           ),
+                                           Container(
+                                             child: TextField(
+                                               controller: nameKin,
+                                               keyboardType: TextInputType.text,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(5.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_17.png',
+                                                     height: 2.0,
+                                                     width: 2.0,),
+                                                 ),
+                                                 hintText: 'Name of Kin (Name)',
+                                               ),
+                                               style: const TextStyle(fontSize: 18.0),
+                                             ),
+                                           ),
+                                           Container(
+                                             child: TextField(
+                                               controller: numberKin,
+                                               keyboardType: TextInputType.number,
+                                               decoration: InputDecoration(
+                                                 counterText: "",
+                                                 prefixIcon: Container(
+                                                   padding: EdgeInsets.all(8.0),
+                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                                   child: Image.asset('images/login_stuff_23.png',
+                                                     height: 2.0,
+                                                     width: 2.0,),
+                                                 ),
+                                                 hintText: 'Number of Kin (Phone no.)',
+                                               ),
+                                               style: const TextStyle(fontSize: 18.0),
+                                             ),
+                                           )
+                                         ],
+
+                                       ),
+                                   )
+                                 ],
+                               ),
                              ),
                            ),
                          ),
@@ -592,14 +626,71 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
 
   }
 
-  void navigaterUser(){
+  void navigaterUser() {
     _phone = selectedCode!.substring(1)! + mobileNumber.text;
     print(_phone);
-    _dob =' ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}';
+    _dob = ' ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}';
     print(_dob);
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => MapSample(selectedImage!, fullName.text, _phone.toString(), _dob.toString(), _radioVal.toString(),
-          email.text, age.text, city.text, selectedNationality.toString(), profession.text, nameKin.text, numberKin.text),));
+    if (selectedImage == null) {
+      Fluttertoast.showToast(
+          msg: "Please upload profile photo",
+          gravity: ToastGravity.CENTER);
+    }  if (fullName.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter full name",
+          gravity: ToastGravity.CENTER);
+    }  if (_phone!.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter phone number",
+          gravity: ToastGravity.CENTER);
+    }  if (_dob!.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter date of birth",
+          gravity: ToastGravity.CENTER);
+    }  if (_radioVal!.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please select Gender",
+          gravity: ToastGravity.CENTER);
+    }  if (email.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter email",
+          gravity: ToastGravity.CENTER);
+    }  if (age.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter age",
+          gravity: ToastGravity.CENTER);
+    }  if (city.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter city",
+          gravity: ToastGravity.CENTER);
+    }  if (profession.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter your profession",
+          gravity: ToastGravity.CENTER);
+    }  if (nameKin.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter name of kin",
+          gravity: ToastGravity.CENTER);
+    }  if (numberKin.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter number of kin",
+          gravity: ToastGravity.CENTER);
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            MapSample(
+                imageUrl,
+                fullName.text,
+                _phone.toString(),
+                _dob.toString(),
+                _radioVal.toString(),
+                email.text,
+                age.text,
+                city.text,
+                selectedNationality.toString(),
+                profession.text,
+                nameKin.text,
+                numberKin.text),));
+    }
   }
-
 }

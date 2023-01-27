@@ -15,6 +15,8 @@ class Login extends StatefulWidget {
 
 class _LoginFormState extends State <Login> {
 
+  SharedPreferences? prefs;
+
   bool _isHidden = true;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -22,48 +24,72 @@ class _LoginFormState extends State <Login> {
   late LoginModel loginModel;
   Future<void> LoginMethod(String Email, String Password)  async {
     loginModel = await Services.LoginCredentials(Email, Password);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    SharedPreferences custPrefs = await SharedPreferences.getInstance();
 
     if (loginModel.status!){
-      Fluttertoast.showToast(msg: "Login successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER);
-     
+      prefs?.setString('loginStatus', loginModel.Login_status.toString());
+      setState(() {
+        if (loginModel.Login_status!.matchAsPrefix("agent") != null){
+          print("agent true");
+          prefs?.setString('ID', loginModel.ID.toString());
+          prefs?.setString('orgID', loginModel.orgID.toString());
+          prefs?.setString('token', loginModel.token.toString());
+          prefs?.setBool("agentislogin", true);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => Agent(),));
+        }
+        if (loginModel.Login_status!.matchAsPrefix("customer") != null){
+          print("customer true");
+          prefs?.setString('custID', loginModel.ID.toString());
+          prefs?.setString('cust_token', loginModel.token.toString());
+          prefs?.setBool('custislogin', true);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => CustomerDash(),));
+        }
+        else{
+          prefs?.setBool('islogin', false);
+          // custPrefs.setBool('custislogin', false);
+          Fluttertoast.showToast(msg: "${loginModel.msg}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM);
+        }
+      });
     }
-    if (loginModel.Login_status!.contains("agent")){
-      prefs.setString('ID', loginModel.ID.toString());
-      prefs.setString('orgID', loginModel.orgID.toString());
-      prefs.setString('token', loginModel.token.toString());
-      prefs.setBool('islogin', true);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => Agent(),));
-    }
-    if (loginModel.Login_status!.contains("customer")){
-      prefs.setString('custID', loginModel.ID.toString());
-      prefs.setString('token', loginModel.token.toString());
-      prefs.setBool('islogin', true);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => CustomerDash(),));
-    }
-    else{
-      prefs.setBool('islogin', false);
-      Fluttertoast.showToast(msg: "Invalid Credentials",
-        toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-    }
-    setState(() {
+    // setState(() {
+    //
+    // });
+  }
+  getAsync() async {
+  try{
+  prefs = await SharedPreferences.getInstance();
+  setState(() {
 
-    });
+  });
+  }catch (e) {
+  print(e);
+  }
   }
 
   @override
   void initState() {
     super.initState();
+    getAsync();
   }
   @override
   Widget build(BuildContext context) {
+    var id = prefs?.getString("ID");
+    var org = prefs?.getString("orgID");
+    var token = prefs?.getString("token");
+    bool? islogin = prefs?.getBool("agentislogin");
+
+    print("id ${id}");
+    print("org ${org}");
+    print("token ${token}");
+    print("islogin ${islogin}");
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

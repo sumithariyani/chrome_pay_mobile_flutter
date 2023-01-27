@@ -16,6 +16,7 @@ import '../Models/Agent Performance Model.dart';
 import '../Models/All Did Model.dart';
 import '../Models/Cust dash Model.dart';
 import '../Models/Document Scanner Model.dart';
+import '../Models/Image Upload Model.dart';
 import '../Models/Login Model.dart';
 import '../Models/OrganisationModel.dart';
 import '../Models/Verify Cust Model.dart';
@@ -39,6 +40,7 @@ class Services {
   static String DocumentScanner = BaseUrl+"createCustomerByOrg2";
   static String VerifyCustOtp = BaseUrl+"new_verify_customer";
   static String OrganisationList = BaseUrl+"orgList";
+  static String ImageUploader = BaseUrl+"globalImageUploader";
 
   // ignore: non_constant_identifier_names
   static Future<LoginModel> LoginCredentials(String EMAIL, String PASSWORD) async{
@@ -53,7 +55,7 @@ class Services {
     if (response.statusCode == 200){
 
       if (response.body.contains("false")){
-        Fluttertoast.showToast(msg: "Invalid Credentials",
+        Fluttertoast.showToast(msg: "",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM);
       }
@@ -206,11 +208,11 @@ class Services {
     return user;
   }
 
-  static Future<Object> CustRegister(String id, String orgId, File image, String name,
+  static Future<Object> CustRegister(String id, String orgId, String image, String name,
       String number, String dob, String gender, String email, String nationality, String profession, String kinName, String kinPhone, String age, String city) async {
     var uri = CustomerRegistration+id+"/"+orgId;
     var request = new http.MultipartRequest("POST", Uri.parse(uri));
-    var multipart = await http.MultipartFile.fromPath("IDphoto",image.path);
+    // var multipart = await http.MultipartFile.fromPath("IDphoto",image.path);
     request.fields["fullname"] = name;
     request.fields["dateOfBirth"] = dob;
     request.fields["phone"] = number;
@@ -223,14 +225,16 @@ class Services {
     request.fields["nextFOKinName"] = kinName;
     request.fields["age"] = age;
     request.fields["city"] = city;
-    request.files.add(multipart);
+    request.fields["IDphoto"] = image;
+    // request.files.add(multipart);
 
-    print('request ${multipart}');
+    // print('request ${multipart}');
 
 
     var response = await request.send();
     var response2 = await http.Response.fromStream(response);
 
+    print(response2.body);
     if (response2.statusCode == 201){
       var data = json.decode(response2.body);
       print(data);
@@ -242,18 +246,21 @@ class Services {
     }
   }
 
-  static Future<DocumentScannerModel> DocumentScan(File residace, File local, File land, String landSize,
+  static Future<DocumentScannerModel> DocumentScan(String residace, String local, String land, String landSize,
       String assetType, String assetID, String phone, String email, int age, String city) async {
 
     var uri = DocumentScanner;
     var request = new http.MultipartRequest("POST", Uri.parse(uri));
-    var residenceMulti = await http.MultipartFile.fromPath("residace", residace.path);
-    var localMulti = await http.MultipartFile.fromPath("residace", local.path);
-    var landMulti = await http.MultipartFile.fromPath("residace", land.path);
+    // var residenceMulti = await http.MultipartFile.fromPath("residace", residace.path);
+    // var localMulti = await http.MultipartFile.fromPath("residace", local.path);
+    // var landMulti = await http.MultipartFile.fromPath("residace", land.path);
 
-    request.files.add(residenceMulti);
-    request.files.add(localMulti);
-    request.files.add(landMulti);
+    // request.files.add(residenceMulti);
+    // request.files.add(localMulti);
+    // request.files.add(landMulti);
+    request.fields['residace'] = residace;
+    request.fields['local'] = local;
+    request.fields['land'] = land;
     request.fields['landSize'] = landSize;
     request.fields['assetType'] = assetType;
     request.fields['assetID'] = assetID;
@@ -265,13 +272,14 @@ class Services {
     var response = await request.send();
     var response2 = await http.Response.fromStream(response);
 
+    print(response2.body);
     if (response2.statusCode == 200){
       var data = json.decode(response2.body);
       print(data);
       DocumentScannerModel user = DocumentScannerModel.fromJson(data);
       return user;
     }else{
-      print(response2);
+      print(response2.body);
       throw Error();
     }
 
@@ -345,6 +353,136 @@ class Services {
     }else{
       print(response.body);
       throw Exception('Failed');
+    }
+  }
+
+  static Future<ImageUploadModel> ProfileImage(File image,) async {
+
+    var uri = ImageUploader;
+
+    var request = new http.MultipartRequest("POST", Uri.parse(uri));
+    print(uri);
+    var idPhoto = await http.MultipartFile.fromPath("IDphoto",image.path);
+    // var residenceMulti = await http.MultipartFile.fromPath("residace", residace.path);
+    // var localMulti = await http.MultipartFile.fromPath("local", local.path);
+    // var landMulti = await http.MultipartFile.fromPath("land", land.path);
+
+    request.files.add(idPhoto);
+    // request.files.add(residenceMulti);
+    // request.files.add(localMulti);
+    // request.files.add(landMulti);
+
+    var response = await request.send();
+    var response2 = await http.Response.fromStream(response);
+
+    print(response.toString());
+    print(response2.body);
+
+    if (response2.statusCode == 200){
+      var data = json.decode(response2.body);
+      print("ImageUploadersss "+data.toString());
+      print(response);
+      ImageUploadModel user = ImageUploadModel.fromJson(data);
+      return user;
+
+    }else{
+      print("gfhgkfgh ${response2.body}");
+      throw Error();
+    }
+  }
+
+  static Future<ImageUploadModel> ResidenceImage(File residace,) async {
+
+    var uri = ImageUploader;
+
+    var request = new http.MultipartRequest("POST", Uri.parse(uri));
+    print(uri);
+    var residenceMulti = await http.MultipartFile.fromPath("residace", residace.path);
+    // var localMulti = await http.MultipartFile.fromPath("local", local.path);
+    // var landMulti = await http.MultipartFile.fromPath("land", land.path);
+
+    request.files.add(residenceMulti);
+    // request.files.add(residenceMulti);
+    // request.files.add(localMulti);
+    // request.files.add(landMulti);
+
+    var response = await request.send();
+    var response2 = await http.Response.fromStream(response);
+
+    print(response.toString());
+    print("residance "+response2.body);
+
+    if (response2.statusCode == 200){
+      var data = json.decode(response2.body);
+      print("residanceUploadersss "+data.toString());
+      print(response);
+      ImageUploadModel user = ImageUploadModel.fromJson(data);
+      return user;
+
+    }else{
+      print("residance ${response2.body}");
+      throw Error();
+    }
+  }
+
+  static Future<ImageUploadModel> DocumentImage(File document,) async {
+
+    var uri = ImageUploader;
+
+    var request = new http.MultipartRequest("POST", Uri.parse(uri));
+    print(uri);
+    var localMulti = await http.MultipartFile.fromPath("local", document.path);
+    // var landMulti = await http.MultipartFile.fromPath("land", land.path);
+
+    request.files.add(localMulti);
+    // request.files.add(landMulti);
+
+    var response = await request.send();
+    var response2 = await http.Response.fromStream(response);
+
+    print(response.toString());
+    print("document "+response2.body);
+
+    if (response2.statusCode == 200){
+      var data = json.decode(response2.body);
+      print("documentUploadersss "+data.toString());
+      print(response);
+      ImageUploadModel user = ImageUploadModel.fromJson(data);
+      return user;
+
+    }else{
+      print("document ${response2.body}");
+      throw Error();
+    }
+  }
+
+  static Future<ImageUploadModel> RegistrationImage(File registraion,) async {
+
+    var uri = ImageUploader;
+
+    var request = new http.MultipartRequest("POST", Uri.parse(uri));
+    print(uri);
+
+    var landMulti = await http.MultipartFile.fromPath("land", registraion.path);
+
+    request.files.add(landMulti);
+
+    var response = await request.send();
+    var response2 = await http.Response.fromStream(response);
+
+    print(response.toString());
+    print("registraion "+response2.body);
+
+    if (response2.statusCode == 200){
+      var data = json.decode(response2.body);
+      print("registraioneUploadersss "+data.toString());
+      print(response);
+      ImageUploadModel user = ImageUploadModel.fromJson(data);
+      return user;
+
+    }else{
+      print("registraion ${response2.body}");
+      throw Error();
     }
   }
 

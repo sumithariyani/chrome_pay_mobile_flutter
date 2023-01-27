@@ -26,17 +26,25 @@ class _SettingState extends State<Setting> {
   }
 
   void LogoutMethod() async{
-    prefs?.setString('ID', "");
-    prefs?.setString('orgID', "");
-    prefs?.setString('token', "");
-    prefs?.setBool('islogin', false);
+    prefs?.remove('ID');
+    prefs?.remove('orgID');
+    prefs?.remove('token');
+    prefs?.remove('agentislogin');
+
     Fluttertoast.showToast(
       msg: "Logout successfully",
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER);
 
-    Navigator.pop(context);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()),
+    // Navigator.pop(context);
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => Login()),
+    // );
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (BuildContext context) => Login(),
+      ),
+          (Route route) => false,
     );
   }
 

@@ -124,34 +124,35 @@ class _AgentCommissionState extends State<AgentCommission> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 20.0),
-                                  alignment: Alignment.center,
-                                  child: InkWell(
-                                      onTap: () async{
-                                        fromDate = await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(1950),
-                                            lastDate: DateTime.now());
-                                        if(fromDate != null){
-                                          print('Date Selecte : ${fromDate?.day}-${fromDate?.month}-${fromDate?.year}');
-                                        }
-                                        setState(() {
-                                          selectedFromDate='${fromDate?.year}-${fromDate?.month}-${fromDate?.day}';
-                                          print("selectedFromDate ${selectedFromDate}");
-                                        });
-                                      },
-                                      child: Text('${selectedFromDate??"From Date"}')),
-                                ),
-                                Container(
-                                    margin: EdgeInsets.only(left: 5.0),
+                            InkWell(
+                              onTap: () async{
+                                fromDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1950),
+                                    lastDate: DateTime.now());
+                                if(fromDate != null){
+                                  print('Date Selecte : ${fromDate?.day}-${fromDate?.month}-${fromDate?.year}');
+                                }
+                                setState(() {
+                                  selectedFromDate='${fromDate?.year}-${fromDate?.month}-${fromDate?.day}';
+                                  print("selectedFromDate ${selectedFromDate}");
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 20.0),
                                     alignment: Alignment.center,
-                                    child: Icon(Icons.keyboard_arrow_down)
-                                ),
-                              ],
+                                        child: Text('${selectedFromDate??"From Date"}'),
+                                  ),
+                                  Container(
+                                      margin: EdgeInsets.only(left: 5.0),
+                                      alignment: Alignment.center,
+                                      child: Icon(Icons.keyboard_arrow_down)
+                                  ),
+                                ],
+                              ),
                             ),
                             Spacer(),
                             Container(
@@ -161,35 +162,35 @@ class _AgentCommissionState extends State<AgentCommission> {
                               color: Colors.black,
                             ),
                             Spacer(),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () async{
-                                    toDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1950),
-                                        lastDate: DateTime.now());
-                                    if(toDate != null){
-                                      print('toDate : ${toDate?.day}-${toDate?.month}-${toDate?.year}');
-                                      setState(() {
-                                         selectedToDate='${toDate?.year}-${toDate?.month}-${toDate?.day}';
-                                        print("selectedToDate ${selectedToDate}");
-                                      });
-                                    }
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                    alignment: Alignment.centerRight,
-                                        child: Text('${selectedToDate??"To Date"}'),
-                                  ),
-                                ),
-                                Container(
-                                    margin: EdgeInsets.only(right: 20.0),
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(Icons.keyboard_arrow_down)
-                                )
-                              ],
+                            InkWell(
+                              onTap: () async{
+                                toDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1950),
+                                    lastDate: DateTime.now());
+                                if(toDate != null){
+                                  print('toDate : ${toDate?.day}-${toDate?.month}-${toDate?.year}');
+                                  setState(() {
+                                    selectedToDate='${toDate?.year}-${toDate?.month}-${toDate?.day}';
+                                    print("selectedToDate ${selectedToDate}");
+                                  });
+                                }
+                              },
+                              child: Row(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                      alignment: Alignment.centerRight,
+                                          child: Text('${selectedToDate??"To Date"}'),
+                                    ),
+                                  Container(
+                                      margin: EdgeInsets.only(right: 20.0),
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(Icons.keyboard_arrow_down)
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),

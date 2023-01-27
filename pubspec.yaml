@@ -38,6 +38,10 @@ dependencies:
   charts_flutter_new: ^0.12.0
   image_picker: ^0.8.6
   fl_chart: ^0.55.2
+  pdf: ^3.8.4
+  path_provider: ^2.0.12
+  printing: ^5.9.3
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
@@ -109,6 +113,13 @@ flutter:
     - images/all_dids_10.png
     - images/all_dids_06.png
     - handshake_06.png
+    - power.png
+    - coin.png
+    - home_page_icon_08.png
+    - home_page_icon_06.png
+    - home_page_icon_03.png
+    - home_page_icon_04.png
+    - home_page_icon_05.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
