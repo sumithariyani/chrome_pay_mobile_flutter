@@ -2,6 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:camera/camera.dart';
+import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
+import 'package:chrome_pay_mobile_flutter/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,8 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Activity/login.dart';
 import 'Customer/customer_dash.dart';
-
-void main() {
+List<CameraDescription> cameras = [];
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  cameras = await availableCameras();
+  setupServices();
   runApp(MyApp());
 }
 

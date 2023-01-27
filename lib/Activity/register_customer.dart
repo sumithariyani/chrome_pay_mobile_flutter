@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
+import 'package:chrome_pay_mobile_flutter/Facescan/pages/sign-in.dart';
+import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
+import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_service.dart';
+import 'package:chrome_pay_mobile_flutter/Facescan/services/ml_service.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Image%20Upload%20Model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,13 +17,18 @@ import '../Services/Services.dart';
 import 'address.dart';
 
 class RegisterCustomer extends StatefulWidget{
+  RegisterCustomer(this.imagepath);
+  String imagepath;
   @override
   _RegisterCustomerState createState() => _RegisterCustomerState();
 
 }
 
 class _RegisterCustomerState extends State <RegisterCustomer>{
-
+  MLService _mlService = locator<MLService>();
+  FaceDetectorService _mlKitService = locator<FaceDetectorService>();
+  CameraService _cameraService = locator<CameraService>();
+  bool loading = false;
   File? selectedImage;
   String base64Image = "";
   var stream;
@@ -29,9 +39,9 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   Future<void> uploadImage() async{
     print("function");
     try {
-      if (selectedImage != null) {
+      if (widget.imagepath != "") {
         print("condition");
-        _imageUploadModel = await Services.ProfileImage(selectedImage!);
+        _imageUploadModel = await Services.ProfileImage(File(widget.imagepath));
         if(_imageUploadModel?.status!=false){
           print("imageUrl ${_imageUploadModel?.data}");
           imageUrl = _imageUploadModel?.data;
@@ -46,6 +56,15 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   void initState() {
     // uploadImage();
     super.initState();
+    _initializeServices();
+  }
+
+  _initializeServices() async {
+    setState(() => loading = true);
+    await _cameraService.initialize();
+    await _mlService.initialize();
+    _mlKitService.initialize();
+    setState(() => loading = false);
   }
 
   Future<void> pickImage() async {
@@ -173,16 +192,26 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                             backgroundColor: Colors.transparent,
                                             child: InkWell(
                                               onTap: (){
-                                                pickImage();
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (BuildContext context) => SignIn(),
+                                                  ),
+                                                );
+                                                // pickImage();
                                               },
                                                 child: ClipOval(
-                                                  child: selectedImage!=null
+                                                  child: widget.imagepath!=""
                                                   ?Image.file(
-                                                    selectedImage!,
-                                                    // fit: BoxFit.cover,
+                                                    File(widget.imagepath),
                                                     height: 100,
-                                                  ): Image.asset('images/login_new_10.png',
-                                                    height: 70,),
+                                                    width: 100,
+                                                  ):
+                                                  Image.asset(
+                                                    'images/login_new_10.png',
+                                                    height: 70,
+                                                    width: 70,
+                                                  ),
                                                 )
                                             ),
                                           ),
@@ -627,11 +656,12 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   }
 
   void navigaterUser() {
+    uploadImage();
     _phone = selectedCode!.substring(1)! + mobileNumber.text;
     print(_phone);
     _dob = ' ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}';
     print(_dob);
-    if (selectedImage == null) {
+    if (widget.imagepath == "") {
       Fluttertoast.showToast(
           msg: "Please upload profile photo",
           gravity: ToastGravity.CENTER);

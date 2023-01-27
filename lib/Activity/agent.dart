@@ -84,7 +84,7 @@ class _AgentDashBoard extends State<Agent> {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => RegisterCustomer(),
+                                      builder: (context) => RegisterCustomer(""),
                                     ));
                                   },
                                   child: Card(
