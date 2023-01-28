@@ -8,7 +8,11 @@ import '../Models/customer Register Model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:google_api_headers/google_api_headers.dart';
 
 class MapSample extends StatefulWidget {
 
@@ -33,12 +37,19 @@ class MapSample extends StatefulWidget {
 
 }
 
+const kGoogleApiKey = 'AIzaSyCdkMLmt8vv54OmKcp4c174eK4t7J1Xgzk';
+final homeScaffoldKey = GlobalKey<ScaffoldState>();
+
 class MapSampleState extends State<MapSample> {
 
   CustomerRegisterModel? _customerRegisterModel;
   SharedPreferences? prefs;
   Position? position;
   GoogleMapController? _googleMapController;
+  Set<Marker> markers = {};
+  final Mode _mode = Mode.overlay;
+  PlacesDetailsResponse? detail;
+
   Future<void> register() async{
 
     print('widget.image${widget.image}');
@@ -85,7 +96,7 @@ class MapSampleState extends State<MapSample> {
 
   @override
   void initState() {
-    // register();
+    _currentLocation();
     super.initState();
     getAsync();
   }
@@ -93,6 +104,7 @@ class MapSampleState extends State<MapSample> {
     try{
       prefs = await SharedPreferences.getInstance();
       position = await _determinePosition();
+
       setState(() {
 
       });
@@ -101,6 +113,25 @@ class MapSampleState extends State<MapSample> {
     }
   }
 
+  Future<void> _currentLocation() async {
+    print("position?.latitude ${position?.latitude}");
+    print("position?.longitude ${position?.longitude}");
+    _googleMapController
+        ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target:
+    LatLng(position!.latitude, position!.longitude), zoom: 20)));
+    markers.clear();
+
+    markers.add(Marker(markerId: const MarkerId('CurrentLocation'),position: LatLng(position!.latitude, position!.longitude)));
+
+
+    final lat = detail?.result.geometry!.location.lat;
+    final lng = detail?.result.geometry!.location.lng;
+
+    markers.clear();
+    markers.add(Marker(markerId: const MarkerId("0"),position: LatLng(22.7028776, 75.8714637),infoWindow: InfoWindow(title: detail?.result.name)));
+    print(" name ${detail?.result.formattedAddress}");
+    setState(() {});
+  }
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   TextEditingController _searchController = TextEditingController();
@@ -124,10 +155,6 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    print("position?.latitude ${position?.latitude}");
-    print("position?.longitude ${position?.longitude}");
-    _googleMapController
-        ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(position!.latitude, position!.longitude), zoom: 14)));
     return Scaffold(
       body: Stack(
         children: [
@@ -136,7 +163,7 @@ class MapSampleState extends State<MapSample> {
               Expanded(
                 child: GoogleMap(
                   mapType: MapType.hybrid,
-                  markers: {_kGooglePlexMarker},
+                  markers: markers,
                   initialCameraPosition: _kGooglePlex,
                   onMapCreated: (GoogleMapController controller) {
                     _googleMapController = controller;
@@ -147,31 +174,41 @@ class MapSampleState extends State<MapSample> {
           ),
           Positioned(
             top: MediaQuery.of(context).padding.top, left: 5, right: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20.0))
-              ),
-              child: Row(
-                children: [
-                  Expanded(child:
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: TextFormField(
-                      controller: _searchController,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: InputDecoration(hintText: 'Search by City',
-                      border: InputBorder.none),
-                      onChanged: (value){
-                        print(value);
-                      },
-                    ),
-                  )),
-                  IconButton(
-                        onPressed: (){},
-                        icon: Icon(Icons.search)),
+            child: InkWell(
+              onTap: () {
+                _handlePressButton();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))
+                ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: InkWell(
+                            onTap: (){
+                              _handlePressButton();
+                            },
+                            child: Container(
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: TextField(
+                              controller: _searchController,
+                              readOnly: true,
+                              decoration: InputDecoration(hintText: 'Search by City',
+                              border: InputBorder.none),
+                            ),
+                        ),
+                          )
+                      ),
+                      IconButton(
+                            onPressed: (){
+                              _handlePressButton();
+                            },
+                            icon: Icon(Icons.search)),
 
-                ],
+                    ],
+                  ),
               ),
             ),
           ),
@@ -191,21 +228,21 @@ class MapSampleState extends State<MapSample> {
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: Text('Address : Sydney NAW 2052 Australia',
+                    child: Text('Address : ${detail?.result.adrAddress}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold
                       ),),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                    child: Text('Latitude : 22.7028433',
+                    child: Text('Latitude : ${position?.latitude}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold
                         )),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                    child: Text('Longitude : 75.8715109',
+                    child: Text('Longitude : ${position?.longitude}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold
                         )),
@@ -256,5 +293,61 @@ class MapSampleState extends State<MapSample> {
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  }
+
+  Future<void> _handlePressButton() async {
+    Prediction? p = await PlacesAutocomplete.show(
+        context: context,
+        apiKey: kGoogleApiKey,
+        onError: onError,
+        mode: _mode,
+        language: 'en',
+        strictbounds: false,
+        types: [""],
+        decoration: InputDecoration(
+            hintText: 'Search',
+            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Colors.white))),
+        components: [Component(Component.country,"ind"),Component(Component.country,"usa")]);
+
+
+    displayPrediction(p!,homeScaffoldKey.currentState);
+  }
+
+  void onError(PlacesAutocompleteResponse response){
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: 'Message',
+        message: response.errorMessage!,
+        contentType: ContentType.failure,
+      ),
+    ));
+
+    // homeScaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(response.errorMessage!)));
+  }
+
+  Future<void> displayPrediction(Prediction p, ScaffoldState? currentState) async {
+
+    GoogleMapsPlaces places = GoogleMapsPlaces(
+        apiKey: kGoogleApiKey,
+        apiHeaders: await const GoogleApiHeaders().getHeaders()
+    );
+
+    detail = await places.getDetailsByPlaceId(p.placeId!);
+
+    final lat = detail?.result.geometry!.location.lat;
+    final lng = detail?.result.geometry!.location.lng;
+
+    markers.clear();
+    markers.add(Marker(markerId: const MarkerId("0"),position: LatLng(lat!, lng!),infoWindow: InfoWindow(title: detail?.result.name)));
+
+    print(" name ${detail?.result.adrAddress}");
+    setState(() {});
+
+    _googleMapController?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14.0));
+
   }
 }

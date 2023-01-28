@@ -95,10 +95,16 @@ class _EditProfileState extends State<EditProfile>{
                    crossAxisAlignment: CrossAxisAlignment.start,
                    mainAxisAlignment: MainAxisAlignment.start,
                    children: [
-                     Container(
-                       margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
-                       child: Image.asset('images/login_stuff_03.png',
-                         height: 20,),
+                     InkWell(
+                       onTap: () {
+                         Navigator.pop(context);
+                       },
+                       child: Container(
+                         margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                         child: Image.asset('images/login_stuff_03.png',
+                           height: 20,
+                         ),
+                       ),
                      ),
                      Container(
                        margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),

@@ -42,6 +42,8 @@ dependencies:
   path_provider: ^2.0.12
   printing: ^5.9.3
   geolocator: ^9.0.2
+  flutter_google_places: ^0.3.0
+  awesome_snackbar_content: ^0.1.0
 
 dev_dependencies:
   flutter_test:
