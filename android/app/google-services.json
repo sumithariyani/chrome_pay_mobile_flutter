@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "368330806709",
+    "project_id": "chromepay",
+    "storage_bucket": "chromepay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368330806709:android:dc928ff62083997ef8b5fc",
+        "android_client_info": {
+          "package_name": "com.example.chrome_pay_mobile_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368330806709-pjllbb1qga8auo55qtnd64lhmkk0uejl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6qpGZmj_JCOQxtbWZXiwb-RQjRgGQZv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368330806709-pjllbb1qga8auo55qtnd64lhmkk0uejl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
