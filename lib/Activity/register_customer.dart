@@ -54,7 +54,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
 
   @override
   void initState() {
-    // uploadImage();
+    uploadImage();
     super.initState();
     _initializeServices();
   }
@@ -656,7 +656,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   }
 
   void navigaterUser() {
-    uploadImage();
+
     _phone = selectedCode!.substring(1)! + mobileNumber.text;
     print(_phone);
     _dob = ' ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}';
