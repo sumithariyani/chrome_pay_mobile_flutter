@@ -66,7 +66,7 @@ class SignInState extends State<SignIn> {
     print("users");
     // Navigator.of(context).pop();
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => RegisterCustomer(_cameraService.imagePath!)));
+        MaterialPageRoute(builder: (BuildContext context) => RegisterCustomer(_cameraService.imagePath!, user)));
   }
 
   Future _start() async {

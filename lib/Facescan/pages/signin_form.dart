@@ -17,7 +17,7 @@ class SignInSheet extends StatelessWidget {
   Future _signIn(context, user) async {
     if (user.password == _passwordController.text) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => RegisterCustomer(_cameraService.imagePath!)));
+          MaterialPageRoute(builder: (BuildContext context) => RegisterCustomer(_cameraService.imagePath!,"")));
     } else {
       showDialog(
         context: context,

@@ -264,14 +264,14 @@ class _DocumentScanerState extends State <DocumentScanner> {
                              Navigator.pop(context);
                            },
                            child: Container(
-                             margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                             margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                              child: Image.asset('images/login_stuff_03.png',
                                height: 20,
                              ),
                            ),
                          ),
                          Container(
-                           margin: EdgeInsets.fromLTRB(10, 30, 0, 0),
+                           margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
                            child: Text('Register Customer 3',
                            style: TextStyle(
                              fontWeight: FontWeight.bold,
@@ -609,6 +609,9 @@ class _DocumentScanerState extends State <DocumentScanner> {
                   Container(
                     alignment: Alignment.center,
                     child: Row(
+
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           margin: EdgeInsets.only(top: 10.0, right: 2.5, left: 10.0),

@@ -17,8 +17,9 @@ import '../Services/Services.dart';
 import 'address.dart';
 
 class RegisterCustomer extends StatefulWidget{
-  RegisterCustomer(this.imagepath);
+  RegisterCustomer(this.imagepath, this.name);
   String imagepath;
+  String name;
   @override
   _RegisterCustomerState createState() => _RegisterCustomerState();
 
@@ -55,6 +56,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   @override
   void initState() {
     uploadImage();
+    fullName.text = "${widget.name}";
     super.initState();
     _initializeServices();
   }
@@ -101,6 +103,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   TextEditingController profession = TextEditingController();
   TextEditingController nameKin = TextEditingController();
   TextEditingController numberKin = TextEditingController();
+
 
   List<String> countryCodes = ['+972', '+251', '+91', '+1'];
   String? selectedCode = '+972';

@@ -92,14 +92,14 @@ class _ActiveDidState extends State<Active_Did> {
                                         Navigator.pop(context);
                                       },
                                       child: Container(
-                                        margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                                        margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                                         child: Image.asset('images/login_stuff_03.png',
                                           height: 20,
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                                      margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                                       child: Text('Active D-IDs',
                                       style: TextStyle(
                                         fontSize: 18,

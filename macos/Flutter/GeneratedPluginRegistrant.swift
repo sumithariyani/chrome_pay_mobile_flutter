@@ -7,7 +7,7 @@ import Foundation
 
 import firebase_core
 import geolocator_apple
-import package_info_plus
+import package_info_plus_macos
 import path_provider_foundation
 import printing
 import shared_preferences_macos

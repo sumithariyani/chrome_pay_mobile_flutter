@@ -38,14 +38,14 @@ class _AgencyBankingState extends State<AgencyBanking> {
                              Navigator.pop(context);
                           },
                             child:  Container(
-                              margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                              margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                               child: Image.asset('images/login_stuff_03.png',
                                 height: 20,
                               ),
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                            margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                             child: Text('Agent Performance',
                               style: TextStyle(
                                   fontSize: 18,

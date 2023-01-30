@@ -124,9 +124,11 @@ class MapSampleState extends State<MapSample> {
     markers.add(Marker(markerId: const MarkerId('CurrentLocation'),position: LatLng(position!.latitude, position!.longitude)));
 
 
-    final lat = detail?.result.geometry!.location.lat;
-    final lng = detail?.result.geometry!.location.lng;
+    final lat = position!.latitude;
+    final lng = position!.longitude;
 
+    print("lat ${lat}");
+    print(" lng ${lng}");
     markers.clear();
     markers.add(Marker(markerId: const MarkerId("0"),position: LatLng(22.7028776, 75.8714637),infoWindow: InfoWindow(title: detail?.result.name)));
     print(" name ${detail?.result.formattedAddress}");

@@ -48,6 +48,8 @@ dependencies:
   camera: ^0.10.1
   get_it: ^7.2.0
   firebase_core: ^2.4.1
+  flutter_google_places: ^0.3.0
+  awesome_snackbar_content: ^0.1.0
 
 dev_dependencies:
   flutter_test:
