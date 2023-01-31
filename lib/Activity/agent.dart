@@ -8,6 +8,7 @@ import 'agentperformance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'all-did.dart';
 import 'awatingdid.dart';
+import 'linked_services.dart';
 
 class Agent extends StatefulWidget {
   @override
@@ -159,12 +160,21 @@ class _AgentDashBoard extends State<Agent> {
                             ),
                           ),
 
-                          Container(
-                            margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Text('Our Services',
-                                style: TextStyle(color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold)),
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(builder:
+                                      (context)=>  LinkedServices("")
+                              )
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Text('Our Services',
+                                  style: TextStyle(color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                            ),
                           ),
                           SizedBox(
                             height: 20,

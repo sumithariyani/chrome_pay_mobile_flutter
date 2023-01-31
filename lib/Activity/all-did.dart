@@ -1,7 +1,10 @@
 import 'package:chrome_pay_mobile_flutter/Activity/customer%20profile.dart';
 import 'package:chrome_pay_mobile_flutter/Models/All%20Did%20Model.dart';
+import 'package:chrome_pay_mobile_flutter/Models/CustomerViewOtpModel.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Active_Did extends StatefulWidget {
@@ -18,8 +21,15 @@ class _ActiveDidState extends State<Active_Did> {
   bool _isPageLoading = false;
   final _scrollController = ScrollController();
 
+  TextEditingController _otp1 = TextEditingController();
+  TextEditingController _otp2 = TextEditingController();
+  TextEditingController _otp3 = TextEditingController();
+  TextEditingController _otp4 = TextEditingController();
+  TextEditingController _otp5 = TextEditingController();
+  TextEditingController _otp6 = TextEditingController();
 
   late AllDidModel allDidModel;
+  CustomerViewOtpModel? _customerViewOtpModel;
 
   Future<void> getCustomer() async {
     _isPageLoading = true;
@@ -32,6 +42,16 @@ class _ActiveDidState extends State<Active_Did> {
     });
   }
 
+  Future<void> _verifyCust(String phone) async {
+
+    _customerViewOtpModel = await Services.CustViewOtp(phone);
+
+    if(_customerViewOtpModel?.status!= false){
+      Fluttertoast.showToast(msg: "${_customerViewOtpModel?.msg}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+    }
+  }
   @override
   void initState() {
     getCustomer();
@@ -134,14 +154,15 @@ class _ActiveDidState extends State<Active_Did> {
                                                       itemBuilder: (context, index){
                                                         return  InkWell(
                                                           onTap: () {
-
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(builder: (context) => CustomerProfile(
-                                                                  snapshot.data!.filter![index].id.toString() ?? "1",
-                                                                )
-                                                                )
-                                                            );
+                                                            _verifyCust("${snapshot.data?.filter![index]?.phone}");
+                                                            _custDetailDialog("${snapshot.data?.filter![index]?.phone}");
+                                                            // Navigator.push(
+                                                            //     context,
+                                                            //     MaterialPageRoute(builder: (context) => CustomerProfile(
+                                                            //       snapshot.data!.filter![index].id.toString() ?? "1",
+                                                            //     )
+                                                            //     )
+                                                            // );
                                                           },
                                                           child: Card(
                                                             color: Colors.transparent,
@@ -274,5 +295,309 @@ class _ActiveDidState extends State<Active_Did> {
       print('Dont');
     }
   }
-
+  void _custDetailDialog(String phone){
+    showDialog(context: context, builder: (context){
+      return Container(
+        child: Dialog(
+          child: SingleChildScrollView(
+            child: Container(
+              height: 400,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(40.0)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      padding: EdgeInsets.all(10.0),
+                      child: Image.asset('images/login_stuff_28.png',
+                        height: 20,),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text('Verification Code',
+                      style: TextStyle(fontSize: 18,
+                        fontWeight: FontWeight.bold,),),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text('Sent to customer mobile no.',
+                      style: TextStyle(fontWeight: FontWeight.bold),),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 30.0),
+                    alignment: Alignment.center,
+                    child: Text('Enter the 6 Digit OTP',
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: 16),),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0, right: 2.5, left: 10.0),
+                          width: 40,
+                          height: 50,
+                          child: Card(
+                            color: Color(0xff17314C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                                side: BorderSide(width:2, color: Colors.lightBlueAccent)),
+                            child: TextField(
+                                controller: _otp1,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none
+                                ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                                onChanged: (value){
+                                  if (value.isNotEmpty){
+                                    FocusScope.of(context).nextFocus();
+                                  }else if (value.isEmpty){
+                                    FocusScope.of(context).previousFocus();
+                                  }
+                                },
+                                inputFormatters: [
+                                  new LengthLimitingTextInputFormatter(1)
+                                ]
+                            ),
+                          ),
+                        )
+                        ,
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0, right: 2.5),
+                          width: 40,
+                          height: 50,
+                          child: Card(
+                            color: Color(0xff17314C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                                side: BorderSide(width:2, color: Colors.lightBlueAccent)),
+                            child: TextField(
+                                controller: _otp2,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none
+                                ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                                onChanged: (value){
+                                  if (value.isNotEmpty){
+                                    FocusScope.of(context).nextFocus();
+                                  }else if (value.isEmpty){
+                                    FocusScope.of(context).previousFocus();
+                                  }
+                                },
+                                inputFormatters: [
+                                  new LengthLimitingTextInputFormatter(1)
+                                ]
+                            ),
+                          ),
+                        )
+                        ,
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0, right: 2.5),
+                          width: 40,
+                          height: 50,
+                          child: Card(
+                            color: Color(0xff17314C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                                side: BorderSide(width:2, color: Colors.lightBlueAccent)),
+                            child: TextField(
+                                controller: _otp3,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none
+                                ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                                onChanged: (value){
+                                  if (value.isNotEmpty){
+                                    FocusScope.of(context).nextFocus();
+                                  }else if (value.isEmpty){
+                                    FocusScope.of(context).previousFocus();
+                                  }
+                                },
+                                inputFormatters: [
+                                  new LengthLimitingTextInputFormatter(1)
+                                ]
+                            ),
+                          ),
+                        )
+                        ,
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0, right: 2.5),
+                          width: 40,
+                          height: 50,
+                          child: Card(
+                            color: Color(0xff17314C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                                side: BorderSide(width:2, color: Colors.lightBlueAccent)),
+                            child: TextField(
+                                controller: _otp4,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none
+                                ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                                onChanged: (value){
+                                  if (value.isNotEmpty){
+                                    FocusScope.of(context).nextFocus();
+                                  }else if (value.isEmpty){
+                                    FocusScope.of(context).previousFocus();
+                                  }
+                                },
+                                inputFormatters: [
+                                  new LengthLimitingTextInputFormatter(1)
+                                ]
+                            ),
+                          ),
+                        )
+                        ,
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0, right: 2.5),
+                          width: 40,
+                          height: 50,
+                          child: Card(
+                            color: Color(0xff17314C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                                side: BorderSide(width:2, color: Colors.lightBlueAccent)),
+                            child: TextField(
+                                controller: _otp5,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none
+                                ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                                onChanged: (value){
+                                  if (value.isNotEmpty){
+                                    FocusScope.of(context).nextFocus();
+                                  }else if (value.isEmpty){
+                                    FocusScope.of(context).previousFocus();
+                                  }
+                                },
+                                inputFormatters: [
+                                  new LengthLimitingTextInputFormatter(1)
+                                ]
+                            ),
+                          ),
+                        )
+                        ,
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0, right: 2.5),
+                          width: 40,
+                          height: 50,
+                          child: Card(
+                            color: Color(0xff17314C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                                side: BorderSide(width:2, color: Colors.lightBlueAccent)),
+                            child: TextField(
+                              controller: _otp6,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none
+                              ),
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white,
+                                  fontSize: 18),
+                              onChanged: (value){
+                                if (value.isNotEmpty){
+                                  FocusScope.of(context).nextFocus();
+                                }else if (value.isEmpty){
+                                  FocusScope.of(context).previousFocus();
+                                }
+                              },
+                              inputFormatters: [
+                                new LengthLimitingTextInputFormatter(1)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xff2CABBB),
+                                  Color(0xff0B527E),
+                                ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                            ),
+                            child: ButtonTheme(
+                              minWidth: 400,
+                              height: 50,
+                              child: MaterialButton(
+                                onPressed: () {
+                                  // verify();
+                                },
+                                textColor: Colors.white,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: const Text('Verify DID', style: const TextStyle(fontSize: 18,),),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+  }
 }

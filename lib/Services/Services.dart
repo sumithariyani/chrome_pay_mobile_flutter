@@ -15,6 +15,7 @@ import 'dart:io';
 import '../Models/Agent Performance Model.dart';
 import '../Models/All Did Model.dart';
 import '../Models/Cust dash Model.dart';
+import '../Models/CustomerViewOtpModel.dart';
 import '../Models/Document Scanner Model.dart';
 import '../Models/Image Upload Model.dart';
 import '../Models/Login Model.dart';
@@ -41,6 +42,7 @@ class Services {
   static String VerifyCustOtp = BaseUrl+"new_verify_customer";
   static String OrganisationList = BaseUrl+"orgList";
   static String ImageUploader = BaseUrl+"globalImageUploader";
+  static String CustomerViewOtp = BaseUrl+"send_cust_otp_data_view";
 
   // ignore: non_constant_identifier_names
   static Future<LoginModel> LoginCredentials(String EMAIL, String PASSWORD) async{
@@ -220,7 +222,6 @@ class Services {
     request.fields["gender"] = gender;
     request.fields["nationality"] = nationality;
     request.fields["professoin"] = profession;
-    request.fields["address"] = name;
     request.fields["nextFOKniPhone"] = kinPhone;
     request.fields["nextFOKinName"] = kinName;
     request.fields["age"] = age;
@@ -486,4 +487,21 @@ class Services {
     }
   }
 
+  static Future<CustomerViewOtpModel> CustViewOtp(String phone) async {
+    final params = {
+      "phoneNo": phone
+    };
+
+    http.Response response = await http.post(Uri.parse(CustomerViewOtp),body: params);
+    print("CustomerViewOtp " + response.body);
+
+    if (response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      CustomerViewOtpModel user = CustomerViewOtpModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
 }

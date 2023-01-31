@@ -25,6 +25,7 @@ class LinkedServices extends StatefulWidget {
    Future<void> scan() async{
 
      _organisationModel = await Services.OrgList();
+     print("assetType${assetType}");
      setState(() {
        for(int i=0; i< _organisationModel!.org!.length; i++){
          _orgList.add(_organisationModel!.org![i]!.id ?? "");
