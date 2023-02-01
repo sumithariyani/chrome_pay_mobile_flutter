@@ -108,7 +108,7 @@ class _EditProfileState extends State<EditProfile>{
                      ),
                      Container(
                        margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                       child: const Text('Register Customer',
+                       child: const Text('Edit Profile',
                          style: TextStyle(
                              fontSize: 18,
                              fontWeight: FontWeight.bold

@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Models/VerifyCustViewOtpModel.dart';
+
 class Active_Did extends StatefulWidget {
   @override
   _ActiveDidState createState ()=> _ActiveDidState();
@@ -20,6 +22,8 @@ class _ActiveDidState extends State<Active_Did> {
   int? _page = 1;
   bool _isPageLoading = false;
   final _scrollController = ScrollController();
+  String? otp;
+  String? id;
 
   TextEditingController _otp1 = TextEditingController();
   TextEditingController _otp2 = TextEditingController();
@@ -30,6 +34,7 @@ class _ActiveDidState extends State<Active_Did> {
 
   late AllDidModel allDidModel;
   CustomerViewOtpModel? _customerViewOtpModel;
+  VerifyCustViewOtpModel? _verifyCustViewOtpModel;
 
   Future<void> getCustomer() async {
     _isPageLoading = true;
@@ -42,14 +47,32 @@ class _ActiveDidState extends State<Active_Did> {
     });
   }
 
-  Future<void> _verifyCust(String phone) async {
+  Future<void> _verifyCust(String phone, String id) async {
 
+    print("id${id}");
     _customerViewOtpModel = await Services.CustViewOtp(phone);
 
     if(_customerViewOtpModel?.status!= false){
       Fluttertoast.showToast(msg: "${_customerViewOtpModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
+    }
+  }
+
+  Future<void> _verifyCustOtp(String phone,) async {
+    otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
+    _verifyCustViewOtpModel = await Services.VerifyCustomerViewOtp(phone, otp!);
+
+    if(_verifyCustViewOtpModel?.status!= false){
+      Fluttertoast.showToast(msg: "${_verifyCustViewOtpModel?.msg}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+      print(id);
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CustomerProfile(id!)
+          )
+      );
     }
   }
   @override
@@ -154,7 +177,8 @@ class _ActiveDidState extends State<Active_Did> {
                                                       itemBuilder: (context, index){
                                                         return  InkWell(
                                                           onTap: () {
-                                                            _verifyCust("${snapshot.data?.filter![index]?.phone}");
+                                                            id = "${snapshot.data?.filter![index]?.id}";
+                                                            _verifyCust("${snapshot.data?.filter![index]?.phone}", "${id}");
                                                             _custDetailDialog("${snapshot.data?.filter![index]?.phone}");
                                                             // Navigator.push(
                                                             //     context,
@@ -578,7 +602,8 @@ class _ActiveDidState extends State<Active_Did> {
                               height: 50,
                               child: MaterialButton(
                                 onPressed: () {
-                                  // verify();
+                                  _verifyCustOtp(phone);
+                                  Navigator.pop(context);
                                 },
                                 textColor: Colors.white,
                                 child: const Padding(

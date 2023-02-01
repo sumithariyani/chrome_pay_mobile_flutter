@@ -14,6 +14,7 @@ import 'dart:io';
 
 import '../Models/Agent Performance Model.dart';
 import '../Models/All Did Model.dart';
+import '../Models/ChangePasswordModel.dart';
 import '../Models/Cust dash Model.dart';
 import '../Models/CustomerViewOtpModel.dart';
 import '../Models/Document Scanner Model.dart';
@@ -21,6 +22,7 @@ import '../Models/Image Upload Model.dart';
 import '../Models/Login Model.dart';
 import '../Models/OrganisationModel.dart';
 import '../Models/Verify Cust Model.dart';
+import '../Models/VerifyCustViewOtpModel.dart';
 import '../Models/customer Register Model.dart';
 
 class Services {
@@ -43,6 +45,8 @@ class Services {
   static String OrganisationList = BaseUrl+"orgList";
   static String ImageUploader = BaseUrl+"globalImageUploader";
   static String CustomerViewOtp = BaseUrl+"send_cust_otp_data_view";
+  static String VerifyCustViewOtp = BaseUrl+"verify_cust_view_OTP";
+  static String ChangePass = BaseUrl+"agentchangePassword/";
 
   // ignore: non_constant_identifier_names
   static Future<LoginModel> LoginCredentials(String EMAIL, String PASSWORD) async{
@@ -498,6 +502,46 @@ class Services {
     if (response.statusCode == 200){
       var data = jsonDecode(response.body);
       CustomerViewOtpModel user = CustomerViewOtpModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
+
+  static Future<VerifyCustViewOtpModel> VerifyCustomerViewOtp(String phone, String otp) async {
+    final params = {
+      "phoneNo": phone,
+      "OTP": otp
+    };
+
+    http.Response response = await http.post(Uri.parse(VerifyCustViewOtp),body: params);
+    print("VerifyCustViewOtp " + response.body);
+
+    if (response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      VerifyCustViewOtpModel user = VerifyCustViewOtpModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
+
+  static Future<ChangePaswordModel> ChangePassword(String Id, String oldPass, String newPass,String confirmPass) async {
+    final params = {
+      "agentID": Id,
+      "oldPassword": oldPass,
+      "newPassword": newPass,
+      "confirmPassword": confirmPass,
+    };
+    print("Id ${Id}");
+    http.Response response = await http.post(Uri.parse(ChangePass+Id),body: params);
+    print("VerifyCustViewOtp " + response.body);
+
+    if (response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      ChangePaswordModel user = ChangePaswordModel.fromJson(data);
       return user;
     }else{
       print(response.body);
