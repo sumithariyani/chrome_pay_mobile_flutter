@@ -121,14 +121,14 @@ flutter:
     - images/all_dids_07.png
     - images/all_dids_10.png
     - images/all_dids_06.png
-    - handshake_06.png
-    - power.png
-    - coin.png
-    - home_page_icon_08.png
-    - home_page_icon_06.png
-    - home_page_icon_03.png
-    - home_page_icon_04.png
-    - home_page_icon_05.png
+    - images/handshake_06.png
+    - images/power.png
+    - images/coin.png
+    - images/home_page_icon_08.png
+    - images/home_page_icon_06.png
+    - images/home_page_icon_03.png
+    - images/home_page_icon_04.png
+    - images/home_page_icon_05.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

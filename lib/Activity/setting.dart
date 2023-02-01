@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'changepassword.dart';
+
 class Setting extends StatefulWidget {
   @override
   _SettingState createState ()=> _SettingState();
@@ -141,37 +143,44 @@ class _SettingState extends State<Setting> {
                             ),
                           ),
                         ),
-                        Card(
-                          color: Colors.transparent,
-                          margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          elevation: 5,
-                          shadowColor: Colors.black,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white
-                            ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                    alignment: Alignment.center,
-                                    child: Text('Change Password',
-                                      style: TextStyle(fontWeight: FontWeight.w500),),
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                      alignment: Alignment.centerRight,
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ChangePassword()),
+                            );
+                          },
+                          child: Card(
+                            color: Colors.transparent,
+                            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            elevation: 5,
+                            shadowColor: Colors.black,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white
+                              ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
                                       margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                      child: Image.asset('images/login_stuff_11.png',
-                                        height: 30,)
-                                  )
-                                ],
-                              )
+                                      alignment: Alignment.center,
+                                      child: Text('Change Password',
+                                        style: TextStyle(fontWeight: FontWeight.w500),),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                        alignment: Alignment.centerRight,
+                                        margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                        child: Image.asset('images/login_stuff_11.png',
+                                          height: 30,)
+                                    )
+                                  ],
+                                )
+                            ),
                           ),
                         )
                       ],
