@@ -236,6 +236,7 @@ class Services {
     // request.files.add(multipart);
 
     // print('request ${multipart}');
+    print('request ${request.fields}');
 
 
     var response = await request.send();

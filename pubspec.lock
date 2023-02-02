@@ -134,6 +134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  document_scanner:
+    dependency: "direct dev"
+    description:
+      name: document_scanner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   equatable:
     dependency: transitive
     description:

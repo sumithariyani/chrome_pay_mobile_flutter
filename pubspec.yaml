@@ -64,7 +64,7 @@ dev_dependencies:
   fluttertoast: ^8.1.2
   http: ^0.13.5
   shared_preferences: ^2.0.15
-
+  document_scanner: ^0.2.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
