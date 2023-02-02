@@ -61,7 +61,7 @@ class MapSampleState extends State<MapSample> {
 
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => DocumentScanner(widget.number, widget.email,int.parse(widget.age) , widget.city),));
+            builder: (context) => DocumentDetail(widget.number, widget.email,int.parse(widget.age) , widget.city),));
     }
   }
 

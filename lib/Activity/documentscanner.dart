@@ -1,25 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:document_scanner/document_scanner.dart';
 import '../Models/Document Scanner Model.dart';
 import '../Models/Image Upload Model.dart';
 import '../Models/Verify Cust Model.dart';
 import '../Services/Services.dart';
 import 'linked_services.dart';
 
-class DocumentScanner extends StatefulWidget {
+class DocumentDetail extends StatefulWidget {
 
   String phone = "";
   String email = "";
   int age;
   String city = "";
 
-  DocumentScanner(this.phone, this.email, this.age, this.city);
+  DocumentDetail(this.phone, this.email, this.age, this.city);
 
   @override
   _DocumentScanerState createState() => _DocumentScanerState();
@@ -27,7 +26,7 @@ class DocumentScanner extends StatefulWidget {
 }
 
 
-class _DocumentScanerState extends State <DocumentScanner> {
+class _DocumentScanerState extends State <DocumentDetail> {
 
   DocumentScannerModel? _documentScannerModel;
   VerifyCustModel? _verifyCustModel;
@@ -106,13 +105,17 @@ class _DocumentScanerState extends State <DocumentScanner> {
   Future<void> pickImage() async {
     try{
       var _resImage;
-
+      fromimage=1;
+      setState((){});
+      return;
       _resImage = await ImagePicker().
       pickImage(source: ImageSource.camera);
 
       setState((){
         if(_resImage != null){
+        // if(imagesPath!.isNotEmpty){
           setState(() {
+            // _residnceImage = File(imagesPath![0]);
             _residnceImage = File(_resImage.path);
             residenceImage();
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
@@ -207,7 +210,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
   Future<void> verify() async{
 
     otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
-    _verifyCustModel = await Services.VerifyCust(otp!, widget.phone);
+    _verifyCustModel = await Services.VerifyCust(otp!,widget.phone);
 
     if(_verifyCustModel!.status == true){
       print('true>>>>>>>>');
@@ -222,14 +225,15 @@ class _DocumentScanerState extends State <DocumentScanner> {
           gravity: ToastGravity.CENTER);
     }
   }
-
-
+  int fromimage=0;
+  File? scannedDocument;
   @override
   Widget build(BuildContext context) {
     print('fghsdsdssgfh////////////////////////////////////////''''''''''''''///////////');
     return  Scaffold(
        resizeToAvoidBottomInset: false,
-       body: Stack(
+       body:fromimage == 0 ?
+       Stack(
          children: [
            Container(
              alignment: Alignment.topRight,
@@ -554,6 +558,19 @@ class _DocumentScanerState extends State <DocumentScanner> {
              ),
            )
          ],
+       ) :
+
+       DocumentScanner(
+         noGrayScale: true,
+         onDocumentScanned: (ScannedImage scannedImage) {
+           print("document : " +
+               scannedImage.croppedImage!);
+
+           setState(() {
+             scannedDocument = scannedImage.getScannedDocumentAsFile();
+             // imageLocation = image;
+           });
+         },
        ),
    );
   }
