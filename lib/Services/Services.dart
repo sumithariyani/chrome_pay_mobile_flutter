@@ -28,13 +28,14 @@ import '../Models/customer Register Model.dart';
 class Services {
 
   // static String BaseUrl = "http://192.168.1.158:3300/";
-  static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
+  static String BaseUrl = "http://192.168.1.158:5000/";
+  // static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
 
-  static String Login = BaseUrl+"agent_login_new";
-  static String AllDid = BaseUrl+"agentcustomerList/";
+  static String Login = BaseUrl+"v1/auth/Login";
+  static String AllDid = BaseUrl+"v1/views/DID/view-customer";
+  static String AwatingDid = BaseUrl+"v1/view/DID/awaitingList";
   static String CustomerDash = BaseUrl+"custdetail/";
   static String FinancialActivities = BaseUrl+"calculate_final_activities/";
-  static String AwatingDid = BaseUrl+"AgentAwaiting/";
   static String AgentCommisssion = BaseUrl+"commissionlist/";
   static String AgentProfile = BaseUrl+"agentProfile/";
   static String UpdateProfile = BaseUrl+"agentProfileUpdate/";
@@ -85,14 +86,15 @@ class Services {
     // return LoginModel();
   }
 
-  static Future<AllDidModel> CustomerList(String agent_id, int page) async {
-    final params = {
-      "adminID": agent_id,
-      "page": page.toString(),
-    };
+  static Future<AllDidModel> CustomerList(String token, int page) async {
+    // final params = {
+    //   "adminIDToken": token,
+    //   "page": page.toString(),
+    // };
 
-    print(params);
-    http.Response response = await http.post(Uri.parse(AllDid+agent_id), body: params);
+    print("token${token}");
+    http.Response response = await http.post(Uri.parse(AllDid), headers:
+        {HttpHeaders.contentTypeHeader: "application/json", HttpHeaders.authorizationHeader: "Bearer $token"});
     print("all Did "+response.body);
 
     if (response.statusCode == 200) {
