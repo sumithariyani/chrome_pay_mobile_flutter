@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../Models/OrganisationModel.dart';
 import '../Services/Services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LinkedServices extends StatefulWidget {
 
@@ -18,13 +20,14 @@ class LinkedServices extends StatefulWidget {
    List<String> _orgList = [];
    List<String>? assetType;
    String? selectedAssetType;
-  OrganisationModel? _organisationModel;
+   OrganisationModel? _organisationModel;
    TextEditingController mobileNumber = TextEditingController();
+   SharedPreferences? prefs;
 
 
    Future<void> scan() async{
-
-     _organisationModel = await Services.OrgList();
+     prefs = await SharedPreferences.getInstance();
+     _organisationModel = await Services.OrgList(prefs!.getString("token").toString());
      print("assetType${assetType}");
      setState(() {
        for(int i=0; i< _organisationModel!.org!.length; i++){

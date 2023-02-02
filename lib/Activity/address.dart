@@ -16,7 +16,7 @@ import 'package:google_api_headers/google_api_headers.dart';
 
 class MapSample extends StatefulWidget {
 
-  String image;
+  // String image;
   String name = "";
   String number = "";
   String dob = "";
@@ -29,7 +29,7 @@ class MapSample extends StatefulWidget {
   String kinName = "";
   String kinPhone = "";
 
-  MapSample(this.image, this.name, this.number, this.dob, this.gender,
+  MapSample(this.name, this.number, this.dob, this.gender,
       this.email, this.age, this.city, this.nationality, this.profession, this.kinName, this.kinPhone,);
 
   @override
@@ -52,10 +52,10 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> register() async{
 
-    print('widget.image${widget.image}');
+    // print('widget.image${widget.image}');
     prefs = await SharedPreferences.getInstance();
-    _customerRegisterModel = (await Services.CustRegister(prefs!.getString("ID").toString(), prefs!.getString("orgID").toString(),
-        widget.image, widget!.name, widget!.number, widget!.dob, widget!.gender, widget!.email, widget!.nationality, widget!.profession, widget!.kinName, widget!.kinPhone, widget!.age, widget!.city)) as CustomerRegisterModel?;
+    _customerRegisterModel = (await Services.CustRegister(prefs!.getString("token").toString(),
+         widget!.name, widget!.number, widget!.dob, widget!.gender, widget!.email, widget!.nationality, widget!.profession, widget!.kinName, widget!.kinPhone, widget!.age, widget!.city)) as CustomerRegisterModel?;
 
     if(_customerRegisterModel!.status == true){
 

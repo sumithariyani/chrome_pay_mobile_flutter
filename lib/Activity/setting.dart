@@ -14,7 +14,7 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
 
-  SharedPreferences? prefs;
+  late SharedPreferences prefs;
 
   getAsync() async {
     try{
@@ -28,11 +28,12 @@ class _SettingState extends State<Setting> {
   }
 
   void LogoutMethod() async{
-    prefs?.remove('ID');
-    prefs?.remove('orgID');
-    prefs?.remove('token');
-    prefs?.remove('agentislogin');
-
+    prefs = await SharedPreferences.getInstance();
+    // prefs?.remove('ID');
+    // prefs?.remove('orgID');
+    // prefs?.remove('token');
+    // prefs?.remove('agentislogin');
+    prefs.clear();
     Fluttertoast.showToast(
       msg: "Logout successfully",
     toastLength: Toast.LENGTH_SHORT,
