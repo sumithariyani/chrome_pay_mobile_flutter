@@ -34,9 +34,9 @@ class Services {
   static String Login = BaseUrl+"v1/auth/Login";
   static String AllDid = BaseUrl+"v1/views/DID/view-customer";
   static String AwatingDid = BaseUrl+"v1/view/DID/awaitingList";
+  static String AgentCommisssion = BaseUrl+"v1/Commission/DID/commissionlist";
   static String CustomerDash = BaseUrl+"custdetail/";
   static String FinancialActivities = BaseUrl+"calculate_final_activities/";
-  static String AgentCommisssion = BaseUrl+"commissionlist/";
   static String AgentProfile = BaseUrl+"agentProfile/";
   static String UpdateProfile = BaseUrl+"agentProfileUpdate/";
   static String AgentPerformance = BaseUrl+"get_agent_cut_month/";
@@ -130,11 +130,12 @@ class Services {
 
   static Future<AwatingDidModel> PendingList(String token, int page) async {
     final params = {
-      "token": token,
+      // "token": token,
       "page": page.toString()
     };
     print(params);
-    http.Response response = await http.post(Uri.parse(AwatingDid+token), body: params);
+    http.Response response = await http.post(Uri.parse(AwatingDid), headers: {
+      HttpHeaders.contentTypeHeader: "application/json", HttpHeaders.authorizationHeader: "Bearer $token"});
     print("awating Did "+response.body);
 
     if (response.statusCode == 200) {
@@ -144,8 +145,8 @@ class Services {
     }else{
       print(response.body);
       throw Exception('Failed');
-    }
   }
+    }
 
   static Future<AgentCommissionModel> CommissionList(String token, int page, String fromDate, String toDate) async {
     final params = {
@@ -155,7 +156,10 @@ class Services {
       "toDate": toDate
     };
     print(params);
-    http.Response response = await http.post(Uri.parse(AgentCommisssion+token), body: params);
+
+    http.Response response = await http.post(Uri.parse(AgentCommisssion), headers: {
+      HttpHeaders.contentTypeHeader: "application/json", HttpHeaders.authorizationHeader: "Bearer $token"});
+
     print("AgentCommisssion "+response.body);
 
     if (response.statusCode == 200) {
@@ -292,6 +296,7 @@ class Services {
     }
 
   }
+
   static Future<VerifyCustModel> VerifyCust(String otp, String phone) async {
     final params = {
       "OTP": otp,
