@@ -1,24 +1,27 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:document_scanner/document_scanner.dart';
+
 import '../Models/Document Scanner Model.dart';
 import '../Models/Image Upload Model.dart';
 import '../Models/Verify Cust Model.dart';
 import '../Services/Services.dart';
 import 'linked_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DocumentDetail extends StatefulWidget {
+
+class DocumentScanner extends StatefulWidget {
 
   String phone = "";
   String email = "";
   int age;
   String city = "";
 
-  DocumentDetail(this.phone, this.email, this.age, this.city);
+  DocumentScanner(this.phone, this.email, this.age, this.city);
 
   @override
   _DocumentScanerState createState() => _DocumentScanerState();
@@ -26,10 +29,11 @@ class DocumentDetail extends StatefulWidget {
 }
 
 
-class _DocumentScanerState extends State <DocumentDetail> {
+class _DocumentScanerState extends State <DocumentScanner> {
 
   DocumentScannerModel? _documentScannerModel;
   VerifyCustModel? _verifyCustModel;
+  SharedPreferences? prefs;
 
   TextEditingController _otp1 = TextEditingController();
   TextEditingController _otp2 = TextEditingController();
@@ -55,11 +59,13 @@ class _DocumentScanerState extends State <DocumentDetail> {
   ImageUploadModel? _imageUploadModel;
 
   Future<void> residenceImage() async{
+    prefs = await SharedPreferences.getInstance();
+
     print("function");
     try {
       if (_residnceImage != null) {
         print("condition");
-        _imageUploadModel = await Services.ResidenceImage(_residnceImage!);
+        _imageUploadModel = await Services.ResidenceImage(prefs!.getString("token").toString(), _residnceImage!);
         if(_imageUploadModel?.status!=false){
           print("residanceUrl ${_imageUploadModel?.data}");
           residanceUrl = _imageUploadModel?.data;
@@ -71,11 +77,12 @@ class _DocumentScanerState extends State <DocumentDetail> {
   }
 
   Future<void> documentImage() async{
+    prefs = await SharedPreferences.getInstance();
     print("function");
     try {
       if (_documentImage != null) {
         print("condition");
-        _imageUploadModel = await Services.DocumentImage(_documentImage!);
+        _imageUploadModel = await Services.DocumentImage(prefs!.getString("token").toString(), _documentImage!);
         if(_imageUploadModel?.status!=false){
           print("documentUrl ${_imageUploadModel?.data}");
           documentUrl = _imageUploadModel?.data;
@@ -87,11 +94,12 @@ class _DocumentScanerState extends State <DocumentDetail> {
   }
 
   Future<void> registraionImage() async{
+    prefs = await SharedPreferences.getInstance();
     print("function");
     try {
       if (_registerImage != null) {
         print("condition");
-        _imageUploadModel = await Services.RegistrationImage(_registerImage!);
+        _imageUploadModel = await Services.RegistrationImage(prefs!.getString("token").toString(), _registerImage!);
         if(_imageUploadModel?.status!=false){
           print("registrationUrl ${_imageUploadModel?.data}");
           registrationUrl = _imageUploadModel?.data;
@@ -105,17 +113,13 @@ class _DocumentScanerState extends State <DocumentDetail> {
   Future<void> pickImage() async {
     try{
       var _resImage;
-      fromimage=1;
-      setState((){});
-      return;
+
       _resImage = await ImagePicker().
       pickImage(source: ImageSource.camera);
 
       setState((){
         if(_resImage != null){
-        // if(imagesPath!.isNotEmpty){
           setState(() {
-            // _residnceImage = File(imagesPath![0]);
             _residnceImage = File(_resImage.path);
             residenceImage();
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
@@ -180,8 +184,8 @@ class _DocumentScanerState extends State <DocumentDetail> {
   }
 
   Future<void> scan() async{
-
-    _documentScannerModel = await Services.DocumentScan(residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email, widget.age, widget.city,);
+    prefs = await SharedPreferences.getInstance();
+    _documentScannerModel = await Services.DocumentScan(prefs!.getString("token").toString(), residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email, widget.age, widget.city,);
 
     if(_documentScannerModel!.service?.allMatches("Linked") != null){
 
@@ -208,9 +212,9 @@ class _DocumentScanerState extends State <DocumentDetail> {
   }
 
   Future<void> verify() async{
-
+    prefs = await SharedPreferences.getInstance();
     otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
-    _verifyCustModel = await Services.VerifyCust(otp!,widget.phone);
+    _verifyCustModel = await Services.VerifyCust(prefs!.getString("token").toString(), otp!, widget.phone);
 
     if(_verifyCustModel!.status == true){
       print('true>>>>>>>>');
@@ -225,15 +229,14 @@ class _DocumentScanerState extends State <DocumentDetail> {
           gravity: ToastGravity.CENTER);
     }
   }
-  int fromimage=0;
-  File? scannedDocument;
+
+
   @override
   Widget build(BuildContext context) {
     print('fghsdsdssgfh////////////////////////////////////////''''''''''''''///////////');
     return  Scaffold(
        resizeToAvoidBottomInset: false,
-       body:fromimage == 0 ?
-       Stack(
+       body: Stack(
          children: [
            Container(
              alignment: Alignment.topRight,
@@ -558,19 +561,6 @@ class _DocumentScanerState extends State <DocumentDetail> {
              ),
            )
          ],
-       ) :
-
-       DocumentScanner(
-         noGrayScale: true,
-         onDocumentScanned: (ScannedImage scannedImage) {
-           print("document : " +
-               scannedImage.croppedImage!);
-
-           setState(() {
-             scannedDocument = scannedImage.getScannedDocumentAsFile();
-             // imageLocation = image;
-           });
-         },
        ),
    );
   }

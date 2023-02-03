@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../Models/Cust dash Model.dart';
 import '../Services/Services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LandCertificate extends StatefulWidget {
 
@@ -16,9 +18,12 @@ class _LandCertifyState extends State<LandCertificate> {
 
 
   CustDetailModel? custDetailModel;
+  SharedPreferences? prefs;
 
   Future<void> getCustomer() async {
-    custDetailModel = await Services.GetCustDetail(widget.id);
+    prefs = await SharedPreferences.getInstance();
+
+    custDetailModel = await Services.GetCustDetail(prefs!.getString("token").toString(), widget.id);
 
     if(custDetailModel!.status!){
       print("land"+widget.id);

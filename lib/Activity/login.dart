@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Customer/customer_dash.dart';
 import 'agent.dart';
+import 'forgotpassword.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -200,12 +201,18 @@ class _LoginFormState extends State <Login> {
                                       Container(
                                         alignment: Alignment.centerRight,
                                         margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                        child: const Text("Forgot Password? ",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff7C7EF8)
+                                        child: InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(builder: (context) => ForgotPassword(),));
+                                          },
+                                          child: const Text("Forgot Password? ",
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xff7C7EF8)
+                                            ),
                                           ),
                                         ) ,
                                       )

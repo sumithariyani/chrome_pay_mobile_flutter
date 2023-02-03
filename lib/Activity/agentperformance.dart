@@ -33,7 +33,7 @@ class _Day {
 
 class _AgentPerformanceState extends State<AgentPerformance> {
 
-  SharedPreferences? prefs;
+  late SharedPreferences prefs;
   List<String> filter = ['Year', 'Month', 'Day'];
   String? selectedFilter = 'Month';
 
@@ -44,10 +44,11 @@ class _AgentPerformanceState extends State<AgentPerformance> {
    AgentPerformanceModel? _agentPerformanceModel;
 
   Future<void> getCustomer() async {
+    prefs = await SharedPreferences.getInstance();
     _chartsData.clear();
     _monthData.clear();
     _dayData.clear();
-    _agentPerformanceModel = await Services.AgentPer(selectedFilter.toString());
+    _agentPerformanceModel = await Services.AgentPer(prefs.getString('token').toString(),selectedFilter.toString());
     print("prefs!.getString(token).toString()${prefs!.getString("token").toString()}");
     if(_agentPerformanceModel!.status == true){
 

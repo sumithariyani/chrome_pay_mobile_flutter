@@ -28,7 +28,7 @@ class _EditProfileState extends State<EditProfile>{
 
   Future<void> getAgent() async {
     prefs = await SharedPreferences.getInstance();
-    agentProfileModel = await Services.UpdateAgentProfile(prefs.getString('ID').toString());
+    agentProfileModel = await Services.UpdateAgentProfile(prefs.getString('token').toString());
 
     if(agentProfileModel?.status==true){
       print('ho0');
@@ -47,7 +47,7 @@ class _EditProfileState extends State<EditProfile>{
 
   Future<void> Update(String name, String phone, String email, String address, String city, String country, String postcode,) async {
     prefs = await SharedPreferences.getInstance();
-    agentUpdateModel = await Services.AgentUpdate(prefs.getString('ID').toString(), name , phone, email, address, country, city, postcode);
+    agentUpdateModel = await Services.AgentUpdate(prefs.getString('token').toString(), name , phone, email, address, country, city, postcode);
 
     if(agentUpdateModel?.status==true){
       print('ho0');

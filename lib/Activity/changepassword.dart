@@ -22,7 +22,7 @@ class _ChangePasswordState extends State<ChangePassword>{
 
   Future<void> Update() async {
     prefs = await SharedPreferences.getInstance();
-    _changePaswordModel = await Services.ChangePassword(prefs.getString("ID").toString(), oldPassword.text,
+    _changePaswordModel = await Services.ChangePassword(prefs.getString("token").toString(), oldPassword.text,
         newPassword.text, confirmPassword.text);
 
     if(_changePaswordModel?.status==true){

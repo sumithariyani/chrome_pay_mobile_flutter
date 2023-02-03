@@ -12,6 +12,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../Services/Services.dart';
 import 'address.dart';
@@ -36,13 +38,15 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   var length;
   var imageUrl;
   ImageUploadModel? _imageUploadModel;
+  SharedPreferences? prefs;
 
   Future<void> uploadImage() async{
+    prefs = await SharedPreferences.getInstance();
     print("function");
     try {
       if (widget.imagepath != "") {
         print("condition");
-        _imageUploadModel = await Services.ProfileImage(File(widget.imagepath));
+        _imageUploadModel = await Services.ProfileImage(prefs!.getString("token").toString(), File(widget.imagepath));
         if(_imageUploadModel?.status!=false){
           print("imageUrl ${_imageUploadModel?.data}");
           imageUrl = _imageUploadModel?.data;

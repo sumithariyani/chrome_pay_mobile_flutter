@@ -2,6 +2,7 @@ import 'package:chrome_pay_mobile_flutter/Models/Cust%20dash%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Personal extends StatefulWidget {
@@ -16,9 +17,12 @@ class Personal extends StatefulWidget {
 class _personalState extends State<Personal> {
 
  CustDetailModel? custDetailModel;
+ SharedPreferences? prefs;
 
   Future<void> getCustomer() async {
-    custDetailModel = await Services.GetCustDetail(widget.id);
+    prefs = await SharedPreferences.getInstance();
+
+    custDetailModel = await Services.GetCustDetail(prefs!.getString("token").toString(), widget.id);
 
     if(custDetailModel!.status!){
       print("personal"+widget.id);
