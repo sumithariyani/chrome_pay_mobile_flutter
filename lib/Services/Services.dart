@@ -31,8 +31,8 @@ import '../Models/customer Register Model.dart';
 class Services {
 
   // static String BaseUrl = "http://192.168.1.158:3300/";
-  static String BaseUrl = "http://192.168.1.158:5000/";
-  // static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
+  // static String BaseUrl = "http://192.168.1.158:5000/";
+  static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:5000/";
 
   static String Login = BaseUrl+"v1/auth/Login";
   static String ForgotPassword = BaseUrl+"v1/auth/ForgotPassword";
@@ -305,7 +305,7 @@ class Services {
     return user;
   }
 
-  static Future<Object> CustRegister(String token, String name,
+  static Future<Object> CustRegister(String token, String image, String name,
       String number, String dob, String gender, String email, String nationality, String profession, String kinName, String kinPhone, String age, String city) async {
     var uri = CustomerRegistration;
     var request = new http.MultipartRequest("POST", Uri.parse(uri));
@@ -327,7 +327,7 @@ class Services {
     request.fields["nextFOKinName"] = kinName;
     request.fields["age"] = age;
     request.fields["city"] = city;
-    // request.fields["IDphoto"] = image;
+    request.fields["IDphoto"] = image;
     // request.files.add(multipart);
 
     // print('request ${multipart}');

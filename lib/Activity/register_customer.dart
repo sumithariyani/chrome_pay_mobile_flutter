@@ -722,7 +722,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
             MapSample(
-                // imageUrl,
+                imageUrl,
                 fullName.text,
                 _phone.toString(),
                 _dob.toString(),
