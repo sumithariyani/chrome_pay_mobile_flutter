@@ -50,7 +50,7 @@ class _ActiveDidState extends State<Active_Did> {
   Future<void> _verifyCust(String phone, String id) async {
     prefs = await SharedPreferences.getInstance();
     print("id${id}");
-    _customerViewOtpModel = await Services.CustViewOtp(prefs!.getString("token").toString(), phone);
+    _customerViewOtpModel = await Services.CustViewOtp(phone);
 
     if(_customerViewOtpModel?.status!= false){
       Fluttertoast.showToast(msg: "${_customerViewOtpModel?.msg}",
@@ -62,7 +62,7 @@ class _ActiveDidState extends State<Active_Did> {
   Future<void> _verifyCustOtp(String phone,) async {
     prefs = await SharedPreferences.getInstance();
     otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
-    _verifyCustViewOtpModel = await Services.VerifyCustomerViewOtp(prefs!.getString("token").toString(),phone, otp!);
+    _verifyCustViewOtpModel = await Services.VerifyCustomerViewOtp(phone, otp!);
 
     if(_verifyCustViewOtpModel?.status!= false){
       Fluttertoast.showToast(msg: "${_verifyCustViewOtpModel?.msg}",
@@ -164,7 +164,7 @@ class _ActiveDidState extends State<Active_Did> {
                                           Container(
                                             margin: EdgeInsets.only(bottom: 50.0),
                                             child: FutureBuilder<AllDidModel>(
-                                              future: Services.CustomerList(prefs!.getString('token').toString(), _page!),
+                                              future: Services.CustomerList(prefs!.getString('ID').toString(), _page!),
                                               builder: (mcontext, snapshot){
                                                 if (snapshot.hasData){
                                                   _isPageLoading = false;

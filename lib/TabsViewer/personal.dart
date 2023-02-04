@@ -22,7 +22,7 @@ class _personalState extends State<Personal> {
   Future<void> getCustomer() async {
     prefs = await SharedPreferences.getInstance();
 
-    custDetailModel = await Services.GetCustDetail(prefs!.getString("token").toString(), widget.id);
+    custDetailModel = await Services.GetCustDetail(widget.id);
 
     if(custDetailModel!.status!){
       print("personal"+widget.id);

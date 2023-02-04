@@ -19,17 +19,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController email = TextEditingController();
 
   Future<void> forgotPassWord() async {
-    _forgotPasswordModel = await Services.ForgotPass(email.text);
-    if(_forgotPasswordModel?.status!= false){
-      Fluttertoast.showToast(msg: "${_forgotPasswordModel?.msg}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPassOtp(email.text),));
-    }else{
-      Fluttertoast.showToast(msg: "${_forgotPasswordModel?.msg}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-    }
+    // _forgotPasswordModel = await Services.ForgotPass(email.text);
+    // if(_forgotPasswordModel?.status!= false){
+    //   Fluttertoast.showToast(msg: "${_forgotPasswordModel?.msg}",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM);
+    //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPassOtp(email.text),));
+    // }else{
+    //   Fluttertoast.showToast(msg: "${_forgotPasswordModel?.msg}",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM);
+    // }
   }
   @override
   Widget build(BuildContext context) {

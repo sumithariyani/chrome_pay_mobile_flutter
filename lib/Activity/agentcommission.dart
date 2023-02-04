@@ -244,7 +244,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                             if (snapshot.hasData){
                               _isPageLoading = false;
 
-                              return Container(
+                              Container(
                                 // width: double.infinity,
                                 child: ListView.builder(
                                   padding: EdgeInsets.all(12.0),
@@ -346,8 +346,10 @@ class _AgentCommissionState extends State<AgentCommission> {
                                 ),
                               );
                             }else if (snapshot.hasError){
-                              return Center(
-                                child: Text('Not Found'),
+                              return Expanded(
+                                child: Center(
+                                  child: Text('Not Found'),
+                                ),
                               );
                             }
                             return const CircularProgressIndicator();

@@ -22,24 +22,24 @@ class _NewPassChangeState extends State<NewPassChange>{
   TextEditingController confirmPass = TextEditingController();
 
   Future<void> forgotPassWord() async {
-    _newChangePassModel = await Services.NewChangePass(widget.email!, newPass.text, confirmPass.text);
-    if(_newChangePassModel?.status!= false){
-      Fluttertoast.showToast(msg: "${_newChangePassModel?.msg}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (BuildContext context) => Login(),
-        ),
-            (Route route) => false,
-      );
-
-    }else{
-      Fluttertoast.showToast(msg: "${_newChangePassModel?.msg}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-    }
+    // _newChangePassModel = await Services.NewChangePass(widget.email!, newPass.text, confirmPass.text);
+    // if(_newChangePassModel?.status!= false){
+    //   Fluttertoast.showToast(msg: "${_newChangePassModel?.msg}",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM);
+    //
+    //   Navigator.of(context).pushAndRemoveUntil(
+    //     MaterialPageRoute(
+    //       builder: (BuildContext context) => Login(),
+    //     ),
+    //         (Route route) => false,
+    //   );
+    //
+    // }else{
+    //   Fluttertoast.showToast(msg: "${_newChangePassModel?.msg}",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM);
+    // }
   }
 
   @override

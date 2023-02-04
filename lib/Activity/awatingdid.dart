@@ -121,8 +121,7 @@ class _AwatingState extends State<AwatingDid>{
                                         builder: (mcontext, snapshot){
                                           if (snapshot.hasData){
                                             _isPageLoading = false;
-
-                                            return Container(
+                                            Container(
                                               width: double.infinity,
                                               child: ListView.builder(
                                                 scrollDirection: Axis.vertical,
@@ -219,7 +218,7 @@ class _AwatingState extends State<AwatingDid>{
                                                 physics: NeverScrollableScrollPhysics(),
                                               ),
                                             );
-                                          }else {
+                                          }else if (snapshot.hasError){
                                             return Center(
                                               child: Text('Not Found'),
                                             );

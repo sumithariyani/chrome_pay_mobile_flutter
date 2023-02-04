@@ -21,7 +21,7 @@ class _FinancialActivitesState extends State<FinancialActivites>{
   Future<void> getCustomer() async {
     prefs = await SharedPreferences.getInstance();
 
-    _financialModel = await Services.Finance(prefs!.getString("token").toString(), widget.id);
+    _financialModel = await Services.Finance(widget.id);
 
     if(_financialModel!.status!){
       print("personal"+widget.id);

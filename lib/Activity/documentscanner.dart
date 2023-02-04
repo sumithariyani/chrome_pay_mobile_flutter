@@ -13,7 +13,6 @@ import '../Services/Services.dart';
 import 'linked_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class DocumentScanner extends StatefulWidget {
 
   String phone = "";
@@ -65,7 +64,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
     try {
       if (_residnceImage != null) {
         print("condition");
-        _imageUploadModel = await Services.ResidenceImage(prefs!.getString("token").toString(), _residnceImage!);
+        _imageUploadModel = await Services.ResidenceImage(_residnceImage!);
         if(_imageUploadModel?.status!=false){
           print("residanceUrl ${_imageUploadModel?.data}");
           residanceUrl = _imageUploadModel?.data;
@@ -82,7 +81,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
     try {
       if (_documentImage != null) {
         print("condition");
-        _imageUploadModel = await Services.DocumentImage(prefs!.getString("token").toString(), _documentImage!);
+        _imageUploadModel = await Services.DocumentImage(_documentImage!);
         if(_imageUploadModel?.status!=false){
           print("documentUrl ${_imageUploadModel?.data}");
           documentUrl = _imageUploadModel?.data;
@@ -99,7 +98,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
     try {
       if (_registerImage != null) {
         print("condition");
-        _imageUploadModel = await Services.RegistrationImage(prefs!.getString("token").toString(), _registerImage!);
+        _imageUploadModel = await Services.RegistrationImage(_registerImage!);
         if(_imageUploadModel?.status!=false){
           print("registrationUrl ${_imageUploadModel?.data}");
           registrationUrl = _imageUploadModel?.data;
@@ -185,7 +184,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   Future<void> scan() async{
     prefs = await SharedPreferences.getInstance();
-    _documentScannerModel = await Services.DocumentScan(prefs!.getString("token").toString(), residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email, widget.age, widget.city,);
+    _documentScannerModel = await Services.DocumentScan(residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email as String, widget.age as int, widget.city,);
 
     if(_documentScannerModel!.service?.allMatches("Linked") != null){
 
@@ -214,7 +213,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
   Future<void> verify() async{
     prefs = await SharedPreferences.getInstance();
     otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
-    _verifyCustModel = await Services.VerifyCust(prefs!.getString("token").toString(), otp!, widget.phone);
+    _verifyCustModel = await Services.VerifyCust(otp!, widget.phone);
 
     if(_verifyCustModel!.status == true){
       print('true>>>>>>>>');

@@ -105,7 +105,7 @@ class _AgentDashBoard extends State<Agent> {
                                           ],begin: Alignment.topLeft, end: Alignment.topRight)
                                       ),
                                       width: MediaQuery.of(context).size.width,
-                                      height: 100,
+                                      height: 110,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.start,
