@@ -606,7 +606,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                controller: numberKin,
                                                maxLength: 10,
                                                keyboardType: TextInputType.number,
-                                               maxLength: 10,
                                                decoration: InputDecoration(
                                                  counterText: "",
                                                  prefixIcon: Container(

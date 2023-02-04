@@ -28,7 +28,7 @@ class _LoginFormState extends State <Login> {
 
     SharedPreferences custPrefs = await SharedPreferences.getInstance();
 
-    if (loginModel.status!){
+    if (loginModel.status!=false){
       prefs?.setString('loginStatus', loginModel.Login_status.toString());
       setState(() {
         if (loginModel.Login_status!.matchAsPrefix("agent") != null){
@@ -50,7 +50,7 @@ class _LoginFormState extends State <Login> {
               MaterialPageRoute(
                 builder: (context) => CustomerDash(),));
         }
-        else{
+        if(loginModel.status!=true){
           prefs?.setBool('islogin', false);
           // custPrefs.setBool('custislogin', false);
           Fluttertoast.showToast(msg: "${loginModel.msg}",
