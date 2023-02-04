@@ -250,7 +250,7 @@ class _LoginFormState extends State <Login> {
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.BOTTOM);
                                     }else{
-                                      LoginMethod(email.text, password.text);
+                                      LoginMethod(email.text.trim(), password.text.trim());
                                       print("print"+email.text+password.text);
                                     }
                                   },

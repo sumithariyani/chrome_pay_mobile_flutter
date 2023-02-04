@@ -46,7 +46,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
     try {
       if (widget.imagepath != "") {
         print("condition");
-        _imageUploadModel = await Services.ProfileImage(prefs!.getString("token").toString(), File(widget.imagepath));
+        _imageUploadModel = await Services.ProfileImage(File(widget.imagepath));
         if(_imageUploadModel?.status!=false){
           print("imageUrl ${_imageUploadModel?.data}");
           imageUrl = _imageUploadModel?.data;
@@ -199,7 +199,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                      height: 70,
                                           alignment: Alignment.center,
                                           margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-
                                           child: CircleAvatar(
                                             radius: 60,
                                             backgroundColor: Colors.transparent,
@@ -295,7 +294,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                    ),
                                                  Expanded(
                                                    child: Container(
-                                                     margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                                     margin: EdgeInsets.symmetric(horizontal: 8.0),
                                                      child: TextField(
                                                        controller: mobileNumber,
                                                        keyboardType: TextInputType.phone,
@@ -606,6 +605,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              child: TextField(
                                                controller: numberKin,
                                                keyboardType: TextInputType.number,
+                                               maxLength: 10,
                                                decoration: InputDecoration(
                                                  counterText: "",
                                                  prefixIcon: Container(

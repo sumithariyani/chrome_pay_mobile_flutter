@@ -26,17 +26,18 @@ class LinkedServices extends StatefulWidget {
 
 
    Future<void> scan() async{
-     prefs = await SharedPreferences.getInstance();
-     _organisationModel = await Services.OrgList(prefs!.getString("token").toString());
-     print("assetType${assetType}");
-     setState(() {
-       for(int i=0; i< _organisationModel!.org!.length; i++){
-         _orgList.add(_organisationModel!.org![i]!.id ?? "");
-         // assetType = ['${_organisationModel!.org![i]!.name }'];
-         selectedAssetType = 'Select Asset';
-         assetType?.add('${_organisationModel!.org![i]!.name }');
-       }
-     });
+     // prefs = await SharedPreferences.getInstance();
+     // _organisationModel = await Services.OrgList(prefs!.getString("token").toString());
+     // print("assetType${assetType}");
+     // setState(() {
+     //   for(int i=0; i< _organisationModel!.org!.length; i++){
+     //     _orgList.add(_organisationModel!.org![i]!.id ?? "");
+     //     // assetType = ['${_organisationModel!.org![i]!.name }'];
+     //     selectedAssetType = 'Select Asset';
+     //     assetType?.add('${_organisationModel!.org![i]!.name }');
+     //     assetType?.addAll('${_organisationModel!.org![i]!.name }' as Iterable<String>);
+     //   }
+     // });
 
      }
 
