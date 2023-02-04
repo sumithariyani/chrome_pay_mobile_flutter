@@ -25,7 +25,8 @@ class CameraDetectionPreview extends StatelessWidget {
             fit: BoxFit.fitHeight,
             child: Container(
               width: width,
-              height: width * _cameraService.cameraController!.value.aspectRatio,
+              // height: width * _cameraService.cameraController!.value.aspectRatio,
+              height: width * 2,
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[

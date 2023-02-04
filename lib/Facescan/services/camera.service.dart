@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
@@ -14,12 +13,13 @@ class CameraService {
   String? get imagePath => this._imagePath;
 
   Future<void> initialize() async {
-    if (_cameraController != null) return;
-    CameraDescription description = await _getCameraDescription();
-    await _setupCameraController(description: description);
-    this._cameraRotation = rotationIntToImageRotation(
-      description.sensorOrientation,
-    );
+
+     if (_cameraController != null) return;
+     CameraDescription description = await _getCameraDescription();
+     await _setupCameraController(description: description);
+     this._cameraRotation = rotationIntToImageRotation(
+       description.sensorOrientation,
+     );
 
 
   }
@@ -52,8 +52,8 @@ class CameraService {
   }) async {
     this._cameraController = CameraController(
       description,
-      ResolutionPreset.max,
-      // enableAudio: false,
+      ResolutionPreset.high,
+      enableAudio: false,
     );
     await _cameraController?.initialize();
   }

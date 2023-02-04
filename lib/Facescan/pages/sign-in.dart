@@ -32,7 +32,6 @@ class SignIn extends StatefulWidget {
 class SignInState extends State<SignIn> {
   CameraService _cameraService = locator<CameraService>();
   FaceDetectorService _faceDetectorService = locator<FaceDetectorService>();
-  FaceDetectorService _mlKitService = locator<FaceDetectorService>();
   MLService _mlService = locator<MLService>();
   final TextEditingController _userTextEditingController =
   TextEditingController(text: '');
@@ -46,17 +45,9 @@ class SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    _initializeServices();
     _start();
   }
-  bool loading = true;
-  _initializeServices() async {
-    setState(() => loading = true);
-    await _cameraService.initialize();
-    await _mlService.initialize();
-    _mlKitService.initialize();
-    setState(() => loading = false);
-  }
+
 
 
   @override
@@ -278,11 +269,10 @@ class SignInState extends State<SignIn> {
     Widget? fab;
     if (!_isPictureTaken) fab = AuthButton(onTap: onTap);
 
+
     return Scaffold(
       key: scaffoldKey,
-      body: loading ? Center(
-        child: CircularProgressIndicator(),
-      ):Stack(
+      body:Stack(
         children: [body, header],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

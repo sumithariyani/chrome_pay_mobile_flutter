@@ -61,9 +61,16 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   void initState() {
     uploadImage();
     fullName.text = "${widget.name}";
+    _initializeServices();
     super.initState();
   }
-
+  _initializeServices() async {
+    setState(() => loading = true);
+    await _cameraService.initialize();
+    await _mlService.initialize();
+    _mlKitService.initialize();
+    setState(() => loading = false);
+  }
 
 
   Future<void> pickImage() async {
@@ -599,7 +606,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                controller: numberKin,
                                                maxLength: 10,
                                                keyboardType: TextInputType.number,
-                                               maxLength: 10,
                                                decoration: InputDecoration(
                                                  counterText: "",
                                                  prefixIcon: Container(
