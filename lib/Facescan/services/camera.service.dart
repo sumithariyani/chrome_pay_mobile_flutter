@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
+import 'package:chrome_pay_mobile_flutter/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
@@ -24,9 +25,10 @@ class CameraService {
   }
 
   Future<CameraDescription> _getCameraDescription() async {
-    List<CameraDescription> cameras = await availableCameras();
-    return cameras.firstWhere((CameraDescription camera) =>
-    camera.lensDirection == CameraLensDirection.front);
+    // List<CameraDescription> cameras = await availableCameras();
+    // return cameras.firstWhere((CameraDescription camera) =>
+    // camera.lensDirection == CameraLensDirection.front);
+    return cameras[0];
   }
 
   Future _setupCameraController({
@@ -34,8 +36,8 @@ class CameraService {
   }) async {
     this._cameraController = CameraController(
       description,
-      ResolutionPreset.high,
-      enableAudio: false,
+      ResolutionPreset.max,
+      // enableAudio: false,
     );
     await _cameraController?.initialize();
   }
