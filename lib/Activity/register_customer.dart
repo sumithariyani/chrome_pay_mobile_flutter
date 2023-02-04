@@ -204,12 +204,20 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                             backgroundColor: Colors.transparent,
                                             child: InkWell(
                                               onTap: (){
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext context) => SignIn(),
-                                                  ),
-                                                );
+                                                if(loading==false) {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (
+                                                          BuildContext context) =>
+                                                          SignIn(),
+                                                    ),
+                                                  );
+                                                }else{
+                                                  Fluttertoast.showToast(msg: "please wait and try again",
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      gravity: ToastGravity.CENTER);
+                                                }
                                                 // pickImage();
                                               },
                                                 child: ClipOval(
@@ -727,7 +735,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                 _phone.toString(),
                 _dob.toString(),
                 _radioVal.toString(),
-                email.text,
+                email.text.replaceAll(" ", ""),
                 age.text,
                 city.text,
                 selectedNationality.toString(),
