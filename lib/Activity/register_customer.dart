@@ -62,16 +62,9 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
     uploadImage();
     fullName.text = "${widget.name}";
     super.initState();
-    _initializeServices();
   }
 
-  _initializeServices() async {
-    setState(() => loading = true);
-    await _cameraService.initialize();
-    await _mlService.initialize();
-    _mlKitService.initialize();
-    setState(() => loading = false);
-  }
+
 
   Future<void> pickImage() async {
     try{
