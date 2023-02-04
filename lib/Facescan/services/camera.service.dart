@@ -1,8 +1,6 @@
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
-import 'package:chrome_pay_mobile_flutter/main.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraService {
@@ -22,13 +20,31 @@ class CameraService {
     this._cameraRotation = rotationIntToImageRotation(
       description.sensorOrientation,
     );
+
+
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final CameraController? cameraController = _cameraController;
+
+    // App state changed before we got the chance to initialize.
+    if (cameraController == null || !cameraController.value.isInitialized) {
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      _setupCameraController( description:cameraController.description);
+    }
   }
 
   Future<CameraDescription> _getCameraDescription() async {
-    // List<CameraDescription> cameras = await availableCameras();
-    // return cameras.firstWhere((CameraDescription camera) =>
-    // camera.lensDirection == CameraLensDirection.front);
-    return cameras[0];
+    List<CameraDescription> cameras = await availableCameras();
+    return cameras.firstWhere((CameraDescription camera) =>
+    camera.lensDirection == CameraLensDirection.front);
+    // return cameras[0];
   }
 
   Future _setupCameraController({
