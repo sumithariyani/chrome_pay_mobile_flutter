@@ -35,6 +35,9 @@ class Services {
   static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
 
   static String Login = BaseUrl+"agent_login_new";
+  static String ForgotPassword = BaseUrl+"AgentforgotPassword/";
+  static String ForgotPasswordOtp = BaseUrl+"AgentForgetPassVerifyOtp";
+  static String NewChangePassword = BaseUrl+"AgentchangePassword";
   static String AllDid = BaseUrl+"agentcustomerList/";
   static String AwatingDid = BaseUrl+"AgentAwaiting/";
   static String AgentCommisssion = BaseUrl+"commissionlist/";
@@ -87,6 +90,63 @@ class Services {
     LoginModel user = LoginModel.fromJson(data);
     return user;
     // return LoginModel();
+  }
+
+  static Future<ForgotPasswordModel> ForgotPass(String email) async{
+    final params = {
+      "email": email,
+    };
+
+    http.Response response = await http.post(Uri.parse(ForgotPassword), body: params);
+    print("ForgotPassword "+ response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      ForgotPasswordModel user = ForgotPasswordModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
+
+  static Future<ForgotPassOtpModel> ForgotPassOtp(String email, String otp) async{
+    final params = {
+      "email": email,
+      "otp": otp,
+    };
+
+    http.Response response = await http.post(Uri.parse(ForgotPasswordOtp), body: params);
+    print("ForgotPasswordOtp "+ response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      ForgotPassOtpModel user = ForgotPassOtpModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
+
+  static Future<NewChangePassModel> NewChangePass(String email, String newPass, String confirmPass) async{
+    final params = {
+      "email": email,
+      "newPassword": newPass,
+      "confirmPassword": confirmPass,
+    };
+
+    http.Response response = await http.post(Uri.parse(NewChangePassword), body: params);
+    print("NewChangePassword "+ response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      NewChangePassModel user = NewChangePassModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
   }
 
   static Future<AllDidModel> CustomerList(String agent_id, int page) async {

@@ -182,6 +182,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   }
 
+  
   Future<void> scan() async{
     prefs = await SharedPreferences.getInstance();
     _documentScannerModel = await Services.DocumentScan(residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email as String, widget.age as int, widget.city,);
