@@ -605,6 +605,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                            Container(
                                              child: TextField(
                                                controller: numberKin,
+                                               maxLength: 10,
                                                keyboardType: TextInputType.number,
                                                decoration: InputDecoration(
                                                  counterText: "",
@@ -647,7 +648,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                        height: 50,
                        child: MaterialButton(
                          onPressed: () {
-                           navigaterUser();
+                           navigaterUser(context);
                          },
                          textColor: Colors.white,
                          child: const Padding(
@@ -668,7 +669,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
 
   }
 
-  void navigaterUser() {
+  void navigaterUser(BuildContext context) {
 
     _phone = selectedCode!.substring(1)! + mobileNumber.text;
     print(_phone);
