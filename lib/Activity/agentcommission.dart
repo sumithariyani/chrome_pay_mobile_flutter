@@ -244,7 +244,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                             if (snapshot.hasData){
                               _isPageLoading = false;
 
-                              Container(
+                              return Container(
                                 // width: double.infinity,
                                 child: ListView.builder(
                                   padding: EdgeInsets.all(12.0),

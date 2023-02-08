@@ -36,8 +36,10 @@ class _AgentPerformanceState extends State<AgentPerformance> {
   late SharedPreferences prefs;
   List<String> filter = ['Year', 'Month', 'Day'];
   String? selectedFilter = 'Month';
+  bool _isPageLoading = false;
 
- late List<charts.Series<Sales,String>> _chartsData=[];
+
+  late List<charts.Series<Sales,String>> _chartsData=[];
  late List<charts.Series<_Month,String>> _monthData=[];
  late List<charts.Series<_Day,String>> _dayData=[];
 
@@ -93,6 +95,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
           _Month('Dec', _agentPerformanceModel?.month?.December.toString()),
       ];
 
+        charts.ColorUtil.fromDartColor(Colors.red);
        _monthData = [
         charts.Series(
           id: "Month",
@@ -125,7 +128,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
           data: _data,
           domainFn: (_Day day,__) => day.day.toString(),
           measureFn: (_Day day,__) => int.parse(day.sales.toString()),
-        )
+        ),
       ];
     }
     }
@@ -310,51 +313,54 @@ class _AgentPerformanceState extends State<AgentPerformance> {
            Expanded(
              child: Container(
                child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.end,
                  children: [
-                 Container(
-                   width: 110,
-                   height: 50,
-                   margin: EdgeInsets.all(10),
-                 alignment: Alignment.topRight,
-                   decoration: BoxDecoration(
-                       border: Border.all(color: Colors.grey),
-                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                       color: const Color(0xc3dcfbee)
-                   ),
-                 child: Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                   child: DropdownButtonFormField<String>(
-                     decoration: InputDecoration(
-                         border: InputBorder.none
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.end,
+                   children: [
+                     Container(
+                       width: 110,
+                       height: 50,
+                       margin: EdgeInsets.all(10),
+                     alignment: Alignment.topRight,
+                       decoration: BoxDecoration(
+                           border: Border.all(color: Colors.grey),
+                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                           color: const Color(0xc3dcfbee)
+                       ),
+                     child: Padding(
+                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                       child: DropdownButtonFormField<String>(
+                         decoration: InputDecoration(
+                             border: InputBorder.none
+                         ),
+                         icon: Icon(Icons.keyboard_arrow_down),
+                         value: selectedFilter,
+                         items: filter.
+                         map((item) => DropdownMenuItem<String>(
+                             value: item,
+                             child: Text(item, style: const TextStyle(fontSize: 18),)
+                         ))
+                             .toList(),
+                         onChanged: (item) => setState(() {
+                           selectedFilter = item;
+                           getCustomer();
+                         }),
+                       ),
                      ),
-                     icon: Icon(Icons.keyboard_arrow_down),
-                     value: selectedFilter,
-                     items: filter.
-                     map((item) => DropdownMenuItem<String>(
-                         value: item,
-                         child: Text(item, style: const TextStyle(fontSize: 18),)
-                     ))
-                         .toList(),
-                     onChanged: (item) => setState(() {
-                       selectedFilter = item;
-                       getCustomer();
-                     }),
-                   ),
-                 ),
                ),
-                 if(_monthData!.isNotEmpty) Expanded(child:
-                    charts.BarChart(_monthData!)
+                   ],
+                 ),
+                     if(_monthData!.isNotEmpty) Expanded(child:
+                     charts.BarChart(_monthData!)
+                     ),
+
+                   if(_chartsData!.isNotEmpty) Expanded(child:
+                   charts.BarChart(_chartsData!)
                    ),
 
-                 if(_chartsData!.isNotEmpty) Expanded(child:
-                    charts.BarChart(_chartsData!)
+                   if(_dayData!.isNotEmpty) Expanded(child:
+                   charts.BarChart(_dayData!)
                    ),
-
-                 if(_dayData!.isNotEmpty) Expanded(child:
-                    charts.BarChart(_dayData!)
-                   ),
-
                  ],
                ),
              ),
@@ -364,17 +370,18 @@ class _AgentPerformanceState extends State<AgentPerformance> {
      ),
    );
   }
- void _chart() {
-    if(_chartsData!=null){
-         charts.BarChart(_chartsData!);
-    }
-    if(_monthData!=null){
-        charts.BarChart(_monthData!);
-
-    }
-    if(_dayData!=null){
-        charts.BarChart(_dayData!);
-    }
+  _chart() {
+    // if(_chartsData!=null){
+    //      charts.BarChart(_chartsData!);
+    // }
+    // if(_monthData!=null){
+    //     charts.BarChart(_monthData!);
+    //
+    // }
+    // if(_dayData!=null){
+    //     charts.BarChart(_dayData!);
+    // }
+    _isPageLoading = false;
   }
 }
 

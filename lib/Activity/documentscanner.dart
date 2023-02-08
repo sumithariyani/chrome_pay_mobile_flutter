@@ -12,6 +12,7 @@ import '../Models/Verify Cust Model.dart';
 import '../Services/Services.dart';
 import 'linked_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class DocumentScanner extends StatefulWidget {
 
@@ -46,8 +47,10 @@ class _DocumentScanerState extends State <DocumentScanner> {
   String? selectedAssetType = 'Select Asset';
   List<String> assetId = ['Select Id', 'Passport', 'Car', 'House', 'Store'];
   String? selectedAssetId = 'Select Id';
-
+  
   File? _residnceImage,_documentImage,_registerImage;
+  CroppedFile? _croppedFile;
+
   String base64Image = "";
   String? otp;
   var stream;
@@ -59,11 +62,11 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   Future<void> residenceImage() async{
     prefs = await SharedPreferences.getInstance();
-
     print("function");
     try {
       if (_residnceImage != null) {
-        print("condition");
+        print("condition${_residnceImage?.path}");
+
         _imageUploadModel = await Services.ResidenceImage(_residnceImage!);
         if(_imageUploadModel?.status!=false){
           print("residanceUrl ${_imageUploadModel?.data}");
@@ -92,6 +95,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
     }
   }
 
+
   Future<void> registraionImage() async{
     prefs = await SharedPreferences.getInstance();
     print("function");
@@ -111,16 +115,20 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   Future<void> pickImage() async {
     try{
-      var _resImage;
-
-      _resImage = await ImagePicker().
-      pickImage(source: ImageSource.camera);
+      // var _resImage;
+      // final _resImage =
+      // await ImagePicker().pickImage(source: ImageSource.gallery);
+      final _resImage =
+      await ImagePicker().pickImage(source: ImageSource.gallery);
+      // _resImage = await ImagePicker().
+      // pickImage(source: ImageSource.camera);
 
       setState((){
         if(_resImage != null){
           setState(() {
             _residnceImage = File(_resImage.path);
-            residenceImage();
+            _cropImage();
+
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
             // print('base64Image ${base64Image}');
           });
@@ -133,6 +141,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
     }
 
   }
+
 
   void pickDocumentImage() async {
     try{
@@ -967,6 +976,49 @@ class _DocumentScanerState extends State <DocumentScanner> {
       );
     });
 
+  }
+  Future<void> _cropImage() async {
+    if (_residnceImage != null) {
+      XFile newfile=new XFile(_residnceImage!.path);
+      print("_residnceImage ${_residnceImage}");
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: newfile.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+            viewPort:
+            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        // setState(() {
+
+          _residnceImage = new File(croppedFile.path);
+          // _residnceImage = croppedFile;
+          residenceImage();
+        // });
+      }
+    }
   }
 }
 

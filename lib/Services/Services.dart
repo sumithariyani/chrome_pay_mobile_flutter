@@ -21,18 +21,20 @@ import '../Models/Document Scanner Model.dart';
 import '../Models/ForgotPassOtpModel.dart';
 import '../Models/ForgotPasswordModel.dart';
 import '../Models/Image Upload Model.dart';
+import '../Models/LinkedServiceOtpModel.dart';
 import '../Models/Login Model.dart';
 import '../Models/NewChangePassModel.dart';
 import '../Models/OrganisationModel.dart';
 import '../Models/Verify Cust Model.dart';
 import '../Models/VerifyCustViewOtpModel.dart';
+import '../Models/VerifyLinkedServiceOtpModel.dart';
 import '../Models/customer Register Model.dart';
 
 class Services {
 
-  // static String BaseUrl = "http://192.168.1.158:3300/";
+  static String BaseUrl = "http://192.168.1.158:3300/";
   // static String BaseUrl = "http://192.168.1.158:5000/";
-  static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
+  // static String BaseUrl = "http://ec2-user@ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/";
 
   static String Login = BaseUrl+"agent_login_new";
   static String ForgotPassword = BaseUrl+"AgentforgotPassword/";
@@ -49,7 +51,8 @@ class Services {
   static String CustomerRegistration = BaseUrl+"createCustomerByOrg1/";
   static String DocumentScanner = BaseUrl+"createCustomerByOrg2";
   static String VerifyCustOtp = BaseUrl+"new_verify_customer";
-  static String OrganisationList = BaseUrl+"orgList";
+  static String LinkedServicesOtp = BaseUrl+"Cust_Linked_Srevice_send_OTP";
+  static String VerifyLinkedServicesOtp = BaseUrl+"Cust_Linked_Srevice/";
   static String ImageUploader = BaseUrl+"globalImageUploader";
   static String CustomerViewOtp = BaseUrl+"send_cust_otp_data_view";
   static String VerifyCustViewOtp = BaseUrl+"verify_cust_view_OTP";
@@ -156,7 +159,7 @@ class Services {
     };
 
     print(agent_id);
-    http.Response response = await http.post(Uri.parse(AllDid), body: params);
+    http.Response response = await http.post(Uri.parse(AllDid+agent_id), body: params);
     print("all Did "+response.body);
 
     if (response.statusCode == 200) {
@@ -195,7 +198,7 @@ class Services {
       "token": token,
       "page": page.toString()
     };
-    print(params);
+    print("params>>>>> ${params}");
     http.Response response = await http.post(Uri.parse(AwatingDid+token), body: params);
     print("awating Did "+response.body);
 
@@ -217,7 +220,7 @@ class Services {
       "toDate": toDate
     };
     print(params);
-    http.Response response = await http.post(Uri.parse(AgentCommisssion), body: params);
+    http.Response response = await http.post(Uri.parse(AgentCommisssion+token), body: params);
     print("AgentCommisssion "+response.body);
 
     if (response.statusCode == 200) {
@@ -412,14 +415,38 @@ class Services {
     }
   }
 
-  static Future<OrganisationModel> OrgList() async {
+  static Future<LinkedServiceOtpModel> LinkedService(String DIDref) async {
 
-    http.Response response = await http.get(Uri.parse(OrganisationList));
-    print("OrganisationList " + response.body);
+    final params = {
+      "DIDref": DIDref,
+    };
+    http.Response response = await http.post(Uri.parse(LinkedServicesOtp), body: params);
+    print("LinkedServicesOtp " + response.body);
 
     if (response.statusCode == 200){
       var data = jsonDecode(response.body);
-      OrganisationModel user = OrganisationModel.fromJson(data);
+      LinkedServiceOtpModel user = LinkedServiceOtpModel.fromJson(data);
+      return user;
+    }else{
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
+
+  static Future<VerifyLinkedServiceOtpModel> VerifyLinkedService(String token, String DIDref, String otp) async {
+
+    final params = {
+      "token": token,
+      "DIDref": DIDref,
+      "otp": otp,
+    };
+
+    http.Response response = await http.post(Uri.parse(VerifyLinkedServicesOtp+token), body: params);
+    print("LinkedServicesOtp " + response.body);
+
+    if (response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      VerifyLinkedServiceOtpModel user = VerifyLinkedServiceOtpModel.fromJson(data);
       return user;
     }else{
       print(response.body);

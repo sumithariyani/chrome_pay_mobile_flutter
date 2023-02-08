@@ -14,10 +14,10 @@ class _AwatingState extends State<AwatingDid>{
 
   SharedPreferences? prefs;
   List<String> customerList = [];
-  int _page = 1;
+  int _page = 1;  bool _isPageLoading = false;
+
   final int _limit = 20;
   final _scrollController = ScrollController();
-  bool _isPageLoading = false;
   late AwatingDidModel awatingDidModel;
 
   Future<void> getCustomer() async {
@@ -121,7 +121,7 @@ class _AwatingState extends State<AwatingDid>{
                                         builder: (mcontext, snapshot){
                                           if (snapshot.hasData){
                                             _isPageLoading = false;
-                                            Container(
+                                            return Container(
                                               width: double.infinity,
                                               child: ListView.builder(
                                                 scrollDirection: Axis.vertical,

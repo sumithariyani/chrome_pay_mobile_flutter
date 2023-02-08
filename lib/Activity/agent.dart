@@ -1,3 +1,4 @@
+import 'package:chrome_pay_mobile_flutter/Activity/documentscanner.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/register_customer.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/setting.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +165,7 @@ class _AgentDashBoard extends State<Agent> {
                             onTap: (){
                               Navigator.of(context).push(
                                   MaterialPageRoute(builder:
-                                      (context)=>  LinkedServices("")
+                                      (context)=>  LinkedServices("",)
                               )
                               );
                             },

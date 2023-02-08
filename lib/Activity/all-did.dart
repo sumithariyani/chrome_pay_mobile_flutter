@@ -39,7 +39,8 @@ class _ActiveDidState extends State<Active_Did> {
   Future<void> getCustomer() async {
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
-    allDidModel = await Services.CustomerList(prefs!.getString('token').toString(), _page!);
+    allDidModel = await Services.CustomerList(prefs!.getString('ID').toString(), _page!);
+    print("fgfgghfgfhgfhfID ${prefs!.getString('ID').toString()}");
     setState(() {
       for (int i = 0; i<allDidModel.filter!.length; i++){
         customerList.add(allDidModel.filter![i].id ??"");
@@ -168,7 +169,6 @@ class _ActiveDidState extends State<Active_Did> {
                                               builder: (mcontext, snapshot){
                                                 if (snapshot.hasData){
                                                   _isPageLoading = false;
-
                                                   return Container(
                                                     width: double.infinity,
                                                     child: ListView.builder(
@@ -196,7 +196,7 @@ class _ActiveDidState extends State<Active_Did> {
                                                             shadowColor: Colors.black,
                                                             child: Container(
                                                               width: MediaQuery.of(context).size.width,
-                                                              height: 150,
+                                                              height: 180,
                                                               decoration: BoxDecoration(
                                                                 borderRadius: BorderRadius.circular(20.0),
                                                                 image: const DecorationImage(image: AssetImage('images/all_dids_07.png'),
@@ -248,7 +248,51 @@ class _ActiveDidState extends State<Active_Did> {
                                                                                 )
                                                                             ),
                                                                           ],
-                                                                        )
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsets.all(8.0),
+                                                                          child: Row(
+                                                                            children: [
+                                                                             if(snapshot.data!.filter![index].fingerPrint == 1) Card(
+                                                                                 color: Colors.transparent,
+                                                                                 // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                                                                 elevation: 5,
+                                                                                 shadowColor: Colors.black,
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    decoration: BoxDecoration(
+                                                                                      borderRadius: BorderRadius.circular(5.0),
+                                                                                      color: Colors.white
+                                                                                    ),
+                                                                                    child: Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: Image.asset("images/scan.png",
+                                                                                      ),
+                                                                                    ),
+                                                                                  )
+                                                                             ),
+                                                                              if(snapshot.data!.filter![index].fingerPrint == 1) Card(
+                                                                                 color: Colors.transparent,
+                                                                                 // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                                                                 elevation: 5,
+                                                                                 shadowColor: Colors.black,
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    decoration: BoxDecoration(
+                                                                                      borderRadius: BorderRadius.circular(5.0),
+                                                                                      color: Colors.white
+                                                                                    ),
+                                                                                    child: Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: Image.asset("images/scan.png",
+                                                                                      ),
+                                                                                    ),
+                                                                                  )),
+                                                                            ],
+                                                                          ),
+                                                                        ),
                                                                       ],
                                                                     ),
                                                                   ),

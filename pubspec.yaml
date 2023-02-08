@@ -47,6 +47,7 @@ dependencies:
   image: ^3.0.2
   camera: ^0.10.0
   camera_android: ^0.10.4
+  image_cropper: ^3.0.1
 #  camera_android:
 #    git:
 #      url: https://github.com/OmarHatem28/plugins.git
@@ -135,6 +136,9 @@ flutter:
     - images/home_page_icon_03.png
     - images/home_page_icon_04.png
     - images/home_page_icon_05.png
+    - images/Doc-scan.png
+    - images/scan.png
+    - images/verify.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
