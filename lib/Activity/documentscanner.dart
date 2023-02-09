@@ -119,7 +119,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
       // final _resImage =
       // await ImagePicker().pickImage(source: ImageSource.gallery);
       final _resImage =
-      await ImagePicker().pickImage(source: ImageSource.gallery);
+      await ImagePicker().pickImage(source: ImageSource.camera);
       // _resImage = await ImagePicker().
       // pickImage(source: ImageSource.camera);
 

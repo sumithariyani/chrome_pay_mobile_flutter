@@ -91,9 +91,7 @@ class _LoginFormState extends State <Login> {
     print("token ${token}");
     print("islogin ${islogin}");
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return  Scaffold(
           resizeToAvoidBottomInset: false,
           body: Stack(
               children: [
@@ -270,8 +268,7 @@ class _LoginFormState extends State <Login> {
                 ),
               ]
           )
-      ),
-    );
+      );
   }
 
   void _togglePasswordView(){

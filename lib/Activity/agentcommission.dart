@@ -26,6 +26,7 @@ class _AgentCommissionState extends State<AgentCommission> {
   late AgentCommissionModel agentCommissionModel;
 
   Future<void> getCustomer() async {
+    print("calaghhggj");
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
     agentCommissionModel = await Services.CommissionList(prefs?.getString("token").toString()??"",
@@ -39,7 +40,11 @@ class _AgentCommissionState extends State<AgentCommission> {
 
   @override
   void initState() {
-    getCustomer();
+    if(fromDate == null || toDate == null){
+      print("object success");
+      getCustomer();
+    }
+    print("objectfromDate${fromDate}");
     super.initState();
     getAsync();
     _scrollController.addListener(_scrollListener) ;
@@ -137,19 +142,23 @@ class _AgentCommissionState extends State<AgentCommission> {
                                     firstDate: DateTime(1950),
                                     lastDate: DateTime.now());
                                 if(fromDate != null){
-                                  print('Date Selecte : ${fromDate?.day}-${fromDate?.month}-${fromDate?.year}');
+                                  print('Date Selecte : ${fromDate?.day ??""}-${fromDate?.month ??""}-${fromDate?.year ??""}');
+                                  setState(() {
+                                    selectedFromDate='${fromDate?.year??""}-${fromDate?.month??""}-${fromDate?.day??""}';
+                                    print("selectedFromDate ${selectedFromDate}");
+                                  });
                                 }
-                                setState(() {
-                                  selectedFromDate='${fromDate?.year}-${fromDate?.month}-${fromDate?.day}';
-                                  print("selectedFromDate ${selectedFromDate}");
-                                });
+
                               },
                               child: Row(
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(left: 20.0),
                                     alignment: Alignment.center,
-                                        child: Text('${selectedFromDate??"From Date"}'),
+                                        child: Text('${selectedFromDate??"From Date"}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600
+                                          ),),
                                   ),
                                   Container(
                                       margin: EdgeInsets.only(left: 5.0),
@@ -174,10 +183,11 @@ class _AgentCommissionState extends State<AgentCommission> {
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(1950),
                                     lastDate: DateTime.now());
+
                                 if(toDate != null){
-                                  print('toDate : ${toDate?.day}-${toDate?.month}-${toDate?.year}');
+                                  print('toDate : ${toDate?.day ??""}-${toDate?.month ??""}-${toDate?.year ??""}');
                                   setState(() {
-                                    selectedToDate='${toDate?.year}-${toDate?.month}-${toDate?.day}';
+                                    selectedToDate='${toDate?.year ??""}-${toDate?.month ??""}-${toDate?.day ??""}';
                                     print("selectedToDate ${selectedToDate}");
                                   });
                                 }
@@ -187,12 +197,40 @@ class _AgentCommissionState extends State<AgentCommission> {
                                   Container(
                                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                                       alignment: Alignment.centerRight,
-                                          child: Text('${selectedToDate??"To Date"}'),
+                                          child: Text('${selectedToDate??"To Date"}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600
+                                          ),),
                                     ),
                                   Container(
                                       margin: EdgeInsets.only(right: 20.0),
                                       alignment: Alignment.centerRight,
                                       child: Icon(Icons.keyboard_arrow_down)
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: InkWell(
+                                      onTap: (){
+                                        if(selectedFromDate != null && fromDate != null){
+                                          print(" tap");
+                                          getCustomer();
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xff2CABBB),
+                                              Color(0xff0B527E),
+                                            ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Image.asset("images/vector.png"),
+                                        ),
+                                      ),
+                                    ),
                                   )
                                 ],
                               ),

@@ -39,9 +39,7 @@ class _AgentDashBoard extends State<Agent> {
     List<Widget> routes = [Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
     var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
     var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         body:
         Stack(
@@ -165,7 +163,7 @@ class _AgentDashBoard extends State<Agent> {
                             onTap: (){
                               Navigator.of(context).push(
                                   MaterialPageRoute(builder:
-                                      (context)=>  LinkedServices("",)
+                                      (context)=>  DocumentScanner("","",0,"")
                               )
                               );
                             },
@@ -256,8 +254,7 @@ class _AgentDashBoard extends State<Agent> {
           ],
         ),
 
-      ),
-    );
+      );
   }
 
   void _dialog(){

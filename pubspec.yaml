@@ -139,6 +139,7 @@ flutter:
     - images/Doc-scan.png
     - images/scan.png
     - images/verify.png
+    - images/vector.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

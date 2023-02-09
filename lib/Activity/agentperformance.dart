@@ -1,6 +1,5 @@
 import 'dart:core';
 import 'dart:math';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,17 +16,17 @@ class AgentPerformance extends StatefulWidget {
 }
 class Sales {
   String? year;
-  String? sales;
+  int? sales;
   Sales(this.year, this.sales);
 }
 class _Month {
   String? month;
-  String? sales;
+  int? sales;
   _Month(this.month, this.sales);
 }
 class _Day {
   String? day;
-  String? sales;
+  int? sales;
   _Day(this.day, this.sales);
 }
 
@@ -40,8 +39,8 @@ class _AgentPerformanceState extends State<AgentPerformance> {
 
 
   late List<charts.Series<Sales,String>> _chartsData=[];
- late List<charts.Series<_Month,String>> _monthData=[];
- late List<charts.Series<_Day,String>> _dayData=[];
+  late List <charts.Series<_Month,String>> _monthData=[];
+  late List<charts.Series<_Day,String>> _dayData=[];
 
    AgentPerformanceModel? _agentPerformanceModel;
 
@@ -58,15 +57,15 @@ class _AgentPerformanceState extends State<AgentPerformance> {
 
         print("object");
         List<Sales>? _data = [
-        Sales('2018', _agentPerformanceModel?.year?.year1.toString()),
-        Sales('2019', _agentPerformanceModel?.year?.year2.toString()),
-        Sales('2020', _agentPerformanceModel?.year?.year3.toString()),
-        Sales('2021', _agentPerformanceModel?.year?.year4.toString()),
-        Sales('2022', _agentPerformanceModel?.year?.year5.toString()),
-        Sales('2023', _agentPerformanceModel?.year?.year6.toString()),
-        Sales('2024', _agentPerformanceModel?.year?.year7.toString()),
-        Sales('2025', _agentPerformanceModel?.year?.year8.toString()),
-        Sales('2026', _agentPerformanceModel?.year?.year9.toString()),
+        Sales('2018', _agentPerformanceModel?.year?.year1),
+        Sales('2019', _agentPerformanceModel?.year?.year2),
+        Sales('2020', _agentPerformanceModel?.year?.year3),
+        Sales('2021', _agentPerformanceModel?.year?.year4),
+        Sales('2022', _agentPerformanceModel?.year?.year5),
+        Sales('2023', _agentPerformanceModel?.year?.year6),
+        Sales('2024', _agentPerformanceModel?.year?.year7),
+        Sales('2025', _agentPerformanceModel?.year?.year8),
+        Sales('2026', _agentPerformanceModel?.year?.year9),
       ];
 
        _chartsData = [
@@ -80,26 +79,25 @@ class _AgentPerformanceState extends State<AgentPerformance> {
     }
       if(_agentPerformanceModel!.month!=null){
 
-        List<_Month>? _data = [
-          _Month('Jan', _agentPerformanceModel?.month?.January.toString()),
-          _Month('Feb', _agentPerformanceModel?.month?.February.toString()),
-          _Month('Mar', _agentPerformanceModel?.month?.March.toString()),
-          _Month('Apr', _agentPerformanceModel?.month?.April.toString()),
-          _Month('May', _agentPerformanceModel?.month?.May.toString()),
-          _Month('Jun', _agentPerformanceModel?.month?.June.toString()),
-          _Month('Jul', _agentPerformanceModel?.month?.July.toString()),
-          _Month('Aug', _agentPerformanceModel?.month?.August.toString()),
-          _Month('Sep', _agentPerformanceModel?.month?.September.toString()),
-          _Month('Oct', _agentPerformanceModel?.month?.October.toString()),
-          _Month('Nov', _agentPerformanceModel?.month?.November.toString()),
-          _Month('Dec', _agentPerformanceModel?.month?.December.toString()),
+        List<_Month> _monthdata = [
+          _Month('Jan', _agentPerformanceModel?.month?.January),
+          _Month('Feb', _agentPerformanceModel?.month?.February),
+          _Month('Mar', _agentPerformanceModel?.month?.March),
+          _Month('Apr', _agentPerformanceModel?.month?.April),
+          _Month('May', _agentPerformanceModel?.month?.May),
+          _Month('Jun', _agentPerformanceModel?.month?.June),
+          _Month('Jul', _agentPerformanceModel?.month?.July),
+          _Month('Aug', _agentPerformanceModel?.month?.August),
+          _Month('Sep', _agentPerformanceModel?.month?.September),
+          _Month('Oct', _agentPerformanceModel?.month?.October),
+          _Month('Nov', _agentPerformanceModel?.month?.November),
+          _Month('Dec', _agentPerformanceModel?.month?.December),
       ];
 
-        charts.ColorUtil.fromDartColor(Colors.red);
        _monthData = [
         charts.Series(
           id: "Month",
-          data: _data,
+          data: _monthdata,
           domainFn: (_Month month,__) => month.month.toString(),
           measureFn: (_Month month,__) => int.parse(month.sales.toString()),
         )
@@ -108,13 +106,13 @@ class _AgentPerformanceState extends State<AgentPerformance> {
       if(_agentPerformanceModel!.day!=null){
 
         List<_Day>? _data = [
-          _Day('Mon', _agentPerformanceModel?.day?.monday.toString()),
-          _Day('Tue', _agentPerformanceModel?.day?.tuseday.toString()),
-          _Day('Wed', _agentPerformanceModel?.day?.wednesday.toString()),
-          _Day('Thu', _agentPerformanceModel?.day?.thrusday.toString()),
-          _Day('Fri', _agentPerformanceModel?.day?.friday.toString()),
-          _Day('Sat', _agentPerformanceModel?.day?.saturday.toString()),
-          _Day('Sun', _agentPerformanceModel?.day?.sunday.toString()),
+          _Day('Mon', _agentPerformanceModel?.day?.monday),
+          _Day('Tue', _agentPerformanceModel?.day?.tuseday),
+          _Day('Wed', _agentPerformanceModel?.day?.wednesday),
+          _Day('Thu', _agentPerformanceModel?.day?.thrusday),
+          _Day('Fri', _agentPerformanceModel?.day?.friday),
+          _Day('Sat', _agentPerformanceModel?.day?.saturday),
+          _Day('Sun', _agentPerformanceModel?.day?.sunday),
           // _Day('Aug', _agentPerformanceModel?.month?.August.toString()),
           // _Day('Sep', _agentPerformanceModel?.month?.September.toString()),
           // _Day('Oct', _agentPerformanceModel?.month?.October.toString()),
@@ -314,44 +312,48 @@ class _AgentPerformanceState extends State<AgentPerformance> {
              child: Container(
                child: Column(
                  children: [
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.end,
-                   children: [
-                     Container(
-                       width: 110,
-                       height: 50,
-                       margin: EdgeInsets.all(10),
-                     alignment: Alignment.topRight,
-                       decoration: BoxDecoration(
-                           border: Border.all(color: Colors.grey),
-                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                           color: const Color(0xc3dcfbee)
-                       ),
-                     child: Padding(
-                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                       child: DropdownButtonFormField<String>(
-                         decoration: InputDecoration(
-                             border: InputBorder.none
+                 Container(
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.end,
+                     children: [
+                       Container(
+                         width: 110,
+                         height: 50,
+                         margin: EdgeInsets.all(10),
+                       alignment: Alignment.topRight,
+                         decoration: BoxDecoration(
+                             border: Border.all(color: Colors.grey),
+                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                             color: const Color(0xc3dcfbee)
                          ),
-                         icon: Icon(Icons.keyboard_arrow_down),
-                         value: selectedFilter,
-                         items: filter.
-                         map((item) => DropdownMenuItem<String>(
-                             value: item,
-                             child: Text(item, style: const TextStyle(fontSize: 18),)
-                         ))
-                             .toList(),
-                         onChanged: (item) => setState(() {
-                           selectedFilter = item;
-                           getCustomer();
-                         }),
+                       child: Padding(
+                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                         child: DropdownButtonFormField<String>(
+                           decoration: InputDecoration(
+                               border: InputBorder.none
+                           ),
+                           icon: Icon(Icons.keyboard_arrow_down),
+                           value: selectedFilter,
+                           items: filter.
+                           map((item) => DropdownMenuItem<String>(
+                               value: item,
+                               child: Text(item, style: const TextStyle(fontSize: 18),)
+                           ))
+                               .toList(),
+                           onChanged: (item) => setState(() {
+                             selectedFilter = item;
+                             getCustomer();
+                           }),
+                         ),
                        ),
-                     ),
                ),
-                   ],
+                     ],
+                   ),
                  ),
-                     if(_monthData!.isNotEmpty) Expanded(child:
-                     charts.BarChart(_monthData!)
+                     if(_monthData!.isNotEmpty) Container(
+                       child: Expanded(child:
+                       charts.BarChart(_monthData)
+                       ),
                      ),
 
                    if(_chartsData!.isNotEmpty) Expanded(child:

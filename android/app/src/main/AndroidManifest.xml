@@ -24,7 +24,7 @@
 
 
     <application
-        android:label="chrome_pay_mobile_flutter"
+        android:label="ChromePay"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
