@@ -1,18 +1,17 @@
-import 'dart:convert';
-import 'dart:io';
 
+import 'dart:io';
+import 'package:document_scanner_flutter/configs/configs.dart';
+import 'package:document_scanner_flutter/document_scanner_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../Models/Document Scanner Model.dart';
 import '../Models/Image Upload Model.dart';
 import '../Models/Verify Cust Model.dart';
 import '../Services/Services.dart';
 import 'linked_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 class DocumentScanner extends StatefulWidget {
 
@@ -49,7 +48,6 @@ class _DocumentScanerState extends State <DocumentScanner> {
   String? selectedAssetId = 'Select Id';
   
   File? _residnceImage,_documentImage,_registerImage;
-  CroppedFile? _croppedFile;
 
   String base64Image = "";
   String? otp;
@@ -119,7 +117,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
       // final _resImage =
       // await ImagePicker().pickImage(source: ImageSource.gallery);
       final _resImage =
-      await ImagePicker().pickImage(source: ImageSource.gallery);
+      await ImagePicker().pickImage(source: ImageSource.camera,maxWidth: 1800,
+        maxHeight: 1800);
       // _resImage = await ImagePicker().
       // pickImage(source: ImageSource.camera);
 
@@ -127,7 +126,6 @@ class _DocumentScanerState extends State <DocumentScanner> {
         if(_resImage != null){
           setState(() {
             _residnceImage = File(_resImage.path);
-            _cropImage();
 
             // base64Image = base64Encode(selectedImage!.readAsBytesSync());
             // print('base64Image ${base64Image}');
@@ -413,7 +411,9 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                        side: BorderSide(color: Colors.grey)),
                                                    child: InkWell(
                                                      onTap: (){
-                                                       pickImage();
+                                                       // pickImage();
+                                                       scanimages(context,0);
+                                                       // openImagePicker(ImageSource.camera);
                                                      },
                                                      child: Column(
                                                        children: [
@@ -459,7 +459,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                        side: BorderSide(color: Colors.grey)),
                                                    child: InkWell(
                                                      onTap: (){
-                                                       pickDocumentImage();
+                                                       scanimages(context,1);
+                                                       // pickDocumentImage();
                                                      },
                                                      child: Column(
                                                        children: [
@@ -504,7 +505,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                        side: BorderSide(color: Colors.grey)),
                                                    child: InkWell(
                                                      onTap: (){
-                                                       pickRegisterImage();
+                                                       scanimages(context,2);
+                                                       // pickRegisterImage();
                                                      },
                                                      child: Column(
                                                        children: [
@@ -977,48 +979,29 @@ class _DocumentScanerState extends State <DocumentScanner> {
     });
 
   }
-  Future<void> _cropImage() async {
-    if (_residnceImage != null) {
-      XFile newfile=new XFile(_residnceImage!.path);
-      print("_residnceImage ${_residnceImage}");
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: newfile.path,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
-        uiSettings: [
-          AndroidUiSettings(
-              toolbarTitle: 'Cropper',
-              toolbarColor: Colors.deepOrange,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: false),
-          IOSUiSettings(
-            title: 'Cropper',
-          ),
-          WebUiSettings(
-            context: context,
-            presentStyle: CropperPresentStyle.dialog,
-            boundary: const CroppieBoundary(
-              width: 520,
-              height: 520,
-            ),
-            viewPort:
-            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
-            enableExif: true,
-            enableZoom: true,
-            showZoomer: true,
-          ),
-        ],
-      );
-      if (croppedFile != null) {
-        // setState(() {
 
-          _residnceImage = new File(croppedFile.path);
-          // _residnceImage = croppedFile;
-          residenceImage();
-        // });
-      }
+
+
+  void scanimages(BuildContext context,int from)async{
+    try {
+     File? scannedDoc = await DocumentScannerFlutter.launch(context,source: ScannerFileSource.CAMERA);
+
+     if(from==0) {
+       _residnceImage = scannedDoc;
+     }else if(from==1) {
+       _documentImage = scannedDoc;
+     }else if(from==2){
+       _registerImage = scannedDoc;
+     }
+     setState(() {
+     });
+      // `scannedDoc` will be the image file scanned from scanner
+    } on PlatformException {
+      // 'Failed to get document path or operation cancelled!';
     }
+
   }
+
+
 }
 

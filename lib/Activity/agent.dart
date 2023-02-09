@@ -165,8 +165,8 @@ class _AgentDashBoard extends State<Agent> {
                             onTap: (){
                               Navigator.of(context).push(
                                   MaterialPageRoute(builder:
-                                      (context)=>  LinkedServices("",)
-                              )
+                                      (context)=>  DocumentScanner("","",0,"")
+                                  )
                               );
                             },
                             child: Container(

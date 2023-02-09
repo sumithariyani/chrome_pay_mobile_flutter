@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/firebase_options.dart';
@@ -151,6 +150,10 @@ void naviagteUser(BuildContext context) async {
   else if (status == true ) {
     if(type?.matchAsPrefix("agent") != null){
     print("Agent Logging");
+    // Navigator.of(context).pushReplacement(MaterialPageRoute(
+    //   builder: (context) => DocumentScanner("9131087223","v@gmail.com",0,"indore"),
+    // )
+    // );
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => Agent(),
     )
