@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/documentscanner.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
@@ -114,10 +114,11 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _currentLocation() async {
-    print("position?.latitude ${position?.latitude}");
-    print("position?.longitude ${position?.longitude}");
 
     if(position!=null) {
+      print("position?.latitude ${position?.latitude}");
+      print("position?.longitude ${position?.longitude}");
+
       _googleMapController
           ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target:
       LatLng(position!.latitude, position!.longitude), zoom: 20)));
@@ -203,6 +204,7 @@ class MapSampleState extends State<MapSample> {
                             child: TextField(
                               controller: _searchController,
                               readOnly: true,
+                              enabled: false,
                               decoration: InputDecoration(hintText: 'Search by City',
                               border: InputBorder.none),
                             ),
@@ -236,7 +238,7 @@ class MapSampleState extends State<MapSample> {
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: Text('Address : ${detail?.result.adrAddress}',
+                    child: Text('Address : ${detail?.result.formattedAddress}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold
                       ),),
@@ -269,7 +271,14 @@ class MapSampleState extends State<MapSample> {
                       height: 50,
                       child: MaterialButton(
                         onPressed: () {
-                          register();
+                          if(detail?.result?.formattedAddress != null){
+                            register();
+                          }else{
+                            Fluttertoast.showToast(msg: "Search city first",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER);
+                          }
+
                         },
                         textColor: Colors.white,
                         child: const Padding(
