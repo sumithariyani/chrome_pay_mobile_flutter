@@ -54,7 +54,7 @@ class MapSampleState extends State<MapSample> {
 
     print('widget.image${widget.image}');
     prefs = await SharedPreferences.getInstance();
-    _customerRegisterModel = (await Services.CustRegister(prefs!.getString("ID").toString(), prefs!.getString("orgID").toString(),
+    _customerRegisterModel = (await Services.CustRegister(prefs!.getString("token").toString(),
          widget.image, widget.name, widget.number, widget.dob, widget.gender, widget.email, widget.nationality, widget.profession, widget.kinName, widget.kinPhone, widget.age, widget.city)) as CustomerRegisterModel?;
 
     if(_customerRegisterModel!.status == true){

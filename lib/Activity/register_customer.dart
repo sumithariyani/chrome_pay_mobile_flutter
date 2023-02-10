@@ -46,7 +46,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
     try {
       if (widget.imagepath != "") {
         print("condition");
-        _imageUploadModel = await Services.ProfileImage(File(widget.imagepath));
+        _imageUploadModel = await Services.ProfileImage(prefs!.getString("token").toString(), File(widget.imagepath));
         if(_imageUploadModel?.status!=false){
           print("imageUrl ${_imageUploadModel?.data}");
           imageUrl = _imageUploadModel?.data;

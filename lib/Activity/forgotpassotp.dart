@@ -23,19 +23,19 @@ class _ForgotPassOtpState extends State<ForgotPassOtp>{
   String? otp;
 
   Future<void> forgotPassWord() async {
-    // otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
-    //
-    // _forgotPassOtpModel = await Services.ForgotPassOtp(widget.email, otp!);
-    // if(_forgotPassOtpModel?.status!= false){
-    //   Fluttertoast.showToast(msg: "${_forgotPassOtpModel?.msg}",
-    //       toastLength: Toast.LENGTH_SHORT,
-    //       gravity: ToastGravity.BOTTOM);
-    //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewPassChange(widget.email),));
-    // }else{
-    //   Fluttertoast.showToast(msg: "${_forgotPassOtpModel?.msg}",
-    //       toastLength: Toast.LENGTH_SHORT,
-    //       gravity: ToastGravity.BOTTOM);
-    // }
+    otp = _otp1.text+_otp2.text+_otp3.text+_otp4.text+_otp5.text+_otp6.text;
+
+    _forgotPassOtpModel = await Services.ForgotPassOtp(widget.email, otp!);
+    if(_forgotPassOtpModel?.status!= false){
+      Fluttertoast.showToast(msg: "${_forgotPassOtpModel?.msg}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewPassChange(widget.email),));
+    }else{
+      Fluttertoast.showToast(msg: "${_forgotPassOtpModel?.msg}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
   }
 
   TextEditingController _otp1 = TextEditingController();
