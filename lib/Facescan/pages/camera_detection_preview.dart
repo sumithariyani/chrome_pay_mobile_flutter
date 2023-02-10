@@ -28,16 +28,38 @@ class CameraDetectionPreview extends StatelessWidget {
               // height: width * _cameraService.cameraController!.value.aspectRatio,
               height: width * 2,
               child: Stack(
-                fit: StackFit.expand,
                 children: <Widget>[
                   CameraPreview(_cameraService.cameraController!),
                   if (_faceDetectorService.faceDetected)
-                    CustomPaint(
-                      painter: FacePainter(
-                        face: _faceDetectorService.faces[0],
-                        imageSize: _cameraService.getImageSize(),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: width/2,
+                        width: width/2,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.green, width: 2.0)),
                       ),
                     )
+                  else
+                    Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: width/2,
+                        width: width/2,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.red, width: 2.0)),
+                      ),
+                    )
+                    // CustomPaint(
+                    //   painter: FacePainter(
+                    //     face: _faceDetectorService.faces[0],
+                    //     imageSize: _cameraService.getImageSize(),
+                    //   ),
+                    // )
                 ],
               ),
             ),
