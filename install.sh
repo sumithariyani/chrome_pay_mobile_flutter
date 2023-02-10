@@ -23,9 +23,9 @@ delegate=0
 
 while getopts "d" OPTION
 do
-	case $OPTION in
-		d)  delegate=1;;
-	esac
+     case $OPTION in
+         d)  delegate=1;;
+    esac
 done
 
 
