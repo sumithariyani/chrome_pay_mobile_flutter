@@ -20,7 +20,7 @@ class Sales {
   Sales(this.year, this.sales);
 }
 class _Month {
-  String? month;
+  int? month;
   int? sales;
   _Month(this.month, this.sales);
 }
@@ -39,7 +39,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
 
 
   late List<charts.Series<Sales,String>> _chartsData=[];
-  late List <charts.Series<_Month,String>> _monthData=[];
+  static List <charts.Series<_Month,int>> _monthData=[];
   late List<charts.Series<_Day,String>> _dayData=[];
 
    AgentPerformanceModel? _agentPerformanceModel;
@@ -80,25 +80,25 @@ class _AgentPerformanceState extends State<AgentPerformance> {
       if(_agentPerformanceModel!.month!=null){
 
         List<_Month> _monthdata = [
-          _Month('Jan', _agentPerformanceModel?.month?.January),
-          _Month('Feb', _agentPerformanceModel?.month?.February),
-          _Month('Mar', _agentPerformanceModel?.month?.March),
-          _Month('Apr', _agentPerformanceModel?.month?.April),
-          _Month('May', _agentPerformanceModel?.month?.May),
-          _Month('Jun', _agentPerformanceModel?.month?.June),
-          _Month('Jul', _agentPerformanceModel?.month?.July),
-          _Month('Aug', _agentPerformanceModel?.month?.August),
-          _Month('Sep', _agentPerformanceModel?.month?.September),
-          _Month('Oct', _agentPerformanceModel?.month?.October),
-          _Month('Nov', _agentPerformanceModel?.month?.November),
-          _Month('Dec', _agentPerformanceModel?.month?.December),
+          _Month(int.parse('Jan'), _agentPerformanceModel?.month?.January),
+          _Month(int.parse('Feb'), _agentPerformanceModel?.month?.February),
+          _Month(int.parse('Mar'), _agentPerformanceModel?.month?.March),
+          _Month(int.parse('Apr'), _agentPerformanceModel?.month?.April),
+          _Month(int.parse('May'), _agentPerformanceModel?.month?.May),
+          _Month(int.parse('Jun'), _agentPerformanceModel?.month?.June),
+          _Month(int.parse('Jul'), _agentPerformanceModel?.month?.July),
+          _Month(int.parse('Aug'), _agentPerformanceModel?.month?.August),
+          _Month(int.parse('Sep'), _agentPerformanceModel?.month?.September),
+          _Month(int.parse('Oct'), _agentPerformanceModel?.month?.October),
+          _Month(int.parse('Nov'), _agentPerformanceModel?.month?.November),
+          _Month(int.parse('Dec'), _agentPerformanceModel?.month?.December),
       ];
 
        _monthData = [
         charts.Series(
           id: "Month",
           data: _monthdata,
-          domainFn: (_Month month,__) => month.month.toString(),
+          domainFn: (_Month month,__) => int.parse(month.month.toString()),
           measureFn: (_Month month,__) => int.parse(month.sales.toString()),
         )
       ];
@@ -352,7 +352,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                  ),
                      if(_monthData!.isNotEmpty) Container(
                        child: Expanded(child:
-                       charts.BarChart(_monthData)
+                           charts.LineChart(_monthData)
                        ),
                      ),
 
