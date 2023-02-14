@@ -1,7 +1,7 @@
 
 import 'dart:io';
-import 'package:document_scanner_flutter/configs/configs.dart';
-import 'package:document_scanner_flutter/document_scanner_flutter.dart';
+import 'package:camera/camera.dart';
+import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -48,6 +48,15 @@ class _DocumentScanerState extends State <DocumentScanner> {
   String? selectedAssetId = 'Select Id';
   
   File? _residnceImage,_documentImage,_registerImage;
+
+
+  @override
+  void initState() {
+    camerachange();
+  }
+  void camerachange() async {
+    await availableCameras();
+  }
 
   String base64Image = "";
   String? otp;
@@ -117,7 +126,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
       // final _resImage =
       // await ImagePicker().pickImage(source: ImageSource.gallery);
       final _resImage =
-      await ImagePicker().pickImage(source: ImageSource.camera,maxWidth: 1800,
+      await ImagePicker().pickImage(source: ImageSource.gallery,maxWidth: 1800,
         maxHeight: 1800);
       // _resImage = await ImagePicker().
       // pickImage(source: ImageSource.camera);
@@ -412,7 +421,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                    child: InkWell(
                                                      onTap: (){
                                                        // pickImage();
-                                                       scanimages(context,0);
+                                                       // scanimages(context,0);
+                                                       scandoc(0);
                                                        // openImagePicker(ImageSource.camera);
                                                      },
                                                      child: Column(
@@ -459,7 +469,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                        side: BorderSide(color: Colors.grey)),
                                                    child: InkWell(
                                                      onTap: (){
-                                                       scanimages(context,1);
+                                                       // scanimages(context,1);
+                                                       scandoc(1);
                                                        // pickDocumentImage();
                                                      },
                                                      child: Column(
@@ -505,7 +516,8 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                        side: BorderSide(color: Colors.grey)),
                                                    child: InkWell(
                                                      onTap: (){
-                                                       scanimages(context,2);
+                                                       // scanimages(context,2);
+                                                       scandoc(2);
                                                        // pickRegisterImage();
                                                      },
                                                      child: Column(
@@ -982,26 +994,24 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
 
 
-  void scanimages(BuildContext context,int from)async{
-    try {
-     File? scannedDoc = await DocumentScannerFlutter.launch(context,source: ScannerFileSource.CAMERA);
-
-     if(from==0) {
-       _residnceImage = scannedDoc;
-     }else if(from==1) {
-       _documentImage = scannedDoc;
-     }else if(from==2){
-       _registerImage = scannedDoc;
-     }
-     setState(() {
-     });
-      // `scannedDoc` will be the image file scanned from scanner
-    } on PlatformException {
-      // 'Failed to get document path or operation cancelled!';
+  void scandoc(int from)async{
+    final imagesPath = await CunningDocumentScanner.getPictures();
+    if(imagesPath!.length < 2) {
+      if (from == 0) {
+        _residnceImage = File(imagesPath![0]);
+      } else if (from == 1) {
+        _documentImage = File(imagesPath![0]);
+      } else if (from == 2) {
+        _registerImage = File(imagesPath![0]);
+      }
+    }else{
+      _residnceImage = File(imagesPath![0]);
+      _documentImage = File(imagesPath![1]);
+      _registerImage = File(imagesPath![2]);
     }
-
+    setState(() {
+    });
   }
-
 
 }
 

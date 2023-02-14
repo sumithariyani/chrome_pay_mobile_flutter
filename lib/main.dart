@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState(){
     super.initState();
 
-    Timer(Duration(seconds: 3),
+    Timer(Duration(seconds: 10),
             () => naviagteUser(context));
   }
   @override

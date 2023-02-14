@@ -262,125 +262,133 @@ class _AgentDashBoard extends State<Agent> {
 
   void _dialog(){
     showDialog(context: context, builder: (context){
-      return Container(
-        child: Dialog(
-          child: Container(
-            height: 350,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
-                  Radius.circular(40.0)),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(10.0),
-                        child: Text('Select one of them',
-                          style: TextStyle(fontSize: 18,
-                            fontWeight: FontWeight.bold,),
-                          textAlign: TextAlign.center,),
-                      ),
-                      Expanded(
+      return
+
+        StatefulBuilder(builder: (context, setState) {
+       return Container(
+          child: Dialog(
+            child: Container(
+              height: 350,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(40.0)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(10.0),
+                          child: Text('Select one of them',
+                            style: TextStyle(fontSize: 18,
+                              fontWeight: FontWeight.bold,),
+                            textAlign: TextAlign.center,),
+                        ),
+                        Expanded(
                           child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pop(context);
                             },
                             child: Container(
                               alignment: Alignment.topRight,
                               padding: EdgeInsets.all(10.0),
                               child: Image.asset('images/login_stuff_28.png',
-                                width:20,
+                                width: 20,
                                 height: 20,),
                             ),
                           ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
 
                   Spacer(),
-                   Column(
-                        children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                Radio(
-                                  activeColor: Colors.greenAccent,
-                                  value: 1,
-                                  groupValue: _radioSelected,
-                                  onChanged: (value) {
-                                    setState((){
-                                      _radioSelected = value as int;
-                                      _radioVal = 'Create New D-ID';
-                                      print(_radioVal);
-                                    });
-                                  },),
-                                Text('Create New D-ID'),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Radio(
-                                  activeColor: Colors.greenAccent,
-                                  value: 2,
-                                  groupValue: _radioSelected,
-                                  onChanged: (value) {
-                                    setState((){
-                                      _radioSelected = value as int;
-                                      _radioVal = 'Link D-ID to New Services';
-                                      print(_radioVal);
-                                    });
-                                  },),
-                                Text('Link D-ID to New Services'),
-                              ],
-                            ),
-                          ),
-                        ],
+                  Column(
+                    children: [
+                      Container(
+                        child: Row(
+                          children: [
+                            Radio(
+                              activeColor: Colors.greenAccent,
+                              value: 1,
+                              groupValue: _radioSelected,
+                              onChanged: (value) {
+                                setState(() {
+                                  _radioSelected = value as int;
+                                  _radioVal = 'Create New D-ID';
+                                  print(_radioVal);
+                                });
+                              },),
+                            Text('Create New D-ID'),
+                          ],
+                        ),
                       ),
-                Spacer(),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      // alignment: Alignment.bottomRight,
-                      margin: const EdgeInsets.fromLTRB(30, 20, 10, 10),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                          gradient: LinearGradient(colors: [
-                            Color(0xff2CABBB),
-                            Color(0xff0B527E),
-                          ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                      Container(
+                        child: Row(
+                          children: [
+                            Radio(
+                              activeColor: Colors.greenAccent,
+                              value: 2,
+                              groupValue: _radioSelected,
+                              onChanged: (value) {
+                                setState(() {
+                                  _radioSelected = value as int;
+                                  _radioVal = 'Link D-ID to New Services';
+                                  print(_radioVal);
+                                });
+                              },),
+                            Text('Link D-ID to New Services'),
+                          ],
+                        ),
                       ),
-                      child: ButtonTheme(
-                        minWidth: 150,
-                        height: 50,
-                        child: MaterialButton(
-                          onPressed: () {
-                            _navigator();
-                          },
-                          textColor: Colors.white,
-                          child: const Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: const Text('Confirm', style: const TextStyle(fontSize: 16,),),
+                    ],
+                  ),
+                  Spacer(),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        // alignment: Alignment.bottomRight,
+                        margin: const EdgeInsets.fromLTRB(30, 20, 10, 10),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(40.0)),
+                            gradient: LinearGradient(colors: [
+                              Color(0xff2CABBB),
+                              Color(0xff0B527E),
+                            ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter)
+                        ),
+                        child: ButtonTheme(
+                          minWidth: 150,
+                          height: 50,
+                          child: MaterialButton(
+                            onPressed: () {
+                              _navigator();
+                            },
+                            textColor: Colors.white,
+                            child: const Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: const Text('Confirm',
+                                style: const TextStyle(fontSize: 16,),),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
+      });
     });
   }
 
