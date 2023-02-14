@@ -1,8 +1,10 @@
 import 'dart:core';
 import 'dart:math';
 import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chart_sparkline/chart_sparkline.dart';
 
 import '../Models/Agent Performance Model.dart';
 import '../Services/Services.dart';
@@ -15,12 +17,12 @@ class AgentPerformance extends StatefulWidget {
 
 }
 class Sales {
-  String? year;
+  int? year;
   int? sales;
   Sales(this.year, this.sales);
 }
 class _Month {
-  String? month;
+  int? month;
   int? sales;
   _Month(this.month, this.sales);
 }
@@ -31,17 +33,20 @@ class _Day {
 }
 
 class _AgentPerformanceState extends State<AgentPerformance> {
+  List<Color> gradientColors = [
+    Colors.cyan,
+    Colors.blue,
+  ];
 
   late SharedPreferences prefs;
   List<String> filter = ['Year', 'Month', 'Day'];
   String? selectedFilter = 'Month';
   bool _isPageLoading = false;
 
-
-  late List<charts.Series<Sales,String>> _chartsData=[];
-  static List <charts.Series<_Month,String>> _monthData=[];
+  static List<charts.Series<Sales,int>> _chartsData=[];
+  static List <charts.Series<_Month,int>> _monthData=[];
   late List<charts.Series<_Day,String>> _dayData=[];
-
+  var data;
    AgentPerformanceModel? _agentPerformanceModel;
 
   Future<void> getCustomer() async {
@@ -50,55 +55,67 @@ class _AgentPerformanceState extends State<AgentPerformance> {
     _monthData.clear();
     _dayData.clear();
     _agentPerformanceModel = await Services.AgentPer(prefs.getString('token').toString(),selectedFilter.toString());
-    print("prefs!.getString(token).toString()${prefs!.getString("token").toString()}");
+    print("prefs!.getString(token).toString() ${prefs!.getString("token").toString()}");
     if(_agentPerformanceModel!.status == true){
 
       if(_agentPerformanceModel!.year!=null){
 
         print("object");
         List<Sales>? _data = [
-        Sales('2018', _agentPerformanceModel?.year?.year1),
-        Sales('2019', _agentPerformanceModel?.year?.year2),
-        Sales('2020', _agentPerformanceModel?.year?.year3),
-        Sales('2021', _agentPerformanceModel?.year?.year4),
-        Sales('2022', _agentPerformanceModel?.year?.year5),
-        Sales('2023', _agentPerformanceModel?.year?.year6),
-        Sales('2024', _agentPerformanceModel?.year?.year7),
-        Sales('2025', _agentPerformanceModel?.year?.year8),
-        Sales('2026', _agentPerformanceModel?.year?.year9),
+        Sales(2018, _agentPerformanceModel?.year?.year1),
+        Sales(2019, _agentPerformanceModel?.year?.year2),
+        Sales(2020, _agentPerformanceModel?.year?.year3),
+        Sales(2021, _agentPerformanceModel?.year?.year4),
+        Sales(2022, _agentPerformanceModel?.year?.year5),
+        Sales(2023, _agentPerformanceModel?.year?.year6),
+        Sales(2024, _agentPerformanceModel?.year?.year7),
+        Sales(2025, _agentPerformanceModel?.year?.year8),
+        Sales(2026, _agentPerformanceModel?.year?.year9),
       ];
 
        _chartsData = [
         charts.Series(
           id: "Years",
           data: _data,
-          domainFn: (Sales sales,__) => sales.year.toString(),
+          domainFn: (Sales sales,__) => int.parse(sales.year.toString()),
           measureFn: (Sales sales,__) => int.parse(sales.sales.toString()),
         )
       ];
     }
       if(_agentPerformanceModel!.month!=null){
-
+        data = [
+          double.parse("${_agentPerformanceModel?.month?.January}"),
+          double.parse("${_agentPerformanceModel?.month?.February}"),
+          double.parse("${_agentPerformanceModel?.month?.March}"),
+          double.parse("${_agentPerformanceModel?.month?.April}"),
+          double.parse("${_agentPerformanceModel?.month?.May}"),
+          double.parse("${_agentPerformanceModel?.month?.June}"),
+          double.parse("${_agentPerformanceModel?.month?.July}"),
+          double.parse("${_agentPerformanceModel?.month?.August}"),
+          double.parse("${_agentPerformanceModel?.month?.September}"),
+          double.parse("${_agentPerformanceModel?.month?.October}"),
+          double.parse("${_agentPerformanceModel?.month?.November}"),
+          double.parse("${_agentPerformanceModel?.month?.December}"),
+          ];
         List<_Month> _monthdata = [
-          _Month('Jan', _agentPerformanceModel?.month?.January),
-          _Month('Feb', _agentPerformanceModel?.month?.February),
-          _Month('Mar', _agentPerformanceModel?.month?.March),
-          _Month('Apr', _agentPerformanceModel?.month?.April),
-          _Month('May', _agentPerformanceModel?.month?.May),
-          _Month('Jun', _agentPerformanceModel?.month?.June),
-          _Month('Jul', _agentPerformanceModel?.month?.July),
-          _Month('Aug', _agentPerformanceModel?.month?.August),
-          _Month('Sep', _agentPerformanceModel?.month?.September),
-          _Month('Oct', _agentPerformanceModel?.month?.October),
-          _Month('Nov', _agentPerformanceModel?.month?.November),
-          _Month('Dec', _agentPerformanceModel?.month?.December),
+          _Month(1, _agentPerformanceModel?.month?.January),
+          _Month(2, _agentPerformanceModel?.month?.February),
+          _Month(3, _agentPerformanceModel?.month?.March),
+          _Month(4, _agentPerformanceModel?.month?.April),
+          _Month(5, _agentPerformanceModel?.month?.May),
+          _Month(6, _agentPerformanceModel?.month?.June),
+          _Month(7, _agentPerformanceModel?.month?.July),
+          _Month(8, _agentPerformanceModel?.month?.August),
+          _Month(9, _agentPerformanceModel?.month?.September),
+          _Month(10, _agentPerformanceModel?.month?.October),
+          _Month(11, _agentPerformanceModel?.month?.November),
+          _Month(12, _agentPerformanceModel?.month?.December),
       ];
-
        _monthData = [
         charts.Series(
           id: "Month",
           data: _monthdata,
-          domainFn: (_Month month,__) => month.month.toString(),
+          domainFn: (_Month month,__) => month.month!.toInt(),
           measureFn: (_Month month,__) => int.parse(month.sales.toString()),
         )
       ];
@@ -113,11 +130,6 @@ class _AgentPerformanceState extends State<AgentPerformance> {
           _Day('Fri', _agentPerformanceModel?.day?.friday),
           _Day('Sat', _agentPerformanceModel?.day?.saturday),
           _Day('Sun', _agentPerformanceModel?.day?.sunday),
-          // _Day('Aug', _agentPerformanceModel?.month?.August.toString()),
-          // _Day('Sep', _agentPerformanceModel?.month?.September.toString()),
-          // _Day('Oct', _agentPerformanceModel?.month?.October.toString()),
-          // _Day('Nov', _agentPerformanceModel?.month?.November.toString()),
-          // _Day('Dec', _agentPerformanceModel?.month?.December.toString()),
       ];
 
        _dayData = [
@@ -352,16 +364,27 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                  ),
                      if(_monthData!.isNotEmpty) Container(
                        child: Expanded(child:
-                           charts.BarChart(_monthData)
+                           Padding(
+                             padding: const EdgeInsets.only(right: 8.0),
+                             child: LineChart(
+                               monthData(),
+                             ),
+                           ),
                        ),
                      ),
 
                    if(_chartsData!.isNotEmpty) Expanded(child:
-                   charts.BarChart(_chartsData!)
+                       Padding(padding: const EdgeInsets.only(right: 8.0),
+                         child: LineChart(
+                           yearData(),
+                         ),)
                    ),
 
                    if(_dayData!.isNotEmpty) Expanded(child:
-                   charts.BarChart(_dayData!)
+                   Padding(padding: const EdgeInsets.only(right: 8.0),
+                     child: LineChart(
+                       weekData(),
+                     ),)
                    ),
                  ],
                ),
@@ -372,18 +395,394 @@ class _AgentPerformanceState extends State<AgentPerformance> {
      ),
    );
   }
-  _chart() {
-    // if(_chartsData!=null){
-    //      charts.BarChart(_chartsData!);
-    // }
-    // if(_monthData!=null){
-    //     charts.BarChart(_monthData!);
-    //
-    // }
-    // if(_dayData!=null){
-    //     charts.BarChart(_dayData!);
-    // }
-    _isPageLoading = false;
+
+  LineChartData monthData() {
+    return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
+        horizontalInterval: 1,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            // color: Colors.mainGridLineColor,
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            // color: AppColors.mainGridLineColor,
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        topTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+            interval: 1,
+            getTitlesWidget: monthBottomTitleWidgets,
+          ),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            // getTitlesWidget: leftTitleWidgets,
+            reservedSize: 42,
+          ),
+        ),
+      ),
+      borderData: FlBorderData(
+        show: true,
+        border: Border.all(color: const Color(0xff37434d)),
+      ),
+      lineBarsData: [
+        LineChartBarData(
+          spots:  [
+            FlSpot(0, double.parse("${_agentPerformanceModel?.month?.January}")),
+            FlSpot(1, double.parse("${_agentPerformanceModel?.month?.February}")),
+            FlSpot(2, double.parse("${_agentPerformanceModel?.month?.March}")),
+            FlSpot(3, double.parse("${_agentPerformanceModel?.month?.April}")),
+            FlSpot(4, double.parse("${_agentPerformanceModel?.month?.May}")),
+            FlSpot(5, double.parse("${_agentPerformanceModel?.month?.June}")),
+            FlSpot(6, double.parse("${_agentPerformanceModel?.month?.July}")),
+            FlSpot(7, double.parse("${_agentPerformanceModel?.month?.August}")),
+            FlSpot(8, double.parse("${_agentPerformanceModel?.month?.September}")),
+            FlSpot(9, double.parse("${_agentPerformanceModel?.month?.October}")),
+            FlSpot(10, double.parse("${_agentPerformanceModel?.month?.November}")),
+            FlSpot(11, double.parse("${_agentPerformanceModel?.month?.December}")),
+          ],
+          isCurved: true,
+          gradient: LinearGradient(
+            colors: gradientColors,
+          ),
+          barWidth: 3,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: true,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              colors: gradientColors
+                  .map((color) => color.withOpacity(0.3))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget monthBottomTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      fontWeight: FontWeight.normal,
+      fontSize: 9,
+    );
+    Widget text;
+    switch (value.toInt()) {
+      case 0:
+        text = const Text('JAN', style: style);
+        break;
+      case 1:
+        text = const Text('FEB', style: style);
+        break;
+      case 2:
+        text = const Text('MAR', style: style);
+        break;
+      case 3:
+        text = const Text('APR', style: style);
+        break;
+      case 4:
+        text = const Text('MAY', style: style);
+        break;
+      case 5:
+        text = const Text('JUN', style: style);
+        break;
+      case 6:
+        text = const Text('JUL', style: style);
+        break;
+      case 7:
+        text = const Text('AUG', style: style);
+        break;
+      case 8:
+        text = const Text('SEP', style: style);
+        break;
+      case 9:
+        text = const Text('OCT', style: style);
+        break;
+      case 10:
+        text = const Text('NOV', style: style);
+        break;
+      case 11:
+        text = const Text('DEC', style: style);
+        break;
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
+    );
+  }
+
+  LineChartData yearData() {
+    return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
+        horizontalInterval: 1,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            // color: Colors.mainGridLineColor,
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            // color: AppColors.mainGridLineColor,
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        topTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+            interval: 1,
+            getTitlesWidget: yearBottomTitleWidgets,
+          ),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            // getTitlesWidget: leftTitleWidgets,
+            reservedSize: 42,
+          ),
+        ),
+      ),
+      borderData: FlBorderData(
+        show: true,
+        border: Border.all(color: const Color(0xff37434d)),
+      ),
+      lineBarsData: [
+        LineChartBarData(
+          spots:  [
+            FlSpot(0, double.parse("${_agentPerformanceModel?.year?.year1}")),
+            FlSpot(2, double.parse("${_agentPerformanceModel?.year?.year2}")),
+            FlSpot(3, double.parse("${_agentPerformanceModel?.year?.year3}")),
+            FlSpot(4, double.parse("${_agentPerformanceModel?.year?.year4}")),
+            FlSpot(5, double.parse("${_agentPerformanceModel?.year?.year5}")),
+            FlSpot(6, double.parse("${_agentPerformanceModel?.year?.year6}")),
+            FlSpot(7, double.parse("${_agentPerformanceModel?.year?.year7}")),
+            FlSpot(8, double.parse("${_agentPerformanceModel?.year?.year8}")),
+            FlSpot(9, double.parse("${_agentPerformanceModel?.year?.year9}")),
+          ],
+          isCurved: true,
+          gradient: LinearGradient(
+            colors: gradientColors,
+          ),
+          barWidth: 3,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: true,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              colors: gradientColors
+                  .map((color) => color.withOpacity(0.3))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+
+  }
+  Widget yearBottomTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      fontWeight: FontWeight.normal,
+      fontSize: 9,
+    );
+    Widget text;
+    switch (value.toInt()) {
+      case 0:
+        text = const Text('2018', style: style);
+        break;
+      case 1:
+        text = const Text('2019', style: style);
+        break;
+      case 2:
+        text = const Text('2020', style: style);
+        break;
+      case 3:
+        text = const Text('2021', style: style);
+        break;
+      case 4:
+        text = const Text('2022', style: style);
+        break;
+      case 5:
+        text = const Text('2023', style: style);
+        break;
+      case 6:
+        text = const Text('2024', style: style);
+        break;
+      case 7:
+        text = const Text('2025', style: style);
+        break;
+      case 8:
+        text = const Text('2026', style: style);
+        break;
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
+    );
+  }
+
+  LineChartData weekData() {
+    return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
+        horizontalInterval: 1,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            // color: Colors.mainGridLineColor,
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            // color: AppColors.mainGridLineColor,
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        topTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+            interval: 1,
+            getTitlesWidget: weekBottomTitleWidgets,
+          ),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            // getTitlesWidget: leftTitleWidgets,
+            reservedSize: 42,
+          ),
+        ),
+      ),
+      borderData: FlBorderData(
+        show: true,
+        border: Border.all(color: const Color(0xff37434d)),
+      ),
+      lineBarsData: [
+        LineChartBarData(
+          spots:  [
+            FlSpot(0, double.parse("${_agentPerformanceModel?.day?.monday}")),
+            FlSpot(1, double.parse("${_agentPerformanceModel?.day?.tuseday}")),
+            FlSpot(2, double.parse("${_agentPerformanceModel?.day?.wednesday}")),
+            FlSpot(3, double.parse("${_agentPerformanceModel?.day?.thrusday}")),
+            FlSpot(4, double.parse("${_agentPerformanceModel?.day?.friday}")),
+            FlSpot(5, double.parse("${_agentPerformanceModel?.day?.saturday}")),
+            FlSpot(6, double.parse("${_agentPerformanceModel?.day?.sunday}")),
+          ],
+          isCurved: true,
+          gradient: LinearGradient(
+            colors: gradientColors,
+          ),
+          barWidth: 3,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: true,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              colors: gradientColors
+                  .map((color) => color.withOpacity(0.3))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+
+  }
+  Widget weekBottomTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      fontWeight: FontWeight.normal,
+      fontSize: 9,
+    );
+    Widget text;
+    switch (value.toInt()) {
+      case 0:
+        text = const Text('MON', style: style);
+        break;
+      case 1:
+        text = const Text('TUE', style: style);
+        break;
+      case 2:
+        text = const Text('WED', style: style);
+        break;
+      case 3:
+        text = const Text('THU', style: style);
+        break;
+      case 4:
+        text = const Text('FRI', style: style);
+        break;
+      case 5:
+        text = const Text('SAT', style: style);
+        break;
+      case 6:
+        text = const Text('SUN', style: style);
+        break;
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
+    );
   }
 }
+
+
 

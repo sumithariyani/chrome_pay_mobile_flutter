@@ -18,10 +18,9 @@ class DocumentScanner extends StatefulWidget {
 
   String phone = "";
   String email = "";
-  int age;
   String city = "";
 
-  DocumentScanner(this.phone, this.email, this.age, this.city);
+  DocumentScanner(this.phone, this.email, this.city);
 
   @override
   _DocumentScanerState createState() => _DocumentScanerState();
@@ -202,7 +201,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
   Future<void> scan() async{
     prefs = await SharedPreferences.getInstance();
-    _documentScannerModel = await Services.DocumentScan(prefs!.getString("token").toString(), residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email as String, widget.age as int, widget.city,);
+    _documentScannerModel = await Services.DocumentScan(prefs!.getString("token").toString(), residanceUrl, documentUrl, registrationUrl!, _landSize.text, selectedAssetType!, selectedAssetId!, widget.phone, widget.email as String, widget.city,);
 
     if(_documentScannerModel!.service?.allMatches("Linked") != null){
 

@@ -8,8 +8,11 @@ class AgencyBanking2 extends StatefulWidget{
 
 class _AgencyBankingState extends State<AgencyBanking2>{
 
-var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];
-var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
+var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png',
+  'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png',
+  'images/agent_dashboard_stuff_11.png'];
+var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance',
+  'Agency Banking', 'Settings'];
 
 @override
 Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ Widget build(BuildContext context) {
                         ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                          child: Text('Agent Performance',
+                          child: Text('Agecy Banking',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold
