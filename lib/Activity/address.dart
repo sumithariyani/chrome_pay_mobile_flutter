@@ -6,6 +6,7 @@ import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
 import '../Models/customer Register Model.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -22,7 +23,6 @@ class MapSample extends StatefulWidget {
   String dob = "";
   String gender = "";
   String email = "";
-  String age = "";
   String city = "";
   String nationality = "";
   String profession = "";
@@ -30,7 +30,7 @@ class MapSample extends StatefulWidget {
   String kinPhone = "";
 
   MapSample(this.image, this.name, this.number, this.dob, this.gender,
-      this.email, this.age, this.city, this.nationality, this.profession, this.kinName, this.kinPhone,);
+      this.email, this.city, this.nationality, this.profession, this.kinName, this.kinPhone,);
 
   @override
   MapSampleState createState() => MapSampleState();
@@ -49,19 +49,23 @@ class MapSampleState extends State<MapSample> {
   Set<Marker> markers = {};
   final Mode _mode = Mode.overlay;
   PlacesDetailsResponse? detail;
+  var lat;
+  var lng;
+  List<Placemark>? addresses;
+  var first;
 
   Future<void> register() async{
 
     print('widget.image${widget.image}');
     prefs = await SharedPreferences.getInstance();
     _customerRegisterModel = (await Services.CustRegister(prefs!.getString("token").toString(),
-         widget.image, widget.name, widget.number, widget.dob, widget.gender, widget.email, widget.nationality, widget.profession, widget.kinName, widget.kinPhone, widget.age, widget.city)) as CustomerRegisterModel?;
+         widget.image, widget.name, widget.number, widget.dob, widget.gender, widget.email, widget.nationality, widget.profession, widget.kinName, widget.kinPhone, widget.city)) as CustomerRegisterModel?;
 
     if(_customerRegisterModel!.status == true){
 
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => DocumentScanner(widget.number, widget.email,int.parse(widget.age) , widget.city),));
+            builder: (context) => DocumentScanner(widget.number, widget.email, widget.city),));
     }
   }
 
@@ -103,7 +107,6 @@ class MapSampleState extends State<MapSample> {
   getAsync() async {
     try{
       prefs = await SharedPreferences.getInstance();
-      position = await _determinePosition();
 
       setState(() {
 
@@ -114,11 +117,12 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _currentLocation() async {
+    position = await _determinePosition();
 
     if(position!=null) {
+      _getLocation();
       print("position?.latitude ${position?.latitude}");
       print("position?.longitude ${position?.longitude}");
-
       _googleMapController
           ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target:
       LatLng(position!.latitude, position!.longitude), zoom: 20)));
@@ -128,18 +132,35 @@ class MapSampleState extends State<MapSample> {
           position: LatLng(position!.latitude, position!.longitude)));
 
 
-      final lat = position!.latitude;
-      final lng = position!.longitude;
-
+       lat = position!.latitude;
+       lng = position!.longitude;
       print("lat ${lat}");
       print(" lng ${lng}");
       markers.clear();
       markers.add(Marker(markerId: const MarkerId("0"),
-          position: LatLng(22.7028776, 75.8714637),
+          position: LatLng(lat, lng),
           infoWindow: InfoWindow(title: detail?.result.name)));
       print(" name ${detail?.result.formattedAddress}");
+
+    } else{
+      print("gfgddfhddhfddd ${throw Error()}");
+      throw Error();
     }
     setState(() {});
+  }
+  _getLocation() async
+  {
+    Position position = await
+    Geolocator.getCurrentPosition(desiredAccuracy:
+    LocationAccuracy.high);
+    debugPrint('location: ${position.latitude}');
+     addresses = await
+    placemarkFromCoordinates(position.latitude,position.longitude);
+
+     first = addresses?.first;
+    print("AHGDGHSDGFSDJKAGH addresses ${addresses}");
+    print("AHGDGHSDGFSDJKAGH first ${first}");
+    print("AHGDGHSDGFSDJKAGH ${first?.name} : ${first?.administrativeArea}");
   }
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
@@ -147,7 +168,7 @@ class MapSampleState extends State<MapSample> {
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    zoom: 14.5
   );
 
   static final Marker _kGooglePlexMarker = Marker(
@@ -238,7 +259,7 @@ class MapSampleState extends State<MapSample> {
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: Text('Address : ${detail?.result.formattedAddress}',
+                    child: Text('Address : ${first}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold
                       ),),
@@ -283,7 +304,7 @@ class MapSampleState extends State<MapSample> {
                         textColor: Colors.white,
                         child: const Padding(
                           padding: EdgeInsets.all(10.0),
-                          child: const Text('Countinue', style: const TextStyle(fontSize: 18,),),
+                          child: const Text('Continue', style: const TextStyle(fontSize: 18,),),
                         ),
                       ),
                     ),
@@ -324,7 +345,7 @@ class MapSampleState extends State<MapSample> {
         decoration: InputDecoration(
             hintText: 'Search',
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Colors.white))),
-        components: [Component(Component.country,"ind"),Component(Component.country,"usa")]);
+        components: [Component(Component.country,"ind"),Component(Component.country,"usa"),Component(Component.country,"isr")]);
 
 
     displayPrediction(p!,homeScaffoldKey.currentState);
@@ -355,13 +376,16 @@ class MapSampleState extends State<MapSample> {
 
     detail = await places.getDetailsByPlaceId(p.placeId!);
 
-    final lat = detail?.result.geometry!.location.lat;
-    final lng = detail?.result.geometry!.location.lng;
+    lat = detail?.result.geometry!.location.lat;
+    lng = detail?.result.geometry!.location.lng;
 
     markers.clear();
     markers.add(Marker(markerId: const MarkerId("0"),position: LatLng(lat!, lng!),infoWindow: InfoWindow(title: detail?.result.name)));
 
-    print(" name ${detail?.result.adrAddress}");
+    print(" locationhghbhname ${detail?.result.adrAddress}");
+    print("klflkdsksmmmdmmmlat ${lat}");
+    print(" bdjshhbsdhjbhjbsdfjfbsblng ${lng}");
+
     setState(() {});
 
     _googleMapController?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14.0));
