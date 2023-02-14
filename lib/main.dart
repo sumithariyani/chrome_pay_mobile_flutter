@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Activity/login.dart';
 import 'Customer/customer_dash.dart';
+import '../Models/Agent Performance Model.dart';
 
 List<CameraDescription> cameras = [];
 void main() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       home: SplashScreen(),
     );
   }
@@ -44,10 +46,7 @@ class SplashScreen extends StatefulWidget{
 
   @override
   Widget build (BuildContext context){
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xff003d66)),
-      home: Scaffold(
+    return  Scaffold(
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -61,8 +60,7 @@ class SplashScreen extends StatefulWidget{
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -77,10 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: Scaffold(
+    return Scaffold(
         body: Stack(
           children: [
             Container(
@@ -120,8 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
             )
           ],
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -167,3 +161,4 @@ void naviagteUser(BuildContext context) async {
     );
   }
 }
+

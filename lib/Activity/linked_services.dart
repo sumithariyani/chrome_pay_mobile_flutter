@@ -39,7 +39,7 @@ class LinkedServices extends StatefulWidget {
 
    Future<void> scan() async {
      prefs = await SharedPreferences.getInstance();
-     _linkedServiceOtpModel = await Services.LinkedService(mobileNumber.text.toString());
+     _linkedServiceOtpModel = await Services.LinkedService(prefs!.getString("token").toString(), mobileNumber.text.toString());
      if (_linkedServiceOtpModel?.status != false) {
        Fluttertoast.showToast(msg: "${_linkedServiceOtpModel?.msg}",
            toastLength: Toast.LENGTH_SHORT,
