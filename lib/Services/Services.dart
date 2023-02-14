@@ -468,7 +468,7 @@ class Services {
   }
 
   static Future<Object> CustRegister(String token, String image, String name,
-      String number, String dob, String gender, String email, String nationality, String profession, String kinName, String kinPhone, String age, String city) async {
+      String number, String dob, String gender, String email, String nationality, String profession, String kinName, String kinPhone, String city) async {
     var uri = CustomerRegistration;
     Map<String, String> requestHeaders = {
       'Authorization': "Bearer $token",
@@ -486,7 +486,6 @@ class Services {
     request.fields["professoin"] = profession;
     request.fields["nextFOKniPhone"] = kinPhone;
     request.fields["nextFOKinName"] = kinName;
-    request.fields["age"] = age;
     request.fields["city"] = city;
     request.fields["IDphoto"] = image;
     // request.files.add(multipart);
@@ -510,7 +509,7 @@ class Services {
   }
 
   static Future<DocumentScannerModel> DocumentScan(String token, String residace, String local, String land, String landSize,
-      String assetType, String assetID, String phone, String email, int age, String city) async {
+      String assetType, String assetID, String phone, String email, String city) async {
 
     var uri = DocumentScanner;
     Map<String, String> requestHeaders = {
@@ -533,7 +532,6 @@ class Services {
     request.fields['assetType'] = assetType;
     request.fields['assetID'] = assetID;
     request.fields['phone'] = phone;
-    request.fields['age'] = age.toString();
     request.fields['city'] = city;
     request.fields['email'] = email;
 

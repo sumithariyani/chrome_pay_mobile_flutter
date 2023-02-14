@@ -102,7 +102,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   TextEditingController month = TextEditingController();
   TextEditingController year = TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController age = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController profession = TextEditingController();
   TextEditingController nameKin = TextEditingController();
@@ -114,9 +113,9 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   List<String> nationality = ['Ethiopian', 'Israeli', 'Indian', 'American'];
   String? selectedNationality = 'Ethiopian';
   int _radioSelected = 0;
-  String? _radioVal;
+  String _radioVal = "";
   String? _phone;
-  String? _dob;
+  String _dob = "";
   DateTime? datePicked;
 
   @override
@@ -498,25 +497,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                            Container(
                                              margin: EdgeInsets.only(top: 10.0),
                                              child: TextField(
-                                               controller: age,
-                                               keyboardType: TextInputType.number,
-                                               decoration: InputDecoration(
-                                                 counterText: "",
-                                                 prefixIcon: Container(
-                                                   padding: EdgeInsets.all(5.0),
-                                                   margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                                   child: Image.asset('images/login_stuff_17.png',
-                                                     height: 2.0,
-                                                     width: 2.0,),
-                                                 ),
-                                                 hintText: 'Age',
-                                               ),
-                                               style: const TextStyle(fontSize: 18.0),
-                                             ),
-                                           ),
-                                           Container(
-                                             margin: EdgeInsets.only(top: 10.0),
-                                             child: TextField(
                                                controller: city,
                                                keyboardType: TextInputType.text,
                                                decoration: InputDecoration(
@@ -682,47 +662,45 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
     print(_phone);
     _dob = ' ${datePicked?.day}-${datePicked?.month}-${datePicked?.year}';
     print(_dob);
-    if (widget.imagepath == "") {
+    if (widget.imagepath.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please upload profile photo",
           gravity: ToastGravity.CENTER);
-    }  if (fullName.text.isEmpty) {
+    } else if (fullName.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter full name",
           gravity: ToastGravity.CENTER);
-    }  if (_phone!.isEmpty) {
+    } else if (mobileNumber.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter phone number",
           gravity: ToastGravity.CENTER);
-    }  if (_dob!.isEmpty) {
+    } else if (day.text.isEmpty || month.text.isEmpty || year.text.isEmpty) {
+      print("objectvhvhjvjhvhvv");
       Fluttertoast.showToast(
           msg: "Please enter date of birth",
           gravity: ToastGravity.CENTER);
-    }  if (_radioVal!.isEmpty) {
+    } else if (_radioVal.isEmpty) {
+      print("objectsdxhgfxddsdh");
       Fluttertoast.showToast(
           msg: "Please select Gender",
           gravity: ToastGravity.CENTER);
-    }  if (email.text.isEmpty) {
+    } else if (email.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter email",
           gravity: ToastGravity.CENTER);
-    }  if (age.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: "Please enter age",
-          gravity: ToastGravity.CENTER);
-    }  if (city.text.isEmpty) {
+    } else if (city.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter city",
           gravity: ToastGravity.CENTER);
-    }  if (profession.text.isEmpty) {
+    } else if (profession.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter your profession",
           gravity: ToastGravity.CENTER);
-    }  if (nameKin.text.isEmpty) {
+    } else if (nameKin.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter name of kin",
           gravity: ToastGravity.CENTER);
-    }  if (numberKin.text.isEmpty) {
+    } else if (numberKin.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please enter number of kin",
           gravity: ToastGravity.CENTER);
@@ -736,7 +714,6 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                 _dob.toString(),
                 _radioVal.toString(),
                 email.text.replaceAll(" ", ""),
-                age.text,
                 city.text,
                 selectedNationality.toString(),
                 profession.text,

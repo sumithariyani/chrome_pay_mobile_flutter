@@ -68,6 +68,7 @@ class _CustomerDashState extends State<CustomerDash> {
                      ),
                    ),
                  ),
+                 Spacer(),
                  Align(
                    alignment: Alignment.centerRight,
                    child: InkWell(
