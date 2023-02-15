@@ -4,7 +4,6 @@ import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:chart_sparkline/chart_sparkline.dart';
 
 import '../Models/Agent Performance Model.dart';
 import '../Services/Services.dart';
