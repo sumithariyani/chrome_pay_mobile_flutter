@@ -1,9 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/pages/FacePainter.dart';
+import 'package:chrome_pay_mobile_flutter/Facescan/pages/face_detector_painter.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraDetectionPreview extends StatelessWidget {
   CameraDetectionPreview({Key? key}) : super(key: key);
@@ -25,15 +27,15 @@ class CameraDetectionPreview extends StatelessWidget {
             fit: BoxFit.fitHeight,
             child: Container(
               width: width,
-              // height: width * _cameraService.cameraController!.value.aspectRatio,
               height: width * 2,
               child: Stack(
                 children: <Widget>[
                   CameraPreview(_cameraService.cameraController!),
                   if (_faceDetectorService.faceDetected)
                     Container(
-                      alignment: Alignment.center,
+                      alignment: Alignment.topCenter,
                       child: Container(
+                        margin: const EdgeInsets.only(top: 200),
                         height: width/2,
                         width: width/2,
                         alignment: Alignment.center,
@@ -44,8 +46,9 @@ class CameraDetectionPreview extends StatelessWidget {
                     )
                   else
                     Container(
-                      alignment: Alignment.center,
+                      alignment: Alignment.topCenter,
                       child: Container(
+                        margin: const EdgeInsets.only(top: 200),
                         height: width/2,
                         width: width/2,
                         alignment: Alignment.center,
@@ -53,13 +56,28 @@ class CameraDetectionPreview extends StatelessWidget {
                             color: Colors.transparent,
                             border: Border.all(color: Colors.red, width: 2.0)),
                       ),
-                    )
+                    ),
                     // CustomPaint(
                     //   painter: FacePainter(
                     //     face: _faceDetectorService.faces[0],
                     //     imageSize: _cameraService.getImageSize(),
                     //   ),
                     // )
+                  // if (_faceDetectorService.faceDetected)
+                  //   Container(
+                  //       padding: const EdgeInsets.only(top: 200),
+                  //     alignment: Alignment.topCenter,
+                  //     child: CustomPaint(
+                  //       painter: FaceDetectorPainter(_faceDetectorService.faces,
+                  //         _cameraService.getImageSize(),
+                  //         _cameraService.rotationIntToImageRotation(0)
+                  //       ),
+                  //       size: Size(200, 200),
+                  //     )
+                  //   ),
+
+                  
+                  
                 ],
               ),
             ),

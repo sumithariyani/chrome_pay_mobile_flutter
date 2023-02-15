@@ -264,7 +264,7 @@ class SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    Widget header = CameraHeader("LOGIN", onBackPressed: _onBackPressed);
+    Widget header = CameraHeader("Face Recorganize", onBackPressed: _onBackPressed);
     Widget body = getBodyWidget();
     Widget? fab;
     if (!_isPictureTaken) fab = AuthButton(onTap: onTap);

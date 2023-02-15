@@ -47,7 +47,6 @@ dependencies:
   image: ^3.0.2
   camera: ^0.10.0
   camera_android: ^0.10.4
-  document_scanner_flutter: ^0.2.3
   get_it: ^7.2.0
   firebase_core: ^2.4.1
   flutter_google_places: ^0.3.0
@@ -56,8 +55,9 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.15
   permission_handler: ^10.2.0
+  cunning_document_scanner: ^1.1.2
   geocoding: ^2.0.5
-  chart_sparkline: ^1.0.13
+
 
 dev_dependencies:
   flutter_test:
@@ -136,7 +136,6 @@ flutter:
     - images/Doc-scan.png
     - images/scan.png
     - images/verify.png
-    - images/vector.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
