@@ -355,8 +355,7 @@ class _ActiveDidState extends State<Active_Did> {
 
   void _scrollListener(){
     print("working");
-    if(_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
+    if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       _page = _page!+1;
       getCustomer().then((data) {
       });

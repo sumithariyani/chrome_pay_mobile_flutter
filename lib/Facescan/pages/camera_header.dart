@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CameraHeader extends StatelessWidget {
-  CameraHeader(this.title, {this.onBackPressed});
+  CameraHeader(this.title,this.isloadbutton, {this.onBackPressed,this.onflipPressed} );
   final String title;
   final void Function()? onBackPressed;
+  final void Function()? onflipPressed;
+  final bool isloadbutton;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,19 @@ class CameraHeader extends StatelessWidget {
                 color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),
             textAlign: TextAlign.center,
           )),
+          InkWell(
+            onTap: isloadbutton ? onflipPressed:null,
+            child: Container(
+              margin: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: 50,
+              width: 50,
+              child: Center(child: Icon(Icons.flip_camera_ios_outlined)),
+            ),
+          ),
         ],
       ),
       height: 150,

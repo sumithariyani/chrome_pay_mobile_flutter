@@ -19,6 +19,7 @@ import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_servic
 import 'package:chrome_pay_mobile_flutter/Facescan/services/ml_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,10 +46,19 @@ class SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    _start();
+    _initializeServices(CameraLensDirection.front);
+
   }
-
-
+  bool loading = true;
+  bool loading2 = false;
+  _initializeServices(CameraLensDirection flipcam) async {
+    setState(() => loading = true);
+    await _cameraService.initialize(flipcam);
+    await _mlService.initialize();
+    _faceDetectorService.initialize();
+    _start();
+    setState(() => loading = false);
+  }
 
   @override
   void dispose() {
@@ -58,6 +68,11 @@ class SignInState extends State<SignIn> {
     super.dispose();
   }
 
+  void changeCamera(){
+    _cameraService.dispose();
+    _mlService.dispose();
+    _faceDetectorService.dispose();
+  }
 
   Future _signUp(context) async {
     List predictedData = _mlService.predictedData;
@@ -73,11 +88,13 @@ class SignInState extends State<SignIn> {
 
   Future _start() async {
     setState(() => _isInitializing = true);
-    await _cameraService.initialize();
+    await _cameraService.initialize(CameraLensDirection.front);
     setState(() => _isInitializing = false);
     _frameFaces();
   }
 
+  int countbling=0;
+  bool isopen=false;
   _frameFaces() async {
     bool processing = false;
     _cameraService.cameraController!
@@ -85,7 +102,27 @@ class SignInState extends State<SignIn> {
       if (processing) return; // prevents unnecessary overprocessing.
       processing = true;
       await _predictFacesFromImage(image: image);
+      if(_faceDetectorService.faceDetected) {
+        Face face = _faceDetectorService.faces[0];
+        double? leftEyeOpenProbability = face.leftEyeOpenProbability;
+        if (leftEyeOpenProbability! < 0.2) {
+          // left eye is likely closed
+          if (isopen) {
+            countbling++;
+            print("leftEyeOpenProbability $countbling");
+            isopen = false;
+          }
+        } else {
+          if (!isopen) {
+            countbling++;
+            print("leftEyeOpenProbability $countbling");
+            isopen = true;
+          }
+          // left eye is likely open
+        }
+      }
       FaceData2? user = await _mlService.predict();
+
       processing = false;
     });
   }
@@ -103,19 +140,44 @@ class SignInState extends State<SignIn> {
 
 
   Future<void> takePicture() async {
-    if (_faceDetectorService.faceDetected) {
-      await _cameraService.takePicture();
-      setState(() => _isPictureTaken = true);
-    } else {
-      showDialog(
-          context: context,
+
+      if (_faceDetectorService.faceDetected) {
+        await _cameraService.takePicture();
+        setState(() => _isPictureTaken = true);
+      } else {
+        showDialog(context: context,
           builder: (context) =>
               AlertDialog(content: Text('No face detected!')));
-    }
+      }
+
   }
 
   _onBackPressed() {
     Navigator.of(context).pop();
+  }
+
+  String imagepath="";
+  bool isloadbutton=true;
+  bool isflip=true;
+  _onFlipPressed() async {
+    setState(() {
+      isloadbutton=false;
+    });
+    print("isflip $isflip");
+    changeCamera();
+    new Future.delayed(const Duration(seconds: 3), () {
+      if(isflip) {
+        _initializeServices(CameraLensDirection.back);
+        isflip=false;
+      }else{
+        _initializeServices(CameraLensDirection.front);
+        isflip=true;
+      }
+      setState(() {
+        isloadbutton=true;
+      });
+    });
+
   }
 
   _reload() {
@@ -127,6 +189,7 @@ class SignInState extends State<SignIn> {
   bool _bottomSheetVisible = false;
 
   Future<bool> onShot() async {
+    if(countbling>6){
     if (!_faceDetectorService.faceDetected) {
       showDialog(
         context: context,
@@ -154,10 +217,18 @@ class SignInState extends State<SignIn> {
 
       return true;
     }
+    }else{
+
+      Fluttertoast.showToast(msg: "blink your eyes 4 5 times",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+      return false;
+    }
   }
   bool pictureTaken = false;
 
   Future<void> onTap() async {
+    if(countbling>3){
     await takePicture();
     if (_faceDetectorService.faceDetected) {
       print("users1234567");
@@ -172,6 +243,12 @@ class SignInState extends State<SignIn> {
             gravity: ToastGravity.CENTER);
         naviagteUser(context);
       }
+    }
+    }else{
+      Fluttertoast.showToast(msg: "Blink you eyes ${4 - countbling} more time",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+      print("leftEyeOpenProbability $countbling");
     }
   }
 
@@ -215,9 +292,10 @@ class SignInState extends State<SignIn> {
   }
 
   Widget getBodyWidget() {
+
     if (_isInitializing) return Center(child: CircularProgressIndicator());
-    if (_isPictureTaken)
-      return SinglePicture(imagePath: _cameraService.imagePath!);
+    if (loading) return Center(child: CircularProgressIndicator());
+    if (_isPictureTaken) return SinglePicture(imagePath: _cameraService.imagePath!);
     return CameraDetectionPreview();
   }
 
@@ -247,8 +325,10 @@ class SignInState extends State<SignIn> {
                 AppButton(
                   text: 'Submit',
                   onPressed: () async {
+
                     await _signUp(context);
-                  },
+
+                    },
                   icon: Icon(
                     Icons.person_add,
                     color: Colors.white,
@@ -264,7 +344,7 @@ class SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    Widget header = CameraHeader("Face Recorganize", onBackPressed: _onBackPressed);
+    Widget header = CameraHeader("Move your face center of the Box and blink your eyes",isloadbutton, onBackPressed: _onBackPressed,onflipPressed: _onFlipPressed);
     Widget body = getBodyWidget();
     Widget? fab;
     if (!_isPictureTaken) fab = AuthButton(onTap: onTap);
@@ -272,8 +352,10 @@ class SignInState extends State<SignIn> {
 
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: Colors.black,
       body:Stack(
-        children: [body, header],
+        children:
+        [body, header],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: fab,

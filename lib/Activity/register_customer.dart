@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/pages/sign-in.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
@@ -61,12 +62,12 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   void initState() {
     uploadImage();
     fullName.text = "${widget.name}";
-    _initializeServices();
+    // _initializeServices();
     super.initState();
   }
   _initializeServices() async {
     setState(() => loading = true);
-    await _cameraService.initialize();
+    await _cameraService.initialize(CameraLensDirection.front);
     await _mlService.initialize();
     _mlKitService.initialize();
     setState(() => loading = false);
@@ -203,7 +204,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                             backgroundColor: Colors.transparent,
                                             child: InkWell(
                                               onTap: (){
-                                                if(loading==false) {
+                                                // if(loading==false) {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -212,11 +213,11 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                           SignIn(),
                                                     ),
                                                   );
-                                                }else{
-                                                  Fluttertoast.showToast(msg: "please wait and try again",
-                                                      toastLength: Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.CENTER);
-                                                }
+                                                // }else{
+                                                //   Fluttertoast.showToast(msg: "please wait and try again",
+                                                //       toastLength: Toast.LENGTH_SHORT,
+                                                //       gravity: ToastGravity.CENTER);
+                                                // }
                                                 // pickImage();
                                               },
                                                 child: ClipOval(

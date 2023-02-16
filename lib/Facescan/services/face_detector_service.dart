@@ -21,23 +21,18 @@ class FaceDetectorService {
     _faceDetector = GoogleMlKit.vision.faceDetector(
       FaceDetectorOptions(
         mode: FaceDetectorMode.accurate,
+        enableContours: true,
+        enableClassification: true,
+        enableLandmarks: true,
+        enableTracking: true
       ),
     );
-
-    // _faceDetector = FaceDetector(
-    //     options: FaceDetectorOptions(
-    //         performanceMode: FaceDetectorMode.fast,
-    //         enableContours: true,
-    //         enableClassification: true));
   }
 
   Future<List<Face>> detectFacesFromImage(CameraImage image) async {
     InputImageData _firebaseImageMetadata = InputImageData(
-      imageRotation:
-      _cameraService.cameraRotation ?? InputImageRotation.Rotation_0deg,
-      inputImageFormat:
-      InputImageFormatMethods.fromRawValue(image.format.raw) ??
-          InputImageFormat.NV21,
+      imageRotation: _cameraService.cameraRotation ?? InputImageRotation.Rotation_0deg,
+      inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw) ?? InputImageFormat.NV21,
       size: Size(image.width.toDouble(), image.height.toDouble()),
       planeData: image.planes.map(
             (Plane plane) {
@@ -59,10 +54,11 @@ class FaceDetectorService {
       // bytes: image.planes[0].bytes,
       inputImageData: _firebaseImageMetadata,
     );
-
     // final inputImage =
     // InputImage.fromBytes(bytes: bytes, inputImageData: _firebaseImageMetadata);
     _faces = await _faceDetector.processImage(_firebaseVisionImage);
+
+    
     return _faces;
   }
 

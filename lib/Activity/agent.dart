@@ -85,10 +85,10 @@ class _AgentDashBoard extends State<Agent> {
                             child: PhysicalModel(color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //   builder: (context) => RegisterCustomer("",""),
-                                    // ));
-                                    _dialog();
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => RegisterCustomer("",""),
+                                    ));
+                                    // _dialog();
                                   },
                                   child: Card(
                                     margin: EdgeInsets.fromLTRB(10, 50, 10, 20),

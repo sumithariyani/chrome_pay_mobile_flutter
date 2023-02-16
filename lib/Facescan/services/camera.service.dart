@@ -12,10 +12,10 @@ class CameraService {
   String? _imagePath;
   String? get imagePath => this._imagePath;
 
-  Future<void> initialize() async {
+  Future<void> initialize(CameraLensDirection flipcamera) async {
 
      if (_cameraController != null) return;
-     CameraDescription description = await _getCameraDescription();
+     CameraDescription description = await _getCameraDescription(flipcamera);
      await _setupCameraController(description: description);
      this._cameraRotation = rotationIntToImageRotation(
        description.sensorOrientation,
@@ -40,10 +40,11 @@ class CameraService {
     }
   }
 
-  Future<CameraDescription> _getCameraDescription() async {
+  Future<CameraDescription> _getCameraDescription(CameraLensDirection flipcamera) async {
     List<CameraDescription> cameras = await availableCameras();
     return cameras.firstWhere((CameraDescription camera) =>
-    camera.lensDirection == CameraLensDirection.front);
+    camera.lensDirection == flipcamera);
+    // camera.lensDirection == CameraLensDirection.back);
     // return cameras[0];
   }
 
@@ -81,8 +82,7 @@ class CameraService {
 
   Size getImageSize() {
     assert(_cameraController != null, 'Camera controller not initialized');
-    assert(
-    _cameraController!.value.previewSize != null, 'Preview size is null');
+    assert(_cameraController!.value.previewSize != null, 'Preview size is null');
     return Size(
       _cameraController!.value.previewSize!.height,
       _cameraController!.value.previewSize!.width,
