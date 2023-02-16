@@ -19,7 +19,7 @@ class _AgentCommissionState extends State<AgentCommission> {
   final _scrollController = ScrollController();
   bool _isPageLoading = false;
   SharedPreferences? prefs;
-  List<String> customerList = [];
+  List<Filter> customerList = [];
   DateTime? fromDate, toDate;
   String? selectedFromDate, selectedToDate;
 
@@ -33,7 +33,7 @@ class _AgentCommissionState extends State<AgentCommission> {
         _page, selectedFromDate??"0001-01-01", selectedToDate??"0001-01-01");
     setState(() {
       for (int i = 0; i<agentCommissionModel.filter!.length; i++){
-        customerList.add(agentCommissionModel.filter![i].id ??"");
+        customerList = agentCommissionModel.filter ?? <Filter> [];
       }
     });
   }
@@ -275,124 +275,117 @@ class _AgentCommissionState extends State<AgentCommission> {
                     Container(
                       alignment: Alignment.center ,
                       margin: EdgeInsets.only(bottom: 10.0),
-                      child: FutureBuilder<AgentCommissionModel>(
-                          future: Services.CommissionList(prefs?.getString('token').toString()??"",
-                              _page, selectedFromDate??"0001-01-01", selectedToDate??"0001-01-01"),
-                          builder: (mcontext, snapshot){
-                            if (snapshot.hasData){
-                              _isPageLoading = false;
-
-                              return Container(
-                                // width: double.infinity,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.all(12.0),
-                                  itemCount: snapshot.data!.filter?.length?? 0,
-                                  shrinkWrap: true,
-                                  itemBuilder:(context, index) {
-                                    return Card(
-                                      color: Colors.transparent,
-                                      margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                      elevation: 5,
-                                      shadowColor: Colors.black,
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        height: 90,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5.0),
-                                            color: Colors.white
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  alignment: AlignmentDirectional.center,
-                                                  margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(5.0),
-                                                      color: Colors.black12
-                                                  ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Text("30\nJAN",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 16.0,
-                                                        fontWeight: FontWeight.w500),),
-                                                  ),
-                                                ),
-                                                Container(
-                                                    margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-                                                    child: Text("03:15 PM")
-                                                )
-                                              ],
+                      child: Container(
+                        // width: double.infinity,
+                        child: ListView.builder(
+                          padding: EdgeInsets.all(12.0),
+                          itemCount: customerList.length,
+                          shrinkWrap: true,
+                          itemBuilder:(context, index) {
+                            Filter filter = customerList[index];
+                            if (customerList.length != null){
+                              return Card(
+                                color: Colors.transparent,
+                                margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                elevation: 5,
+                                shadowColor: Colors.black,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.white
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            alignment: AlignmentDirectional.center,
+                                            margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5.0),
+                                                color: Colors.black12
                                             ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(left: 5.0,top: 10.0,),
-                                                  child: Text("${agentCommissionModel?.filter?[index].custName}",
-                                                    style: TextStyle(fontWeight: FontWeight.w500,
-                                                    fontSize: 16.0),),
-                                                ),
-                                                Spacer(),
-                                                Container(
-                                                  margin: EdgeInsets.only(left: 5.0, bottom: 5.0),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      Container(
-                                                        child: Text("Transaction ID"),
-                                                      ),
-                                                      Container(
-                                                        child: Text("#1313131346",
-                                                        style: TextStyle(fontWeight: FontWeight.bold),),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text("30\nJAN",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(fontSize: 16.0,
+                                                    fontWeight: FontWeight.w500),),
                                             ),
-                                            Spacer(),
-                                            Container(
-                                                margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                alignment: Alignment.centerRight,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(top: 10.0),
-                                                      child: Text("\$${agentCommissionModel?.filter?[index].commission}",
-                                                        style: TextStyle(),),
-                                                    ),
-                                                  ],
-                                                )
-                                            ),
-
-                                          ],
-                                        ),
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
+                                              child: Text("03:15 PM")
+                                          )
+                                        ],
                                       ),
-                                    );
-                                  },
-                                  physics: NeverScrollableScrollPhysics(),
-                                ),
-                              );
-                            }else if (snapshot.hasError){
-                              return Expanded(
-                                child: Center(
-                                  child: Text('Not Found'),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(left: 5.0,top: 10.0,),
+                                            child: Text("${filter.custName}",
+                                              style: TextStyle(fontWeight: FontWeight.w500,
+                                                  fontSize: 16.0),),
+                                          ),
+                                          Spacer(),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 5.0, bottom: 5.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  child: Text("Transaction ID"),
+                                                ),
+                                                Container(
+                                                  child: Text("#1313131346",
+                                                    style: TextStyle(fontWeight: FontWeight.bold),),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                          alignment: Alignment.centerRight,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(top: 10.0),
+                                                child: Text("\$${filter.commission}",
+                                                  style: TextStyle(),),
+                                              ),
+                                            ],
+                                          )
+                                      ),
+
+                                    ],
+                                  ),
                                 ),
                               );
                             }
+                            else if(customerList.length == null){
+                              print("gfhdgsgdfkjl");
+                              return Center(
+                                child: Text('Not Found'),
+                              );
+                            }
                             return const CircularProgressIndicator();
-                          }
-                      ),
+                          },
+                          physics: NeverScrollableScrollPhysics(),
+                        ),
+                      )
                     )
                   ],
                 ),
@@ -411,8 +404,6 @@ class _AgentCommissionState extends State<AgentCommission> {
       _page = _page+1;
       getCustomer().then((data) {
       });
-    } else {
-      print('Dont');
     }
   }
 }
