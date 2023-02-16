@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chrome_pay_mobile_flutter/Activity/customer%20profile.dart';
 import 'package:chrome_pay_mobile_flutter/Models/All%20Did%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Models/CustomerViewOtpModel.dart';
@@ -18,7 +20,7 @@ class Active_Did extends StatefulWidget {
 class _ActiveDidState extends State<Active_Did> {
 
   SharedPreferences? prefs;
-  List<String> customerList = [];
+  List<Filter> customerList = [];
   int? _page = 1;
   bool _isPageLoading = false;
   final _scrollController = ScrollController();
@@ -42,8 +44,9 @@ class _ActiveDidState extends State<Active_Did> {
     allDidModel = await Services.CustomerList(prefs!.getString('token').toString(), _page!);
     print("fgfgghfgfhgfhfID ${prefs!.getString('ID').toString()}");
     setState(() {
+      _isPageLoading = false;
       for (int i = 0; i<allDidModel.filter!.length; i++){
-        customerList.add(allDidModel.filter![i].id ??"");
+        customerList = allDidModel.filter ?? <Filter> [];
       }
     });
   }
@@ -164,181 +167,182 @@ class _ActiveDidState extends State<Active_Did> {
                                         children: [
                                           Container(
                                             margin: EdgeInsets.only(bottom: 50.0),
-                                            child: FutureBuilder<AllDidModel>(
-                                              future: Services.CustomerList(prefs!.getString('token').toString(), _page!),
-                                              builder: (mcontext, snapshot){
-                                                if (snapshot.hasData){
-                                                  _isPageLoading = false;
-                                                  return Container(
+                                            child: Container(
                                                     width: double.infinity,
-                                                    child: ListView.builder(
+                                                    child:_isPageLoading ? Center(
+                                                      child: CircularProgressIndicator(),
+                                                    ):ListView.builder(
                                                       scrollDirection: Axis.vertical,
-                                                      itemCount: snapshot.data!.filter?.length?? 0,
+                                                      itemCount: customerList.length,
                                                       shrinkWrap: true,
                                                       itemBuilder: (context, index){
-                                                        return  InkWell(
-                                                          onTap: () {
-                                                            id = "${snapshot.data?.filter![index]?.id}";
-                                                            _verifyCust("${snapshot.data?.filter![index]?.phone}", "${id}");
-                                                            _custDetailDialog("${snapshot.data?.filter![index]?.phone}");
-                                                            // Navigator.push(
-                                                            //     context,
-                                                            //     MaterialPageRoute(builder: (context) => CustomerProfile(
-                                                            //       snapshot.data!.filter![index].id.toString() ?? "1",
-                                                            //     )
-                                                            //     )
-                                                            // );
-                                                          },
-                                                          child: Card(
-                                                            color: Colors.transparent,
-                                                            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                                            elevation: 5,
-                                                            shadowColor: Colors.black,
-                                                            child: Container(
-                                                              width: MediaQuery.of(context).size.width,
-                                                              height: 180,
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(20.0),
-                                                                image: const DecorationImage(image: AssetImage('images/all_dids_07.png'),
-                                                                  fit: BoxFit.cover,),
-                                                              ),
-                                                              child: Row(
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  Container(
-                                                                    child: Column(
+                                                        Filter filter = customerList[index];
+                                                        if(customerList.length != null){
+                                                          return  InkWell(
+                                                            onTap: () {
+                                                              id = "${filter!.id}";
+                                                              _verifyCust("${filter.phone}", "${id}");
+                                                              _custDetailDialog("${filter!.phone}");
+                                                              // Navigator.push(
+                                                              //     context,
+                                                              //     MaterialPageRoute(builder: (context) => CustomerProfile(
+                                                              //       snapshot.data!.filter![index].id.toString() ?? "1",
+                                                              //     )
+                                                              //     )
+                                                              // );
+                                                            },
+                                                            child: Card(
+                                                              color: Colors.transparent,
+                                                              margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                                              elevation: 8.0,
+                                                              shadowColor: Colors.black,
+                                                              child: Container(
+                                                                width: MediaQuery.of(context).size.width,
+                                                                height: 180,
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(10.0),
+                                                                  color: Colors.white
+                                                                ),
+                                                                child: Column(
+                                                                  children: [
+                                                                    Spacer(),
+                                                                    Row(
                                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                                       children: [
                                                                         Container(
-                                                                          height: 30,
-                                                                          margin: EdgeInsets.all(10),
-                                                                          decoration: BoxDecoration(
-                                                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                                                            color: Colors.white,
-                                                                          ),
-                                                                          child: Padding(
-                                                                            padding: EdgeInsets.all(8.0),
-                                                                            child: Text(
-                                                                              "D-ID Ref. ######${snapshot.data!.filter![index].digitalrefId!.substring(7,10)}",
-                                                                             ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.all(12.0),
-                                                                          child: Text(
-                                                                            "${snapshot.data!.filter![index].fullname}" ,
-                                                                            style: TextStyle(
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 16),
-                                                                          ),
-                                                                        ),
-                                                                        Row(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                                                              child: Image.asset('images/all_dids_10.png',
-                                                                                height: 20,),
-                                                                            ),
-                                                                            Text(
-                                                                                "${snapshot.data!.filter![index].phone}",
-                                                                                style: TextStyle(
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                )
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.all(8.0),
-                                                                          child: Row(
+                                                                          margin: EdgeInsets.only(left: 15.0),
+                                                                          child: Column(
+                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                                             children: [
-                                                                             if(snapshot.data!.filter![index].fingerPrint == 1) Card(
-                                                                                 color: Colors.transparent,
-                                                                                 // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                                                                 elevation: 5,
-                                                                                 shadowColor: Colors.black,
-                                                                                  child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
-                                                                                    decoration: BoxDecoration(
-                                                                                      borderRadius: BorderRadius.circular(5.0),
-                                                                                      color: Colors.white
-                                                                                    ),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsets.all(8.0),
-                                                                                      child: Image.asset("images/scan.png",
+                                                                              Container(
+                                                                                height: 30,
+                                                                                decoration: const BoxDecoration(
+                                                                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                                                                    gradient: LinearGradient(colors: [
+                                                                                      Color(0xff0B527E),
+                                                                                      Color(0xff2CABBB),
+                                                                                    ],
+                                                                                        begin: Alignment.centerLeft,
+                                                                                        end: Alignment.centerRight)
+
+                                                                                ),
+                                                                                child:  Padding(
+                                                                                  padding: EdgeInsets.all(8.0),
+                                                                                  child: Text('D-ID Ref. ######${filter.digitalrefId!.substring(7,10)}',
+                                                                                    style: const TextStyle(
+                                                                                        color: Colors.white),),
+                                                                                ),
+                                                                              ),
+                                                                              Container(
+                                                                                margin: EdgeInsets.only(top: 20.0),
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Container(
+                                                                                      child:                                                                                   Padding(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                                                        child: Image.asset('images/Agency-04.png',
+                                                                                          height: 20,),
                                                                                       ),
                                                                                     ),
-                                                                                  )
-                                                                             ),
-                                                                              if(snapshot.data!.filter![index].fingerPrint == 1) Card(
-                                                                                 color: Colors.transparent,
-                                                                                 // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                                                                 elevation: 5,
-                                                                                 shadowColor: Colors.black,
-                                                                                  child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
-                                                                                    decoration: BoxDecoration(
-                                                                                      borderRadius: BorderRadius.circular(5.0),
-                                                                                      color: Colors.white
-                                                                                    ),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsets.all(8.0),
-                                                                                      child: Image.asset("images/scan.png",
+                                                                                    Container(
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                                                                        child: Text(
+                                                                                          "${filter.fullname}" ,
+                                                                                          style: TextStyle(
+                                                                                              fontFamily: 'OpenSans',
+                                                                                              fontSize: 16),
+                                                                                        ),
                                                                                       ),
                                                                                     ),
-                                                                                  )),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Row(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                                                    child: Image.asset('images/all_dids_10.png',
+                                                                                      height: 20,),
+                                                                                  ),
+                                                                                  Text(
+                                                                                      "${filter.phone}",
+                                                                                      style: TextStyle(
+                                                                                          fontFamily: 'OpenSans',
+                                                                                      )
+                                                                                  ),
+                                                                                ],
+                                                                              )
                                                                             ],
                                                                           ),
                                                                         ),
+                                                                        Spacer(),
+                                                                              Container(
+                                                                                  margin: EdgeInsets.only(right: 10.0, top: 10.0),
+                                                                                  alignment: Alignment.center,
+                                                                                  child: Container(
+                                                                          margin: EdgeInsets.only(right: 10.0, top: 5.0),
+                                                                          alignment: Alignment.center,
+                                                                          child: Container(
+                                                                            width: 100,
+                                                                            height: 100,
+                                                                            decoration: BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(20.0),
+                                                                              image: DecorationImage(
+                                                                                image: NetworkImage("${filter!.iDphoto}"),
+                                                                                fit: BoxFit.fill,
+                                                                              ),
+                                                                            ),
+                                                                            alignment: Alignment.center,
+                                                                            // child: Image.network("${snapshot.data!.filter![index].iDphoto}",
+                                                                            //   width: 100,
+                                                                            //   height: 100,),
+                                                                          ),
+                                                                        ),
+                                                                              )
                                                                       ],
                                                                     ),
-                                                                  ),
-                                                                  Spacer(),
-                                                                  Container(
-                                                                    margin: EdgeInsets.only(right: 10.0),
-                                                                    alignment: Alignment.center,
-                                                                    child: Container(
-                                                                      width: 100,
-                                                                      height: 100,
-                                                                      decoration: BoxDecoration(
-                                                                        borderRadius: BorderRadius.circular(20.0),
-                                                                        image: DecorationImage(
-                                                                          image: NetworkImage("${snapshot.data!.filter![index].iDphoto}"),
-                                                                          fit: BoxFit.fill,
-                                                                        ),
-                                                                      ),
-                                                                      alignment: Alignment.center,
-                                                                      // child: Image.network("${snapshot.data!.filter![index].iDphoto}",
-                                                                      //   width: 100,
-                                                                      //   height: 100,),
+                                                                    Spacer(),
+                                                                    Container(
+                                                                        alignment: AlignmentDirectional.bottomCenter,
+                                                                        // width: MediaQuery.of(context).size.width,
+                                                                        height: 10,
+                                                                        decoration: const BoxDecoration(
+                                                                            borderRadius: BorderRadius.only(
+                                                                                bottomLeft: Radius.circular(30.0),
+                                                                                bottomRight: Radius.circular(30.0)
+                                                                            ),
+                                                                            gradient: LinearGradient(colors: [
+                                                                              Color(0xff0B527E),
+                                                                              Color(0xff2CABBB),
+                                                                            ],
+                                                                                begin: Alignment.centerLeft,
+                                                                                end: Alignment.centerRight)
+                                                                        )
                                                                     ),
-                                                                  )
-                                                                ],
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        );
+                                                          );
+                                                        }else if(customerList.length == null){
+                                                          print("gfhdgsgdfkjl");
+                                                          return Center(
+                                                            child: Text('Not Found'),
+                                                          );
+                                                        }
+                                                        return const CircularProgressIndicator();
                                                       },
                                                       physics: NeverScrollableScrollPhysics(),
                                                     ),
-                                                  );
-                                                }else if (snapshot.hasError){
-                                                  return Center(
-                                                    child: Text('Not Found'),
-                                                  );
-                                                }
-                                                return const CircularProgressIndicator();
-                                              },
-                                            ),
+                                                  )
                                           )
                                         ],
                                       ),
                                     ),
                                 ),
-
                             ],
                           ),
                         ),

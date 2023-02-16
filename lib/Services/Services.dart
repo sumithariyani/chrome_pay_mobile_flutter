@@ -602,6 +602,7 @@ class Services {
       "DIDref": DIDref,
       "otp": otp,
     };
+    print(params);
     Map<String, String> requestHeaders = {
       'Authorization': "Bearer $token",
       'Content-Type': 'application/json'

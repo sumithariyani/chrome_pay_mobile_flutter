@@ -1,3 +1,4 @@
+import 'package:chrome_pay_mobile_flutter/Activity/all-did.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Profile%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Update%20Model.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class _EditProfileState extends State<EditProfile>{
 
     if(agentUpdateModel?.status==true){
       print('ho0');
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Active_Did()), (route) => false);
     }
     setState(() {
     });

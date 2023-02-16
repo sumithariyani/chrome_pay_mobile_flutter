@@ -1,3 +1,4 @@
+import 'package:chrome_pay_mobile_flutter/Activity/all-did.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -64,6 +65,8 @@ class LinkedServices extends StatefulWidget {
        Fluttertoast.showToast(msg: "${_verifyLinkedServiceOtpModel?.msg}",
            toastLength: Toast.LENGTH_SHORT,
            gravity: ToastGravity.CENTER);
+       Navigator.of(context).pushAndRemoveUntil(
+           MaterialPageRoute(builder: (context) => Active_Did() ), (route) => false);
      }
      else {
        Fluttertoast.showToast(msg: "${_verifyLinkedServiceOtpModel?.msg}",
