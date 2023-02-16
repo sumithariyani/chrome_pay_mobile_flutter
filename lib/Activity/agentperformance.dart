@@ -206,115 +206,125 @@ class _AgentPerformanceState extends State<AgentPerformance> {
            ),
            Card(
              color: Colors.transparent,
-             margin: EdgeInsets.fromLTRB(20, 30, 20, 20),
+             margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
              elevation: 5,
              shadowColor: Colors.black,
              child: Container(
                width: MediaQuery.of(context).size.width,
-               height: 200,
+               height: 180,
                decoration: BoxDecoration(
-                 borderRadius: BorderRadius.circular(20.0),
-                 image: const DecorationImage(image: AssetImage('images/all_dids_07.png'),
-                   fit: BoxFit.cover,),
+                 borderRadius: BorderRadius.circular(10.0),
+                 color: Colors.white,
                ),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
+               child: Column(
+                 mainAxisAlignment: MainAxisAlignment.center,
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
-                   Container(
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       crossAxisAlignment: CrossAxisAlignment.start,
-                       children: [
-                         Container(
-                           margin: EdgeInsets.only(top: 15.0),
-                           child: Padding(
-                             padding: const EdgeInsets.all(12.0),
-                             child: Text(
-                               "Sumit Hariyani" ,
-                               style: TextStyle(
-                                 color: Colors.white,
-                                   fontWeight: FontWeight.w600,
-                                   fontSize: 16),
+                   Spacer(),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.start,
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                             Container(
+                               alignment: Alignment.center,
+                               margin: EdgeInsets.only(left: 20.0, right: 10.0),
+                               child: CircleAvatar(
+                                 backgroundColor: Colors.black,
+                                 backgroundImage: AssetImage("images/all_dids_06.png"),
+                                 radius: 40,
+                               ),
                              ),
-                           ),
+                             Expanded(
+                                 child: Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   children: [
+                                 Container(
+                                   margin: EdgeInsets.only(top: 10.0),
+                                     child: Text(
+                                       "Sumit Hariyani" ,
+                                       style: TextStyle(
+                                           fontFamily: 'OpenSans',
+                                           fontSize: 18),
+                                     ),
+                                 ),
+                                 Container(
+                                   margin: EdgeInsets.only(top: 5.0),
+                                   child: Row(
+                                         children: [
+                                           Padding(
+                                             padding: const EdgeInsets.only(right: 8.0),
+                                             child: Image.asset('images/Agency-04.png',
+                                               height: 15,),
+                                           ),
+                                           Text(
+                                               "Agent",
+                                               style: TextStyle(
+                                                 fontFamily: 'OpenSans',
+                                               )
+                                           ),
+                                         ],
+                                       ),
+                                 ),
+                                 Container(
+                                   margin: EdgeInsets.only(top: 5.0),
+                                   child: Row(
+                                       children: [
+                                         Padding(
+                                           padding:  const EdgeInsets.only(right: 8.0),
+                                           child: Image.asset('images/home_page_icon_19.png',
+                                           height: 15,),
+                                         ),
+                                         Text(
+                                             "India",
+                                             style: TextStyle(
+                                                 fontFamily: 'OpenSans'
+                                             )
+                                         ),
+                                       ],
+                                     ),
+                                 ),
+                               ],
+                             )
+                             )
+                     ],
+                   ),
+                   Container(
+                     margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                     child: Row(
+                       children: [
+                         Padding(
+                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                           child: Image.asset('images/Agency-03.png',
+                             height: 15,),
                          ),
-                         Container(
-                           margin: EdgeInsets.only(top: 25.0),
-                           child: Row(
-                             children: [
-                               Padding(
-                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                 child: Image.asset('images/agent_dashboard_stuff_04.png',
-                                   height: 20,),
-                               ),
-                               Text(
-                                   "Agent",
-                                   style: TextStyle(
-                                     fontWeight: FontWeight.w500,
-                                   )
-                               ),
-                               Padding(
-                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                 child: Image.asset('images/home_page_icon_19.png',
-                                   height: 20,),
-                               ),
-                               Text(
-                                   "India",
-                                   style: TextStyle(
-                                     fontWeight: FontWeight.w500,
-                                   )
-                               ),
-                             ],
-                           ),
+                         Text(
+                             "sumithariyani@gmail.com",
+                             style: TextStyle(
+                               fontFamily: 'OpenSans',
+                             )
                          ),
-                         Container(
-                           margin: EdgeInsets.only(top: 10.0),
-                           child: Row(
-                             children: [
-                               Padding(
-                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                 child: Image.asset('images/login_stuff_04.png',
-                                   height: 20,),
-                               ),
-                               Text(
-                                   "sumithariyani@gmail.com",
-                                   style: TextStyle(
-                                     fontWeight: FontWeight.w500,
-                                   )
-                               ),
-                             ],
-                           ),
-                         ),
-                         Container(
-                           width: 70,
-                           height: 50,
-                           decoration: new BoxDecoration(
-                               border: Border(
-                                   left:
-                                   BorderSide(color: Color(0XFFFF6D64), width: 2.0,style: BorderStyle.solid))),
-
-                         )
                        ],
                      ),
                    ),
                    Spacer(),
                    Container(
-                     margin: EdgeInsets.only(right: 10.0),
-                     alignment: Alignment.center,
-                     child: Container(
-                       width: 100,
-                       height: 100,
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(20.0),
-                         image: DecorationImage(
-                           image: AssetImage("images/all_dids_06.png"),
-                           fit: BoxFit.fill,
-                         ),
-                       ),
-                       alignment: Alignment.center,
-                     )
-                   ),
+                       alignment: AlignmentDirectional.bottomCenter,
+                       // width: MediaQuery.of(context).size.width,
+                         height: 10,
+                         decoration: const BoxDecoration(
+                             borderRadius: BorderRadius.only(
+                               bottomLeft: Radius.circular(30.0),
+                               bottomRight: Radius.circular(30.0)
+                             ),
+                             gradient: LinearGradient(colors: [
+                               Color(0xff0B527E),
+                               Color(0xff2CABBB),
+                             ],
+                                 begin: Alignment.centerLeft,
+                                 end: Alignment.centerRight)
+                         )
+                     ),
                  ],
                ),
              ),
@@ -323,48 +333,50 @@ class _AgentPerformanceState extends State<AgentPerformance> {
              child: Container(
                child: Column(
                  children: [
-                 Container(
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.end,
-                     children: [
-                       Container(
-                         width: 110,
-                         height: 50,
-                         margin: EdgeInsets.all(10),
-                       alignment: Alignment.topRight,
-                         decoration: BoxDecoration(
-                             border: Border.all(color: Colors.grey),
-                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                             color: const Color(0xc3dcfbee)
-                         ),
-                       child: Padding(
-                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                         child: DropdownButtonFormField<String>(
-                           decoration: InputDecoration(
-                               border: InputBorder.none
+                 Padding(
+                   padding: const EdgeInsets.only(bottom: 8.0),
+                   child: Container(
+                     margin: EdgeInsets.all(10),
+                     child: Card(
+                          elevation: 5,
+                          shadowColor: Colors.white,
+                          child: Container(
+                             width: MediaQuery.of(context).size.width,
+                             height: 50,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                 // color: const Color(0xc3dcfbee)
+                             ),
+                           child: Padding(
+                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                             child: DropdownButtonFormField<String>(
+                               decoration: InputDecoration(
+                                   border: InputBorder.none
+                               ),
+                               icon: Icon(Icons.keyboard_arrow_down),
+                               value: selectedFilter,
+                               items: filter.
+                               map((item) => DropdownMenuItem<String>(
+                                   value: item,
+                                   child: Text(item, style: const TextStyle(fontSize: 18),)
+                               ))
+                                   .toList(),
+                               onChanged: (item) => setState(() {
+                                 selectedFilter = item;
+                                 getCustomer();
+                               }),
+                             ),
                            ),
-                           icon: Icon(Icons.keyboard_arrow_down),
-                           value: selectedFilter,
-                           items: filter.
-                           map((item) => DropdownMenuItem<String>(
-                               value: item,
-                               child: Text(item, style: const TextStyle(fontSize: 18),)
-                           ))
-                               .toList(),
-                           onChanged: (item) => setState(() {
-                             selectedFilter = item;
-                             getCustomer();
-                           }),
-                         ),
-                       ),
                ),
-                     ],
+                        ),
+
                    ),
                  ),
+
                      if(_monthData!.isNotEmpty) Container(
                        child: Expanded(child:
                            Padding(
-                             padding: const EdgeInsets.only(right: 8.0),
+                             padding: const EdgeInsets.only(right: 15.0),
                              child: LineChart(
                                monthData(),
                              ),
@@ -373,14 +385,14 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                      ),
 
                    if(_chartsData!.isNotEmpty) Expanded(child:
-                       Padding(padding: const EdgeInsets.only(right: 8.0),
+                       Padding(padding: const EdgeInsets.only(right: 15.0),
                          child: LineChart(
                            yearData(),
                          ),)
                    ),
 
                    if(_dayData!.isNotEmpty) Expanded(child:
-                   Padding(padding: const EdgeInsets.only(right: 8.0),
+                   Padding(padding: const EdgeInsets.only(right: 15.0),
                      child: LineChart(
                        weekData(),
                      ),)
@@ -435,7 +447,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
             showTitles: true,
             interval: 1,
             // getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 30,
           ),
         ),
       ),
@@ -459,7 +471,6 @@ class _AgentPerformanceState extends State<AgentPerformance> {
             FlSpot(10, double.parse("${_agentPerformanceModel?.month?.November}")),
             FlSpot(11, double.parse("${_agentPerformanceModel?.month?.December}")),
           ],
-          isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
           ),
@@ -574,7 +585,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
             showTitles: true,
             interval: 1,
             // getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 30,
           ),
         ),
       ),
@@ -595,7 +606,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
             FlSpot(8, double.parse("${_agentPerformanceModel?.year?.year8}")),
             FlSpot(9, double.parse("${_agentPerformanceModel?.year?.year9}")),
           ],
-          isCurved: true,
+          // isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
           ),
@@ -702,7 +713,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
             showTitles: true,
             interval: 1,
             // getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 30,
           ),
         ),
       ),
@@ -721,7 +732,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
             FlSpot(5, double.parse("${_agentPerformanceModel?.day?.saturday}")),
             FlSpot(6, double.parse("${_agentPerformanceModel?.day?.sunday}")),
           ],
-          isCurved: true,
+          // isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
           ),

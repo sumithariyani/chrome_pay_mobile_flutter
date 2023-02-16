@@ -136,6 +136,10 @@ flutter:
     - images/Doc-scan.png
     - images/scan.png
     - images/verify.png
+    - images/Agency-03.png
+    - images/Agency-04.png
+    - images/pending-04.png
+    - images/check mark-04.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -149,17 +153,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+     - family: Opensans
+       fonts:
+         - asset: fonts/OpenSans-Medium.ttf
+     - family: OpensansRegular
+       fonts:
+         - asset: fonts/OpenSans-Bold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
