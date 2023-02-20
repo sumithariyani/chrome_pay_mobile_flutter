@@ -30,11 +30,12 @@ class _AgentCommissionState extends State<AgentCommission> {
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
     agentCommissionModel = await Services.CommissionList(prefs?.getString("token").toString()??"",
-        _page, selectedFromDate??"0001-01-01", selectedToDate??"0001-01-01");
-    setState(() {
+        _page, selectedFromDate??"", selectedToDate??"");
+
       for (int i = 0; i<agentCommissionModel.filter!.length; i++){
-        customerList = agentCommissionModel.filter ?? <Filter> [];
+        customerList.add(agentCommissionModel.filter![i]);
       }
+    setState(() {
     });
   }
 
@@ -95,6 +96,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                               Navigator.pop(context);
                             },
                             child: Container(
+                              padding: EdgeInsets.all(5.0),
                               margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                               child: Image.asset('images/login_stuff_03.png',
                                 height: 20,
@@ -102,6 +104,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                             ),
                           ),
                           Container(
+                            padding: EdgeInsets.only(top: 5.0),
                             margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                             child: Text('Agent Commission',
                               style: TextStyle(

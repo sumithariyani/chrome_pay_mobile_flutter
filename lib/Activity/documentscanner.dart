@@ -280,12 +280,14 @@ class _DocumentScanerState extends State <DocumentScanner> {
                           },
                           child: Container(
                             margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                            padding: EdgeInsets.all(5.0),
                             child: Image.asset('images/login_stuff_03.png',
                               height: 20,
                             ),
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.only(top: 5.0),
                           margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
                           child: Text('Register Customer 3',
                             style: TextStyle(

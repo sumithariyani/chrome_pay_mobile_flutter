@@ -108,6 +108,7 @@ class LinkedServices extends StatefulWidget {
                           Navigator.pop(context);
                         },
                         child: Container(
+                          padding: EdgeInsets.all(5.0),
                           margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                           child: Image.asset('images/login_stuff_03.png',
                             height: 20,
@@ -115,6 +116,7 @@ class LinkedServices extends StatefulWidget {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.only(top: 5.0),
                         margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
                         child: Text('Linked Service',
                           style: TextStyle(
@@ -229,6 +231,8 @@ class LinkedServices extends StatefulWidget {
                       minWidth: 400,
                       height: 50,
                       child: MaterialButton(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
                         onPressed: () {
                           scan();
                         },

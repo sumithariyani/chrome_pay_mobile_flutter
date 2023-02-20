@@ -143,58 +143,60 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
            Container(
              width: MediaQuery.of(context).size.width,
              height: MediaQuery.of(context).size.height,
-             child: Container(
-               child: Column(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Container(
-                     child: Row(
-                       crossAxisAlignment: CrossAxisAlignment.start,
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       children: [
-                         InkWell(
-                           onTap: () {
-                             Navigator.pop(context);
-                           },
-                           child: Container(
-                             margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                             child: Image.asset('images/login_stuff_03.png',
-                               height: 20,
-                             ),
-                           ),
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.start,
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: <Widget>[
+                 Row(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: <Widget>[
+                     InkWell(
+                       onTap: () {
+                         Navigator.pop(context);
+                       },
+                       child: Container(
+                         padding: EdgeInsets.all(5.0),
+                         margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                         child: Image.asset('images/login_stuff_03.png',
+                           height: 20,
                          ),
-                         Container(
-                           margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                           child: const Text('Register Customer',
-                           style: TextStyle(
-                             fontSize: 18,
-                             fontWeight: FontWeight.bold
-                           ),),
-                         ),
-                       ],
+                       ),
                      ),
-                   ),
-                   Expanded(
-                     child: Container(
-                       width: MediaQuery.of(context).size.width,
-                       child: Card(
-                         margin: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-                         elevation: 10,
-                         shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.all(Radius.circular(10.0))
-                         ),
-                         color: Colors.white,
-                         shadowColor: Colors.black,
-                         child: SingleChildScrollView(
-                           reverse: true,
+                     Container(
+                       padding: EdgeInsets.only(top: 5.0),
+                       margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                       child: const Text('Register Customer',
+                       style: TextStyle(
+                         fontSize: 18,
+                         fontWeight: FontWeight.bold
+                       ),),
+                     ),
+                   ],
+                 ),
+                 Expanded(
+                   child: SizedBox(
+                     width: MediaQuery.of(context).size.width,
+                     height: MediaQuery.of(context).size.height,
+                     child: Card(
+                       margin: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                       elevation: 10,
+                       shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.all(Radius.circular(10.0))
+                       ),
+                       color: Colors.white,
+                       shadowColor: Colors.black,
+                       child: SingleChildScrollView(
+                         // reverse: false,
+                         child: ConstrainedBox(
+                           constraints: BoxConstraints(),
                            child: Container(
                              child: Padding(
                                padding: const EdgeInsets.all(8.0),
                                child: Column(
                                  mainAxisAlignment: MainAxisAlignment.start,
                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
+                                 children: <Widget>[
                                    Container(
                                      height: 70,
                                           alignment: Alignment.center,
@@ -248,7 +250,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                    Container(
                                      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                                        child: Column(
-                                         children: [
+                                         children: <Widget>[
                                            Container(
                                              child: TextField(
                                                controller: fullName,
@@ -277,7 +279,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              ),
                                              margin: const EdgeInsets.only(top: 10.0),
                                              child: Row(
-                                               children: [
+                                               children: <Widget>[
                                                  Container(
                                                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                                                    child: Image.asset('images/login_stuff_18.png',
@@ -287,7 +289,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                  Container(
                                                    width: 60,
                                                      child: DropdownButtonFormField<String>(
-                                                       decoration: InputDecoration(
+                                                       decoration: const InputDecoration(
                                                          border: InputBorder.none
                                                        ),
                                                        value: selectedCode,
@@ -329,7 +331,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                ),),
                                            ),
                                            Row(
-                                             children: [
+                                             children: <Widget>[
                                                Container(
                                                  alignment: Alignment.center,
                                                  height: 30,
@@ -431,7 +433,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              margin: const EdgeInsets.fromLTRB(5, 15, 0, 0),
                                              child: Row(
                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                               children: [
+                                               children: <Widget>[
                                                  Container(
                                                    alignment: Alignment.centerLeft,
                                                    child: const Text('Gender :',
@@ -525,7 +527,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              width: MediaQuery.of(context).size.width,
                                              margin: const EdgeInsets.only(top: 10.0),
                                              child: Row(
-                                               children: [
+                                               children: <Widget>[
                                                  Container(
                                                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                                                    child: Image.asset('images/login_stuff_20.png',
@@ -618,37 +620,39 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                              ),
                            ),
                          ),
-                       )
-                     ),
+                       ),
+                     )
                    ),
-                   Container(
-                     alignment: Alignment.bottomCenter,
-                     margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
-                     decoration: const BoxDecoration(
-                         borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                         gradient: LinearGradient(colors: [
-                           Color(0xff2CABBB),
-                           Color(0xff0B527E),
-                         ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
-                     ),
-                     child: ButtonTheme(
-                       minWidth: 400,
-                       height: 50,
-                       child: MaterialButton(
-                         onPressed: () {
-                           navigaterUser(context);
-                         },
-                         textColor: Colors.white,
-                         child: const Padding(
-                           padding: EdgeInsets.all(10.0),
-                           child: const Text('Next', style: const TextStyle(fontSize: 18,),),
-                         ),
+                 ),
+                 Container(
+                   alignment: Alignment.bottomCenter,
+                   margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
+                   decoration: const BoxDecoration(
+                       borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                       gradient: LinearGradient(colors: [
+                         Color(0xff2CABBB),
+                         Color(0xff0B527E),
+                       ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                   ),
+                   child: ButtonTheme(
+                     minWidth: 400,
+                     height: 50,
+                     child: MaterialButton(
+                       highlightColor: Colors.transparent,
+                       splashColor: Colors.transparent,
+                       onPressed: () {
+                         navigaterUser(context);
+                       },
+                       textColor: Colors.white,
+                       child: const Padding(
+                         padding: EdgeInsets.all(10.0),
+                         child: const Text('Next', style: const TextStyle(fontSize: 18,),),
                        ),
                      ),
-                   )
+                   ),
+                 )
 
-                 ],
-               ),
+               ],
              ),
            )
          ],

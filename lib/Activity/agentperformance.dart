@@ -186,6 +186,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                      Navigator.pop(context);
                    },
                    child: Container(
+                     padding: EdgeInsets.all(5.0),
                      margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                      child: Image.asset('images/login_stuff_03.png',
                        height: 20,
@@ -193,6 +194,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                    ),
                  ),
                  Container(
+                   padding: EdgeInsets.only(top: 5.0),
                    margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                    child: Text('Agent Performance',
                      style: TextStyle(

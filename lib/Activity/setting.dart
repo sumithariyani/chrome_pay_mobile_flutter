@@ -79,6 +79,7 @@ class _SettingState extends State<Setting> {
                           Navigator.pop(context);
                         },
                         child: Container(
+                          padding: EdgeInsets.all(5.0),
                           margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
                           child: Image.asset('images/login_stuff_03.png',
                             height: 20,
@@ -86,6 +87,7 @@ class _SettingState extends State<Setting> {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.only(top: 5.0),
                         margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
                         child: Text('Settings',
                           style: TextStyle(
@@ -105,6 +107,8 @@ class _SettingState extends State<Setting> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
                           onTap: (){
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) => EditProfile()),
@@ -145,6 +149,8 @@ class _SettingState extends State<Setting> {
                           ),
                         ),
                         InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
                           onTap: () {
                             Navigator.push(context,
                               MaterialPageRoute(builder: (context) => ChangePassword()),
@@ -204,6 +210,8 @@ class _SettingState extends State<Setting> {
                         minWidth: 400,
                         height: 50,
                         child: MaterialButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
                           onPressed: () {
 
                             LogoutMethod();

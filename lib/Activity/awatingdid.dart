@@ -90,6 +90,7 @@ class _AwatingState extends State<AwatingDid>{
                                       Navigator.pop(context);
                                     },
                                     child: Container(
+                                      padding: EdgeInsets.all(5.0),
                                       margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                                       child: Image.asset('images/login_stuff_03.png',
                                         height: 20,
@@ -97,6 +98,7 @@ class _AwatingState extends State<AwatingDid>{
                                     ),
                                   ),
                                   Container(
+                                    padding: EdgeInsets.only(top: 5.0),
                                     margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                                     child: Text('Pending Approval',
                                       style: TextStyle(
@@ -176,7 +178,7 @@ class _AwatingState extends State<AwatingDid>{
                                                                         child:                                                                                   Padding(
                                                                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                                                           child: Image.asset('images/Agency-04.png',
-                                                                            height: 20,),
+                                                                            height: 15,),
                                                                         ),
                                                                       ),
                                                                       Container(
@@ -198,7 +200,7 @@ class _AwatingState extends State<AwatingDid>{
                                                                     Padding(
                                                                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                                                       child: Image.asset('images/all_dids_10.png',
-                                                                        height: 20,)
+                                                                        height: 15,)
                                                                     ),
                                                                     Text(
                                                                         "${filter.phone}",

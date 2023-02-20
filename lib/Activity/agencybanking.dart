@@ -99,6 +99,7 @@ class _AgencyBankingState extends State<AgencyBanking> {
                           Navigator.pop(context);
                         },
                         child: Container(
+                          padding: EdgeInsets.all(5.0),
                           margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                           child: Image.asset('images/login_stuff_03.png',
                             height: 20,
@@ -106,6 +107,7 @@ class _AgencyBankingState extends State<AgencyBanking> {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.only(top: 5.0),
                         margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
                         child: Text('Agency Banking',
                           style: TextStyle(

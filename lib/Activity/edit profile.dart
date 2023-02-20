@@ -102,6 +102,7 @@ class _EditProfileState extends State<EditProfile>{
                          Navigator.pop(context);
                        },
                        child: Container(
+                         padding: EdgeInsets.all(5.0),
                          margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                          child: Image.asset('images/login_stuff_03.png',
                            height: 20,
@@ -109,6 +110,7 @@ class _EditProfileState extends State<EditProfile>{
                        ),
                      ),
                      Container(
+                       padding: EdgeInsets.only(top: 5.0),
                        margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                        child: const Text('Edit Profile',
                          style: TextStyle(

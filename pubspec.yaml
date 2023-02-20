@@ -38,9 +38,6 @@ dependencies:
   charts_flutter_new: ^0.12.0
   image_picker: ^0.8.6
   fl_chart: ^0.55.2
-  pdf: ^3.8.4
-  path_provider: ^2.0.12
-  printing: ^5.9.3
   geolocator: ^9.0.2
   google_ml_kit: ^0.7.0
   tflite_flutter: ^0.9.0
@@ -57,7 +54,6 @@ dependencies:
   permission_handler: ^10.2.0
   cunning_document_scanner: ^1.1.2
   geocoding: ^2.0.5
-
 
 dev_dependencies:
   flutter_test:
@@ -135,6 +131,7 @@ flutter:
     - images/home_page_icon_05.png
     - images/Doc-scan.png
     - images/scan.png
+    - images/vector.png
     - images/verify.png
     - images/Agency-03.png
     - images/Agency-04.png

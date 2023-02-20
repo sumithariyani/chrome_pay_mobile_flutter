@@ -6,9 +6,6 @@ import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/agent.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,48 +30,45 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: SplashScreen(),
+      home: SplashScreen()
     );
   }
+
+  initializeApp() {}
 }
 
 class SplashScreen extends StatefulWidget{
   @override
 
   _SplashScreenState createState() => _SplashScreenState();
-
-  @override
-  Widget build (BuildContext context){
-    return  Scaffold(
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-
-              ],
-            ),
-          ),
-        ),
-      );
-  }
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>{
 
   @override
   void initState(){
     super.initState();
 
-    Timer(Duration(seconds: 10),
+    Timer(Duration(seconds: 3),
             () => naviagteUser(context));
+
+    Timer(Duration(seconds: 1),
+            () => callamination());
+
   }
+
+  void callamination(){
+    setState(() {
+      _width = 70;
+      _height = 70;
+    });
+  }
+  double _width = 10.0;
+  double _height = 10.0;
   @override
   Widget build(BuildContext context) {
+    // final width = MediaQuery.of(context).size.width;
+    // final height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Stack(
           children: [
@@ -92,24 +86,33 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Image.asset("images/login_stuff_02.png",
-                      height: 70,
-                      width: 70,),
 
+                  new Container(
+                    height:70,
+                    width: 70,
+                    alignment: Alignment.center,
+                    child:  AnimatedContainer(
+                      width: _width,
+                      height: _height,
+                      color: Colors.transparent,
+                      alignment: Alignment.center,
+                      child: Image.asset("images/login_stuff_02.png",
+                        height: _width,
+                        width: _height,),
+                      duration: Duration(seconds: 1),
+                    ),
                   ),
-
                   Container(
-                    padding: EdgeInsets.only(top: 10, bottom: 10),
-                    child: const Text("Let`s Get\nStarted ",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textDirection: TextDirection.ltr,
-                    ) ,
-                  ),
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: const Text("Let`s Get\nStarted ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textDirection: TextDirection.ltr,
+                      ) ,
+                    ),
                 ],
               ),
             )

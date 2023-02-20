@@ -86,12 +86,14 @@ class _ForgotPassOtpState extends State<ForgotPassOtp>{
                                      Navigator.pop(context);
                                    },
                                    child: Container(
+                                     padding: EdgeInsets.all(5.0),
                                      child: Image.asset('images/login_stuff_03.png',
                                        height: 20,
                                      ),
                                    ),
                                  ),
                                  Container(
+                                   padding: EdgeInsets.only(top: 5.0),
                                    margin: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                                    child: Text('Verify Otp',
                                      style: TextStyle(
@@ -357,6 +359,8 @@ class _ForgotPassOtpState extends State<ForgotPassOtp>{
                            minWidth: 400,
                            height: 50,
                            child: MaterialButton(
+                             highlightColor: Colors.transparent,
+                             splashColor: Colors.transparent,
                              onPressed: () {
                                forgotPassWord();
                              },

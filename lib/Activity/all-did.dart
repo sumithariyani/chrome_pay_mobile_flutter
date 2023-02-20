@@ -140,6 +140,7 @@ class _ActiveDidState extends State<Active_Did> {
                                         Navigator.pop(context);
                                       },
                                       child: Container(
+                                        padding: EdgeInsets.all(5.0),
                                         margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                                         child: Image.asset('images/login_stuff_03.png',
                                           height: 20,
@@ -147,6 +148,7 @@ class _ActiveDidState extends State<Active_Did> {
                                       ),
                                     ),
                                     Container(
+                                      padding: EdgeInsets.only(top: 5.0),
                                       margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
                                       child: Text('Active D-IDs',
                                       style: TextStyle(
@@ -179,6 +181,8 @@ class _ActiveDidState extends State<Active_Did> {
                                                         Filter filter = customerList[index];
                                                         if(customerList.length != null){
                                                           return  InkWell(
+                                                            highlightColor: Colors.transparent,
+                                                            splashColor: Colors.transparent,
                                                             onTap: () {
                                                               id = "${filter!.id}";
                                                               _verifyCust("${filter.phone}", "${id}");
@@ -243,7 +247,7 @@ class _ActiveDidState extends State<Active_Did> {
                                                                                       child:                                                                                   Padding(
                                                                                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                                                                         child: Image.asset('images/Agency-04.png',
-                                                                                          height: 20,),
+                                                                                          height: 15,),
                                                                                       ),
                                                                                     ),
                                                                                     Container(
@@ -265,7 +269,7 @@ class _ActiveDidState extends State<Active_Did> {
                                                                                   Padding(
                                                                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                                                                     child: Image.asset('images/all_dids_10.png',
-                                                                                      height: 20,),
+                                                                                      height: 15,),
                                                                                   ),
                                                                                   Text(
                                                                                       "${filter.phone}",
@@ -285,23 +289,37 @@ class _ActiveDidState extends State<Active_Did> {
                                                                                   child: Container(
                                                                           margin: EdgeInsets.only(right: 10.0, top: 5.0),
                                                                           alignment: Alignment.center,
-                                                                          child: Container(
-                                                                            width: 100,
-                                                                            height: 100,
-                                                                            decoration: BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(20.0),
-                                                                              image: DecorationImage(
-                                                                                image: NetworkImage("${filter!.iDphoto}"),
-                                                                                fit: BoxFit.fill,
+                                                                          child:  Container(
+                                                                              width: 100,
+                                                                              height: 100,
+                                                                              child: ClipRRect(
+                                                                                borderRadius: BorderRadius.circular(20.0),
+                                                                                child: Image.network("${filter!.iDphoto}",
+                                                                                    height: 100,
+                                                                                    width: 100,
+                                                                                    fit: BoxFit.fill,
+                                                                                  errorBuilder: (_, __, ___) => Image.asset(
+                                                                                    "images/all_dids_06.png",
+                                                                                    height: 100,
+                                                                                    width: 100,
+                                                                                    fit: BoxFit.fill,
+                                                                                  ),
+                                                                                ),
                                                                               ),
+
+
+                                                                              // decoration: BoxDecoration(
+                                                                              //   borderRadius: BorderRadius.circular(20.0),
+                                                                              //   image: DecorationImage(
+                                                                              //     image: NetworkImage("${filter!.iDphoto}"),
+                                                                              //     fit: BoxFit.fill,
+                                                                              //
+                                                                              //   ),
+                                                                              // ),
+                                                                              alignment: Alignment.center,
                                                                             ),
-                                                                            alignment: Alignment.center,
-                                                                            // child: Image.network("${snapshot.data!.filter![index].iDphoto}",
-                                                                            //   width: 100,
-                                                                            //   height: 100,),
-                                                                          ),
                                                                         ),
-                                                                              )
+                                                                              ),
                                                                       ],
                                                                     ),
                                                                     Spacer(),

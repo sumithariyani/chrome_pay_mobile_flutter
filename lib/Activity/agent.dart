@@ -9,6 +9,7 @@ import 'agencybanking.dart';
 import 'agentcommission.dart';
 import 'agentperformance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'all-did.dart';
 import 'awatingdid.dart';
 import 'linked_services.dart';
@@ -38,7 +39,7 @@ class _AgentDashBoard extends State<Agent> {
     bool? status = prefs?.getBool('agentislogin');
     print("agentStaus ${status}");
     List<Widget> routes = [Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
-    var names =  ['Active D-ID`s', 'Pending approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
+    var names =  ['Active D-ID`s', 'Pending Approval', 'Agent Commission', 'Agent Performance', 'Agency Banking', 'Settings'];
     var images = ['images/agent_dashboard_stuff_03.png', 'images/agent_dashboard_stuff_08.png', 'images/agent_dashboard_stuff_10.png', 'images/agent_dashboard_stuff_10.png', 'images/icon_12.png', 'images/agent_dashboard_stuff_11.png'];
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -84,79 +85,79 @@ class _AgentDashBoard extends State<Agent> {
                           ),
                           Container(
                             child: PhysicalModel(color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => RegisterCustomer("",""),
-                                    ));
-                                    // _dialog();
-                                  },
                                   child: Card(
                                     margin: EdgeInsets.fromLTRB(10, 50, 10, 20),
                                     elevation: 10,
                                     color: Colors.transparent,
                                     shadowColor: Colors.black,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                          gradient: LinearGradient(colors: [
-                                            Color(0xff0B527E),
-                                            Color(0xff2CABBB),
-                                          ],begin: Alignment.topLeft, end: Alignment.topRight)
-                                      ),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 110,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                                            height: 40,
-                                            alignment: Alignment.topLeft,
-                                            child: CircleAvatar(
-                                              backgroundColor: Colors.white,
-                                              child: Image.asset('images/agent_dashboard_stuff_01.png',
-                                                height: 30,),
+                                    child: InkWell(
+                                      highlightColor: Colors.transparent,
+                                      onTap: () {
+                                        // Navigator.of(context).push(MaterialPageRoute(
+                                        //   builder: (context) => RegisterCustomer("",""),
+                                        // ));
+                                        _dialog();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xff0B527E),
+                                              Color(0xff2CABBB),
+                                            ],begin: Alignment.topLeft, end: Alignment.topRight)
+                                        ),
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 110,
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                              height: 40,
+                                              alignment: Alignment.topLeft,
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.white,
+                                                child: Image.asset('images/agent_dashboard_stuff_01.png',
+                                                  height: 30,),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                              flex: 10,
-                                              child: Container(
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                                                      child: Text('Create',
-                                                          textAlign: TextAlign.start,
-                                                          style: TextStyle(color: Colors.white,
-                                                              fontSize: 18)),
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                                      child: Text('Digital ID',
-                                                          style: TextStyle(color: Colors.white,
-                                                              fontSize: 20,
-                                                              fontWeight: FontWeight.bold)),
-                                                    ),
-                                                    Container(
-                                                      alignment: Alignment.bottomRight,
-                                                      margin: EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                                      child: Image.asset('images/login_stuff_10.png',
-                                                        height: 35,),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                          )
-                                        ],
+                                            Expanded(
+                                                flex: 10,
+                                                child: Container(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                                        child: Text('Create',
+                                                            textAlign: TextAlign.start,
+                                                            style: TextStyle(color: Colors.white,
+                                                                fontSize: 18)),
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                                        child: Text('Digital ID',
+                                                            style: TextStyle(color: Colors.white,
+                                                                fontSize: 20,
+                                                                fontWeight: FontWeight.bold)),
+                                                      ),
+                                                      Container(
+                                                        alignment: Alignment.bottomRight,
+                                                        margin: EdgeInsets.fromLTRB(0, 0, 10, 10),
+                                                        child: Image.asset('images/login_stuff_10.png',
+                                                          height: 35,),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-
                             ),
                           ),
 
@@ -182,66 +183,67 @@ class _AgentDashBoard extends State<Agent> {
                           Container(
                             child: ListView.builder(
                               itemBuilder: (context, index){
-                                return    InkWell(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => routes[index]));
-                                  },
-                                    child: Container(
+                                return  Container(
                                       child: Card(
                                         margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                                         elevation: 20,
                                         color: Colors.transparent,
                                         shadowColor: Colors.black,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                              color: Colors.white
-                                          ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                color: Colors.white
+                                            ),
 
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 70,
-                                          child: Row(
-                                            /* mainAxisAlignment: MainAxisAlignment.start,
-                                           crossAxisAlignment: CrossAxisAlignment.start,*/
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(20.0))
-                                                ),
-                                                child:
-                                                Card(
-                                                  margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                                  elevation: 8,
-                                                  color: Colors.transparent,
-                                                  child: CircleAvatar(
-                                                    backgroundColor: Colors.white,
-                                                    child: Image.asset(images[index],
-                                                      height: 20,),
-                                                  ),),
+                                            width: MediaQuery.of(context).size.width,
+                                            height: 70,
+                                            child: InkWell(
+                                              highlightColor: Colors.transparent,
+                                              onTap: (){
+                                                Navigator.push(context, MaterialPageRoute(
+                                                    builder: (context) => routes[index]));
+                                              },
+                                              child: Row(
+                                                /* mainAxisAlignment: MainAxisAlignment.start,
+                                               crossAxisAlignment: CrossAxisAlignment.start,*/
+                                                children: [
+                                                  Container(
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(20.0))
+                                                    ),
+                                                    child:
+                                                    Card(
+                                                      margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                                      elevation: 8,
+                                                      color: Colors.transparent,
+                                                      child: CircleAvatar(
+                                                        backgroundColor: Colors.white,
+                                                        child: Image.asset(images[index],
+                                                          height: 20,),
+                                                      ),),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                    alignment: Alignment.center,
+                                                    child: Text(names[index],
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight: FontWeight.w500)),
+                                                  ),
+                                                  const Spacer(),
+                                                  Container(
+                                                      alignment: Alignment.centerRight,
+                                                      margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                                      child: Image.asset('images/login_stuff_11.png',
+                                                        height: 30,)
+                                                  )
+                                                ],
                                               ),
-                                              Container(
-                                                margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                alignment: Alignment.center,
-                                                child: Text(names[index],
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight: FontWeight.w500)),
-                                              ),
-                                              const Spacer(),
-                                              Container(
-                                                  alignment: Alignment.centerRight,
-                                                  margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                                  child: Image.asset('images/login_stuff_11.png',
-                                                    height: 30,)
-                                              )
-                                            ],
+                                            ),
                                           ),
-                                        ),
                                       ),
-                                    )
-                                );
+                                    );
                               },
                               itemCount: names.length,
                               shrinkWrap: true,
@@ -303,14 +305,16 @@ class _MyDialogState extends State<MyDialog> {
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
                  Container(
-                   margin: EdgeInsets.all(10.0),
+                   margin: EdgeInsets.only(left: 10.0, top: 20),
                    child: Text('Select one of them',
                      style: TextStyle(fontSize: 18,
-                       fontWeight: FontWeight.bold,),
+                     fontFamily: 'OpensansRegular'),
                      textAlign: TextAlign.center,),
                  ),
                  Expanded(
                    child: InkWell(
+                     highlightColor: Colors.transparent,
+                     splashColor: Colors.transparent,
                      onTap: () {
                        setState(() {
                          Navigator.of(context).pop();
@@ -345,8 +349,12 @@ class _MyDialogState extends State<MyDialog> {
                            _radioVal = 'Create New D-ID';
                            print(_radioVal);
                          });
-                       },),
-                     Text('Create New D-ID'),
+                       },
+                     ),
+                     Text('Create New D-ID',
+                     style: TextStyle(fontFamily: 'OpenSans',
+                     fontSize: 16.0),
+                     ),
                    ],
                  ),
                ),
@@ -364,7 +372,10 @@ class _MyDialogState extends State<MyDialog> {
                            print(_radioVal);
                          });
                        },),
-                     Text('Link D-ID to New Services'),
+                     Text('Link D-ID to New Services',
+                       style: TextStyle(fontFamily: 'OpenSans',
+                           fontSize: 16.0),
+                     ),
                    ],
                  ),
                ),
@@ -373,10 +384,9 @@ class _MyDialogState extends State<MyDialog> {
            Spacer(),
            Expanded(
              child: Align(
-               alignment: Alignment.bottomRight,
                child: Container(
                  // alignment: Alignment.bottomRight,
-                 margin: const EdgeInsets.fromLTRB(30, 20, 10, 10),
+                 margin: const EdgeInsets.only(bottom: 20.0),
                  decoration: const BoxDecoration(
                      borderRadius: BorderRadius.all(
                          Radius.circular(40.0)),
@@ -391,14 +401,21 @@ class _MyDialogState extends State<MyDialog> {
                    minWidth: 150,
                    height: 50,
                    child: MaterialButton(
+                     highlightColor: Colors.transparent,
+                     splashColor: Colors.transparent,
                      onPressed: () {
                        _navigator();
+                       // if(_radioVal?.isNotEmpty == true) {
+                       //   print("objectskfhsfsbvhb");
+                       //   Navigator.
+                       // }
                      },
                      textColor: Colors.white,
                      child: const Padding(
                        padding: EdgeInsets.all(10.0),
                        child: const Text('Confirm',
-                         style: const TextStyle(fontSize: 16,),),
+                         style: const TextStyle(fontSize: 16,
+                         fontFamily: 'OpenSans'),),
                      ),
                    ),
                  ),
@@ -414,21 +431,24 @@ class _MyDialogState extends State<MyDialog> {
   void _navigator() {
     if(_radioVal?.matchAsPrefix("Link D-ID to New Services")!= null){
       print("link pe jaao");
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder:
               (context)=>  LinkedServices("")
           )
       );
     }
-    else if(_radioVal?.matchAsPrefix("Create New D-ID")!= null){
+     else if(_radioVal?.matchAsPrefix("Create New D-ID")!= null){
       print("new pe jaao");
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder:
               (context)=> RegisterCustomer("","")
           )
       );
     }else {
-      print("please select");
+       // Navigator.pop(context);
+       Fluttertoast.showToast(msg: "Please Select",
+       gravity: ToastGravity.CENTER);
+       print("please select");
     }
 
   }

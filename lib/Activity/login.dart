@@ -236,6 +236,8 @@ class _LoginFormState extends State <Login> {
                                 minWidth: 400,
                                 height: 50,
                                 child: MaterialButton(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
                                   onPressed: () {
                                     if(email.text.isEmpty){
                                       Fluttertoast.showToast(
