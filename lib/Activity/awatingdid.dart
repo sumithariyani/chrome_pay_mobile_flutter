@@ -14,7 +14,8 @@ class _AwatingState extends State<AwatingDid>{
 
   SharedPreferences? prefs;
   List<Filter> customerList = [];
-  int _page = 1;  bool _isPageLoading = false;
+  int _page = 1;
+  bool _isPageLoading = false;
 
   final int _limit = 20;
   final _scrollController = ScrollController();
@@ -25,6 +26,7 @@ class _AwatingState extends State<AwatingDid>{
     prefs = await SharedPreferences.getInstance();
     awatingDidModel = await Services.PendingList(prefs?.getString("token").toString()??"", _page);
     setState(() {
+       _isPageLoading = false;
       for (int i = 0; i<awatingDidModel.filter!.length; i++){
         customerList = awatingDidModel.filter ?? <Filter> [];
       }
@@ -120,7 +122,9 @@ class _AwatingState extends State<AwatingDid>{
                                       margin: EdgeInsets.only(bottom: 50.0),
                                       child: Container(
                                         width: double.infinity,
-                                        child: ListView.builder(
+                                        child: _isPageLoading ? const Center(
+                                          child: CircularProgressIndicator(),
+                                        ):ListView.builder(
                                           scrollDirection: Axis.vertical,
                                           itemCount: customerList.length,
                                           shrinkWrap: true,
@@ -223,7 +227,7 @@ class _AwatingState extends State<AwatingDid>{
                                                                   borderRadius: BorderRadius.all(
                                                                     Radius.circular(5.0)
                                                                   ),
-                                                                  color: Colors.pink.shade300,
+                                                                  color: Colors.red.shade800,
                                                                 ),
                                                                 child: Row(
                                                                     children: [
@@ -239,7 +243,8 @@ class _AwatingState extends State<AwatingDid>{
                                                                         padding: const EdgeInsets.only(right: 8.0),
                                                                         child: Container(
                                                                           child: Text("Pending",
-                                                                          style: TextStyle(color: Colors.white),),
+                                                                          style: TextStyle(color: Colors.white,
+                                                                          fontFamily: "OpensansSemiBold"),),
                                                                         ),
                                                                       )
                                                                     ],
@@ -248,20 +253,19 @@ class _AwatingState extends State<AwatingDid>{
                                                               Container(
                                                                 margin: EdgeInsets.only(right: 10.0, top: 10.0),
                                                                 alignment: Alignment.center,
-                                                                child: Container(
-                                                                  width: 100,
-                                                                  height: 100,
-                                                                  decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(20.0),
-                                                                    image: DecorationImage(
-                                                                      image: NetworkImage("${filter.iDphoto}"),
+                                                                child: ClipRRect(
+                                                                  borderRadius: BorderRadius.circular(20.0),
+                                                                  child: Image.network("${filter!.iDphoto}",
+                                                                    height: 100,
+                                                                    width: 100,
+                                                                    fit: BoxFit.fill,
+                                                                    errorBuilder: (_, __, ___) => Image.asset(
+                                                                      "images/all_dids_06.png",
+                                                                      height: 100,
+                                                                      width: 100,
                                                                       fit: BoxFit.fill,
                                                                     ),
                                                                   ),
-                                                                  alignment: Alignment.center,
-                                                                  // child: Image.network("${snapshot.data!.filter![index].iDphoto}",
-                                                                  //   width: 100,
-                                                                  //   height: 100,),
                                                                 ),
                                                               ),
                                                             ],

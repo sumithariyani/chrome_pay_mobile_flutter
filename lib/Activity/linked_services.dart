@@ -78,15 +78,7 @@ class LinkedServices extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-          children: [
-            Container(
-              alignment: Alignment.topRight,
-              child: Image.asset('images/login_stuff_31.png',
-                height: 200,
-                width: 150,),
-            ),
-            Container(
+      body: Container(
               width: MediaQuery
                   .of(context)
                   .size
@@ -133,16 +125,7 @@ class LinkedServices extends StatefulWidget {
                           .size
                           .width,
                       // height: MediaQuery.of(context).size.height,
-                      child: Card(
-                        margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                10.0))
-                        ),
-                        color: Colors.white,
-                        shadowColor: Colors.black,
-                        child: Column(
+                      child:  Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -157,8 +140,8 @@ class LinkedServices extends StatefulWidget {
                                     padding: EdgeInsets.only(
                                         top: 20.0, bottom: 10.0),
                                     child: Image.asset(
-                                      'images/handshake_06.png',
-                                      height: 70,),
+                                      'images/popup-05.png',
+                                      height: 180,),
                                   ),
                                   Center(
                                     child: Column(
@@ -168,39 +151,40 @@ class LinkedServices extends StatefulWidget {
                                           .center,
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(top: 10.0),
-                                          child: Text('Phone',
+                                          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
+                                          child: Text('DID Number',
                                             style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 15),),
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                            fontFamily: "Opensans"),),
                                         ),
-                                        Container(
-                                          height: 50,
-                                          margin: EdgeInsets.only(top: 5.0),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5.0)),
-                                              color: Color(0xff5f8fa)
-                                          ),
-                                          child: TextFormField(
-                                            controller: mobileNumber,
-                                            maxLength: 10,
-                                            keyboardType: TextInputType
-                                                .phone,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(
-                                                    borderSide: BorderSide
-                                                        .none,
-                                                    borderRadius: BorderRadius
-                                                        .circular(10.0)
-                                                ),
-                                                counterText: "",
-                                                hintText: "DID-Ref"
+                                        Card(
+                                          // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                          elevation: 10,
+                                          color: Colors.white,
+                                          shadowColor: Colors.black,
+                                          child: Container(
+                                            height: 50,
+                                            margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.white),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5.0)),
                                             ),
-                                            style: TextStyle(fontSize: 18.0),
+                                            child: TextFormField(
+                                              controller: mobileNumber,
+                                              maxLength: 10,
+                                              keyboardType: TextInputType
+                                                  .phone,
+                                              decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  counterText: "",
+                                                  hintText: "DID-Ref"
+                                              ),
+                                              style: TextStyle(fontSize: 18.0),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -211,7 +195,6 @@ class LinkedServices extends StatefulWidget {
                             ),
                           ],
                         ),
-                      ),
                     ),
                   ),
                   Container(
@@ -221,11 +204,11 @@ class LinkedServices extends StatefulWidget {
                         borderRadius: BorderRadius.all(
                             Radius.circular(40.0)),
                         gradient: LinearGradient(colors: [
-                          Color(0xff2CABBB),
                           Color(0xff0B527E),
+                          Color(0xff2CABBB),
                         ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter)
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight)
                     ),
                     child: ButtonTheme(
                       minWidth: 400,
@@ -239,7 +222,7 @@ class LinkedServices extends StatefulWidget {
                         textColor: Colors.white,
                         child: const Padding(
                           padding: EdgeInsets.all(10.0),
-                          child: Text('Save Changes',
+                          child: Text('Update',
                             style: const TextStyle(fontSize: 18,),),
                         ),
                       ),
@@ -248,8 +231,7 @@ class LinkedServices extends StatefulWidget {
                 ],
               ),
             )
-          ]
-      ),
+
     );
   }
 

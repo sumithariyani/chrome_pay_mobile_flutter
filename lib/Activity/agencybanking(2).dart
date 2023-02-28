@@ -103,12 +103,13 @@ Widget build(BuildContext context) {
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                                 gradient: LinearGradient(colors: [
-                                                  Color(0xff2CABBB),
                                                   Color(0xff0B527E),
-                                                ],begin: Alignment.topLeft,end: Alignment.centerRight)
+                                                  Color(0xff2CABBB),
+                                                ],begin: Alignment.bottomLeft,end: Alignment.topRight)
 
                                             ),
                                             child: CircleAvatar(
+                                              backgroundColor: Colors.transparent,
                                               child: Image.asset(images[index],
                                                 height: 20,),
                                             ),

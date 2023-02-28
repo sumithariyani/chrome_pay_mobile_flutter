@@ -414,7 +414,6 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                       side: BorderSide(color: Colors.grey)),
                                                   child: InkWell(
                                                     onTap: (){
-                                                      // pickImage();
                                                       // scanimages(context,0);
                                                       scandoc(0);
                                                       // openImagePicker(ImageSource.camera);
@@ -428,6 +427,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                             _residnceImage!,
                                                             // _residnceImage!,
                                                             fit: BoxFit.cover,
+                                                            width: 70,
                                                             height: 50,
                                                           ): Image.asset('images/register_customer_05.png',
                                                             height: 50,),
@@ -465,7 +465,6 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                     onTap: (){
                                                       // scanimages(context,1);
                                                       scandoc(1);
-                                                      // pickDocumentImage();
                                                     },
                                                     child: Column(
                                                       children: [
@@ -475,6 +474,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                           Image.file(
                                                             _documentImage!,
                                                             fit: BoxFit.cover,
+                                                            width: 70,
                                                             height: 50,
                                                           ):Image.asset('images/register_customer_05.png',
                                                             height: 50,),
@@ -512,7 +512,6 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                     onTap: (){
                                                       // scanimages(context,2);
                                                       scandoc(2);
-                                                      // pickRegisterImage();
                                                     },
                                                     child: Column(
                                                       children: [
@@ -522,6 +521,7 @@ class _DocumentScanerState extends State <DocumentScanner> {
                                                           Image.file(
                                                             _registerImage!,
                                                             fit: BoxFit.cover,
+                                                            width: 70,
                                                             height: 50,
                                                           ): Image.asset('images/register_customer_05.png',
                                                             height: 50,),
@@ -988,23 +988,29 @@ class _DocumentScanerState extends State <DocumentScanner> {
 
 
 
-  void scandoc(int from)async{
+  void scandoc(int from)async {
     final imagesPath = await CunningDocumentScanner.getPictures();
-    if(imagesPath!.length < 2) {
+    if (imagesPath!.length < 2) {
       if (from == 0) {
         _residnceImage = File(imagesPath![0]);
+        residenceImage();
       } else if (from == 1) {
         _documentImage = File(imagesPath![0]);
+        documentImage();
       } else if (from == 2) {
+        registraionImage();
         _registerImage = File(imagesPath![0]);
       }
-    }else{
-      _residnceImage = File(imagesPath![0]);
-      _documentImage = File(imagesPath![1]);
-      _registerImage = File(imagesPath![2]);
+    } else {
+      if (from == 0) {
+        _residnceImage = File(imagesPath![0]);
+        residenceImage();
+        _documentImage = File(imagesPath![1]);
+        documentImage();
+        registraionImage();
+        _registerImage = File(imagesPath![2]);
+      }
+      setState(() {});
     }
-    setState(() {
-    });
   }
-
 }

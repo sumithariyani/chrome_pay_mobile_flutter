@@ -86,134 +86,147 @@ class _AgencyBankingState extends State<AgencyBanking> {
                   .of(context)
                   .size
                   .height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(5.0),
+                              margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                              child: Image.asset('images/login_stuff_03.png',
+                                height: 20,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5.0),
+                            margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
+                            child: Text('Agency Banking',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18
+                              ),),
+                          )
+                        ],
+                      ),
+                      Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(5.0),
-                          margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                          child: Image.asset('images/login_stuff_03.png',
-                            height: 20,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          // height: MediaQuery.of(context).size.height,
+                          child: Card(
+                            margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                    10.0))
+                            ),
+                            color: Colors.white,
+                            shadowColor: Colors.black,
+                            child: Container(
+                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.only(
+                                            top: 20.0, bottom: 10.0),
+                                        child: Image.asset(
+                                          'images/icon_12.png',
+                                          height: 70,),
+                                      ),
+                                      Center(
+                                        child: Container(
+                                              height: 50,
+                                              margin: EdgeInsets.only(top: 5.0),
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(5.0)),
+                                                  color: Color(0xff5f8fa)
+                                              ),
+                                              child: TextFormField(
+                                                controller: mobileNumber,
+                                                maxLength: 10,
+                                                keyboardType: TextInputType
+                                                    .phone,
+                                                decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                        borderSide: BorderSide
+                                                            .none,
+                                                        borderRadius: BorderRadius
+                                                            .circular(10.0)
+                                                    ),
+                                                    counterText: "",
+                                                    hintText: "DID-Ref & Mobile number"
+                                                ),
+                                                style: TextStyle(fontSize: 18.0),
+                                              ),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                           ),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 5.0),
-                        margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
-                        child: Text('Agency Banking',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18
-                          ),),
+                        alignment: Alignment.bottomCenter,
+                        margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(40.0)),
+                            gradient: LinearGradient(colors: [
+                              Color(0xff2CABBB),
+                              Color(0xff0B527E),
+                            ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter)
+                        ),
+                        child: ButtonTheme(
+                          minWidth: 400,
+                          height: 50,
+                          child: MaterialButton(
+                            onPressed: () {
+                              sendOtp();
+                            },
+                            textColor: Colors.white,
+                            child: const Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text('Next',
+                                style: const TextStyle(fontSize: 18,),),
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      // height: MediaQuery.of(context).size.height,
-                      child: Card(
-                        margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                10.0))
-                        ),
-                        color: Colors.white,
-                        shadowColor: Colors.black,
-                        child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.only(
-                                        top: 20.0, bottom: 10.0),
-                                    child: Image.asset(
-                                      'images/icon_12.png',
-                                      height: 70,),
-                                  ),
-                                  Center(
-                                    child: Container(
-                                          height: 50,
-                                          margin: EdgeInsets.only(top: 5.0),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5.0)),
-                                              color: Color(0xff5f8fa)
-                                          ),
-                                          child: TextFormField(
-                                            controller: mobileNumber,
-                                            maxLength: 10,
-                                            keyboardType: TextInputType
-                                                .phone,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(
-                                                    borderSide: BorderSide
-                                                        .none,
-                                                    borderRadius: BorderRadius
-                                                        .circular(10.0)
-                                                ),
-                                                counterText: "",
-                                                hintText: "DID-Ref & Mobile number"
-                                            ),
-                                            style: TextStyle(fontSize: 18.0),
-                                          ),
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(40.0)),
-                        gradient: LinearGradient(colors: [
-                          Color(0xff2CABBB),
-                          Color(0xff0B527E),
-                        ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter)
-                    ),
-                    child: ButtonTheme(
-                      minWidth: 400,
-                      height: 50,
-                      child: MaterialButton(
-                        onPressed: () {
-                          sendOtp();
-                        },
-                        textColor: Colors.white,
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text('Next',
-                            style: const TextStyle(fontSize: 18,),),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
             )
           ]

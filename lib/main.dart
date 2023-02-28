@@ -1,26 +1,17 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:chrome_pay_mobile_flutter/Activity/agent.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Activity/login.dart';
 import 'Customer/customer_dash.dart';
-import '../Models/Agent Performance Model.dart';
 
 List<CameraDescription> cameras = [];
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  cameras = await availableCameras();
-  setupServices();
+
   runApp(MyApp());
 }
 
@@ -29,12 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white
+      ),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen()
+      home: SplashScreen(),
     );
   }
 
-  initializeApp() {}
 }
 
 class SplashScreen extends StatefulWidget{
@@ -48,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>{
   @override
   void initState(){
     super.initState();
-
+    getAsync();
     Timer(Duration(seconds: 3),
             () => naviagteUser(context));
 
@@ -56,15 +49,23 @@ class _SplashScreenState extends State<SplashScreen>{
             () => callamination());
 
   }
-
+   void getAsync() async{
+     WidgetsFlutterBinding.ensureInitialized();
+     await Firebase.initializeApp(
+       options: DefaultFirebaseOptions.currentPlatform,
+     );
+     cameras = await availableCameras();
+     setupServices();
+   }
   void callamination(){
     setState(() {
       _width = 70;
       _height = 70;
     });
   }
-  double _width = 10.0;
-  double _height = 10.0;
+  double _width = 5.0;
+  double _height = 5.0;
+
   @override
   Widget build(BuildContext context) {
     // final width = MediaQuery.of(context).size.width;
@@ -86,8 +87,7 @@ class _SplashScreenState extends State<SplashScreen>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  new Container(
+                  Container(
                     height:70,
                     width: 70,
                     alignment: Alignment.center,
@@ -96,10 +96,10 @@ class _SplashScreenState extends State<SplashScreen>{
                       height: _height,
                       color: Colors.transparent,
                       alignment: Alignment.center,
+                      duration: const Duration(seconds: 1),
                       child: Image.asset("images/login_stuff_02.png",
                         height: _width,
                         width: _height,),
-                      duration: Duration(seconds: 1),
                     ),
                   ),
                   Container(
@@ -128,16 +128,9 @@ void naviagteUser(BuildContext context) async {
   bool? status = prefs.getBool('agentislogin');
   bool? custStatus = custPrefs.getBool('custislogin');
   var type = prefs.getString('loginStatus');
-  // var custType = prefs.getString('custLoginStatus');
-  // var type = prefs.getString('loginStatus');
-  // var ctype = prefs.getString('loginStatus');
-  print(status);
-  print(custStatus);
-  print(type);
 
   if(custStatus == true){
     if(type?.matchAsPrefix("customer") != null) {
-      print("CustomerLogein");
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => CustomerDash(),
       )
@@ -146,7 +139,6 @@ void naviagteUser(BuildContext context) async {
   }
   else if (status == true ) {
     if(type?.matchAsPrefix("agent") != null){
-    print("Agent Logging");
     // Navigator.of(context).pushReplacement(MaterialPageRoute(
     //   builder: (context) => DocumentScanner("9131087223","v@gmail.com",0,"indore"),
     // )
@@ -157,7 +149,6 @@ void naviagteUser(BuildContext context) async {
     );
     }
   } else {
-    print("login");
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => Login(),
     )

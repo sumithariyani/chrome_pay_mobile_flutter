@@ -1,10 +1,9 @@
-
-
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Commisssion%20%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:date_time_format/date_time_format.dart';
+
 
 class AgentCommission extends StatefulWidget {
   @override
@@ -22,28 +21,29 @@ class _AgentCommissionState extends State<AgentCommission> {
   List<Filter> customerList = [];
   DateTime? fromDate, toDate;
   String? selectedFromDate, selectedToDate;
-
   late AgentCommissionModel agentCommissionModel;
 
-  Future<void> getCustomer() async {
+  Future<void> getCustomer(int page) async {
     print("calaghhggj");
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
     agentCommissionModel = await Services.CommissionList(prefs?.getString("token").toString()??"",
-        _page, selectedFromDate??"", selectedToDate??"");
+        page, selectedFromDate??"", selectedToDate??"");
 
+    setState(() {
+      _isPageLoading = false;
       for (int i = 0; i<agentCommissionModel.filter!.length; i++){
         customerList.add(agentCommissionModel.filter![i]);
       }
-    setState(() {
     });
   }
 
   @override
   void initState() {
+
     if(fromDate == null || toDate == null){
       print("object success");
-      getCustomer();
+      getCustomer(_page);
     }
     print("objectfromDate${fromDate}");
     super.initState();
@@ -66,16 +66,7 @@ class _AgentCommissionState extends State<AgentCommission> {
   Widget build(BuildContext context) {
 
     return  Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            alignment: Alignment.topRight,
-            child: Image.asset('images/login_stuff_31.png',
-              height: 200,
-              width: 150,
-            ),
-          ),
-          Container(
+      body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
@@ -116,180 +107,181 @@ class _AgentCommissionState extends State<AgentCommission> {
                         ],
                       ),
                     ),
-                    Card(
-                      margin: EdgeInsets.all(20.0),
-                      color: Colors.transparent,
-                      shadowColor: Colors.black,
-                      elevation: 5,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 40.0,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.black,
-                                width: 1
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                            shape: BoxShape.rectangle,
-                            color: Colors.white
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () async{
-                                fromDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1950),
-                                    lastDate: DateTime.now());
-                                if(fromDate != null){
-                                  print('Date Selecte : ${fromDate?.day ??""}-${fromDate?.month ??""}-${fromDate?.year ??""}');
-                                  setState(() {
-                                    selectedFromDate='${fromDate?.year??""}-${fromDate?.month??""}-${fromDate?.day??""}';
-                                    print("selectedFromDate ${selectedFromDate}");
-                                  });
-                                }
-
+                    Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 60.0,
+                            margin: EdgeInsets.only(left: 15.0, right: 10.0),
+                            child: InkWell(
+                                onTap: () async{
+                                  fromDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1950),
+                                      lastDate: DateTime.now());
+                                  int? month = fromDate?.month;
+                                  String? fm=""+ "${month}";
+                                  String? fd=""+"${fromDate?.day}";
+                                  if(month!<10){
+                                    fm ="0"+"${month}";
+                                    print("fm ${fm}");
+                                  }
+                                  if (fromDate!.day<10){
+                                    fd="0"+"${fromDate?.day}";
+                                    print("fd ${fd}");
+                                  }
+                                  if(fromDate != null){
+                                    print('Date Selecte : ${fromDate?.day ??""}-${fromDate?.month ??""}-${fromDate?.year ??""}');
+                                    setState(() {
+                                      selectedFromDate='${fromDate?.year??""}-${fm}-${fd}';
+                                      print("selectedFromDate ${selectedFromDate?.split(" ")[0]}");
+                                    });
+                                  }
                               },
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 20.0),
-                                    alignment: Alignment.center,
-                                        child: Text('${selectedFromDate??"From Date"}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600
-                                          ),),
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 5.0),
-                                      alignment: Alignment.center,
-                                      child: Icon(Icons.keyboard_arrow_down)
-                                  ),
-                                ],
+                              child: Card(
+                                elevation: 10,
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                        child: Image.asset("images/popup-07.png",
+                                        height: 20,),
+                                      ),
+                                      Container(
+                                        child: Text("${selectedFromDate??"From Date"}",
+                                        style: TextStyle(
+                                          fontFamily: "OpensansSemiBold",
+                                          fontSize: 13.0
+                                        ),),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(left: 5.0),
+                                          alignment: Alignment.center,
+                                          child: Icon(Icons.keyboard_arrow_down)
+                                      ),
+                                    ],
+                                  )
                               ),
                             ),
-                            Spacer(),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 3.5),
-                              alignment: Alignment.center,
-                              width: 1,
-                              color: Colors.black,
-                            ),
-                            Spacer(),
-                            InkWell(
-                              onTap: () async{
-                                toDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1950),
-                                    lastDate: DateTime.now());
-
-                                if(toDate != null){
-                                  print('toDate : ${toDate?.day ??""}-${toDate?.month ??""}-${toDate?.year ??""}');
-                                  setState(() {
-                                    selectedToDate='${toDate?.year ??""}-${toDate?.month ??""}-${toDate?.day ??""}';
-                                    print("selectedToDate ${selectedToDate}");
-                                  });
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                      alignment: Alignment.centerRight,
-                                          child: Text('${selectedToDate??"To Date"}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600
-                                          ),),
-                                    ),
-                                  Container(
-                                      margin: EdgeInsets.only(right: 20.0),
-                                      alignment: Alignment.centerRight,
-                                      child: Icon(Icons.keyboard_arrow_down)
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onTap: (){
-                                        if(selectedFromDate != null && fromDate != null){
-                                          print(" tap");
-                                          getCustomer();
-                                        }
-                                      },
-                                      child: Container(
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                            gradient: LinearGradient(colors: [
-                                              Color(0xff2CABBB),
-                                              Color(0xff0B527E),
-                                            ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                          ),
+                          Container(
+                            width: 140,
+                              height: 60.0,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: InkWell(
+                                onTap: () async{
+                                  toDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1950),
+                                      lastDate: DateTime.now());
+                                  int? month = toDate?.month;
+                                  String? fm=""+ "${month}";
+                                  String? fd=""+"${toDate?.day}";
+                                  if(month!<10){
+                                    fm ="0"+"${month}";
+                                    print("fm ${fm}");
+                                  }
+                                  if (toDate!.day<10){
+                                    fd="0"+"${toDate?.day}";
+                                    print("fd ${fd}");
+                                  }
+                                  if(toDate != null){
+                                    print('toDate : ${toDate?.day ??""}-${toDate?.month ??""}-${toDate?.year ??""}');
+                                    setState(() {
+                                      selectedToDate='${toDate?.year ??""}-${fm}-${fd}';
+                                      print("selectedToDate ${selectedToDate}");
+                                    });
+                                  }
+                                },
+                                child: Card(
+                                    elevation: 10,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                          child: Image.asset("images/popup-07.png",
+                                            height: 20,),
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Image.asset("images/vector.png"),
+                                        Container(
+                                          child: Text("${selectedToDate??"To Date"}",
+                                            style: TextStyle(
+                                              fontSize: 13.0,
+                                                fontFamily: "OpensansSemiBold"
+                                            ),),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                            margin: EdgeInsets.only(left: 5.0),
+                                            alignment: Alignment.centerRight,
+                                            child: Icon(Icons.keyboard_arrow_down)
+                                        ),
+                                      ],
+                                    )
+                                ),
+                              ),
+                            ),
+                          Container(
+                                  alignment: Alignment.centerRight,
+                                  margin: EdgeInsets.only(right: 10.0),
+                                  child: InkWell(
+                                    onTap: (){
+                                      // _isPageLoading = true;
+                                        setState(() {
+                                        if(selectedFromDate != null && fromDate != null) {
+                                          _isPageLoading = true;
+                                          getCustomer(1);
+                                          print("tap");
+                                        }
+                                        });
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                            boxShadow:  [
+                                              BoxShadow(
+                                                color: Color(0xff2CABBB).withOpacity(0.5),
+                                                spreadRadius: 1,
+                                                blurRadius: 5,
+                                                offset: Offset(0, 3), // changes position of shadow
+                                              ),
+                                            ],
+                                            image: DecorationImage(image: AssetImage("images/popup-08.png",),
+                                            scale: 4.0),
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xff0B527E),
+                                              Color(0xff2CABBB),
+                                            ],begin: Alignment.bottomLeft, end: Alignment.topRight)
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                            ),
+                                  ),
+                                ),
+                        ],
                       ),
                     ),
-                    // Card(
-                    //   margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    //   color: Colors.transparent,
-                    //   shadowColor: Colors.black,
-                    //   elevation: 5,
-                    //   child: Container(
-                    //     width: MediaQuery.of(context).size.width,
-                    //     height: 40.0,
-                    //     decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(10.0),
-                    //         shape: BoxShape.rectangle,
-                    //         color: Colors.white
-                    //     ),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.start,
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Container(
-                    //           margin: EdgeInsets.only(left: 20.0),
-                    //           alignment: Alignment.center,
-                    //           child: Text('Name'),
-                    //         ),
-                    //
-                    //         Spacer(),
-                    //         Container(
-                    //           margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    //           alignment: Alignment.centerRight,
-                    //           child: Text('Amount'),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     Container(
                       alignment: Alignment.center ,
-                      margin: EdgeInsets.only(bottom: 10.0),
+                      margin: EdgeInsets.only(top:10.0, bottom: 10.0),
                       child: Container(
                         // width: double.infinity,
-                        child: ListView.builder(
+                        child: _isPageLoading ? Center(
+                          child: CircularProgressIndicator(),
+                        ):ListView.builder(
                           padding: EdgeInsets.all(12.0),
                           itemCount: customerList.length,
                           shrinkWrap: true,
                           itemBuilder:(context, index) {
                             Filter filter = customerList[index];
+                            var date = DateTime.parse("${filter.Date}");
                             if (customerList.length != null){
                               return Card(
                                 color: Colors.transparent,
-                                margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                margin: EdgeInsets.fromLTRB(5, 0, 5, 20),
                                 elevation: 5,
                                 shadowColor: Colors.black,
                                 child: Container(
@@ -304,62 +296,86 @@ class _AgentCommissionState extends State<AgentCommission> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Container(
+                                            height: 60.0,
                                             alignment: AlignmentDirectional.center,
-                                            margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
+                                            margin: EdgeInsets.only(left: 10.0, right: 5.0, top: 5.0, bottom: 5.0),
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5.0),
-                                                color: Colors.black12
+                                                gradient: LinearGradient(colors: [
+                                                  Color(0xff0B527E),
+                                                  Color(0xff2CABBB),
+                                                ],begin: Alignment.topLeft, end: Alignment.topRight)
+
                                             ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text("30\nJAN",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(fontSize: 16.0,
-                                                    fontWeight: FontWeight.w500),),
+                                            child:  Padding(
+                                              padding: EdgeInsets.all(4.0),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Text(DateTimeFormat.format(date, format: DateTimeFormats.commonLogFormat).substring(0,6).replaceAll("/", " "),
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(color: Colors.white,
+                                                          fontWeight: FontWeight.w500),),
+                                                  ),
+                                                  Container(
+                                                      child: Text("11:45AM",
+                                                        style: TextStyle(color: Colors.white,
+                                                        fontSize: 10.0 ),
+                                                      )
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          Container(
-                                              margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-                                              child: Text("03:15 PM")
-                                          )
                                         ],
                                       ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(left: 5.0,top: 10.0,),
-                                            child: Text("${filter.custName}",
-                                              style: TextStyle(fontWeight: FontWeight.w500,
-                                                  fontSize: 16.0),),
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                            margin: EdgeInsets.only(left: 5.0, bottom: 5.0),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  child: Text("Transaction ID"),
-                                                ),
-                                                Container(
-                                                  child: Text("#1313131346",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),),
-                                                ),
-                                              ],
+                                      Container(
+                                        margin: EdgeInsets.only(left: 20.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(left: 5.0,top: 10.0, bottom: 5.0),
+                                              child: Text("${filter.custName}",
+                                                style: TextStyle(fontWeight: FontWeight.w500,
+                                                    fontSize: 13.0,
+                                                fontFamily: "OpensansRegular"),),
                                             ),
-                                          )
-                                        ],
+                                            Container(
+                                              margin: EdgeInsets.only(left: 5.0, bottom: 5.0),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    child: Text("Transaction ID",
+                                                    style: TextStyle(
+                                                      fontSize: 10.0
+                                                    ),),
+                                                  ),
+                                                  Container(
+                                                    child: Text("#1313131346",
+                                                      style: TextStyle(
+                                                          fontSize: 13.0,
+                                                          fontFamily: "OpensansRegular"),),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                       Spacer(),
                                       Container(
-                                          margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                                           alignment: Alignment.centerRight,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -367,7 +383,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                                               Container(
                                                 margin: EdgeInsets.only(top: 10.0),
                                                 child: Text("\$${filter.commission}",
-                                                  style: TextStyle(),),
+                                                  style: TextStyle(fontFamily: "OpensansRegular"),),
                                               ),
                                             ],
                                           )
@@ -378,7 +394,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                                 ),
                               );
                             }
-                            else if(customerList.length == null){
+                            else if(customerList.isEmpty == true){
                               print("gfhdgsgdfkjl");
                               return Center(
                                 child: Text('Not Found'),
@@ -395,17 +411,15 @@ class _AgentCommissionState extends State<AgentCommission> {
               ),
             ),
           )
-        ],
-      ),
     );
   }
 
   void _scrollListener(){
-    print("working");
     if(_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       _page = _page+1;
-      getCustomer().then((data) {
+      print("working");
+      getCustomer(_page).then((data) {
       });
     }
   }

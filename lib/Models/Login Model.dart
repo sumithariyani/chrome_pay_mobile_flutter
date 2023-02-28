@@ -14,6 +14,8 @@ class LoginModel {
     this.ID,
     this.orgID,
     this.custID,
+    this.name,
+    this.image,
 });
 
   bool? status;
@@ -23,6 +25,8 @@ class LoginModel {
   String? ID;
   String? orgID;
   String? custID;
+  String? name;
+  String? image;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
     status: json["status"] == null ? null : json["status"],
@@ -32,6 +36,8 @@ class LoginModel {
     ID: json["ID"] == null ? null : json["ID"],
     orgID: json["orgID"] == null ? null : json["orgID"],
     custID: json["custID"] == null ? null : json["custID"],
+    name: json["name"] == null ? null : json["name"],
+    image: json["image"] == null ? null : json["image"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -42,5 +48,7 @@ class LoginModel {
     "ID": ID == null ? null : ID,
     "orgID": orgID == null ? null : orgID,
     "custID": custID == null ? null : custID,
+    "name": name == null ? null : name,
+    "image": image == null ? null : image,
   };
 }

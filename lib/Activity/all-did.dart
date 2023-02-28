@@ -42,7 +42,6 @@ class _ActiveDidState extends State<Active_Did> {
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
     allDidModel = await Services.CustomerList(prefs!.getString('token').toString(), _page!);
-    print("fgfgghfgfhgfhfID ${prefs!.getString('ID').toString()}");
     setState(() {
       _isPageLoading = false;
       for (int i = 0; i<allDidModel.filter!.length; i++){
@@ -53,7 +52,6 @@ class _ActiveDidState extends State<Active_Did> {
 
   Future<void> _verifyCust(String phone, String id) async {
     prefs = await SharedPreferences.getInstance();
-    print("id${id}");
     _customerViewOtpModel = await Services.CustViewOtp(prefs!.getString('token').toString(), phone);
 
     if(_customerViewOtpModel?.status!= false){
@@ -72,7 +70,6 @@ class _ActiveDidState extends State<Active_Did> {
       Fluttertoast.showToast(msg: "${_verifyCustViewOtpModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
-      print(id);
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => CustomerProfile(id!)
@@ -171,7 +168,7 @@ class _ActiveDidState extends State<Active_Did> {
                                             margin: EdgeInsets.only(bottom: 50.0),
                                             child: Container(
                                                     width: double.infinity,
-                                                    child:_isPageLoading ? Center(
+                                                    child:_isPageLoading ? const Center(
                                                       child: CircularProgressIndicator(),
                                                     ):ListView.builder(
                                                       scrollDirection: Axis.vertical,
@@ -332,12 +329,13 @@ class _ActiveDidState extends State<Active_Did> {
                                                                                 bottomLeft: Radius.circular(30.0),
                                                                                 bottomRight: Radius.circular(30.0)
                                                                             ),
-                                                                            gradient: LinearGradient(colors: [
-                                                                              Color(0xff0B527E),
-                                                                              Color(0xff2CABBB),
-                                                                            ],
-                                                                                begin: Alignment.centerLeft,
-                                                                                end: Alignment.centerRight)
+                                                                            color: Colors.green
+                                                                            // gradient: LinearGradient(colors: [
+                                                                            //   Color(0xff0B527E),
+                                                                            //   Color(0xff2CABBB),
+                                                                            // ],
+                                                                            //     begin: Alignment.centerLeft,
+                                                                            //     end: Alignment.centerRight)
                                                                         )
                                                                     ),
                                                                   ],
@@ -346,7 +344,6 @@ class _ActiveDidState extends State<Active_Did> {
                                                             ),
                                                           );
                                                         }else if(customerList.length == null){
-                                                          print("gfhdgsgdfkjl");
                                                           return Center(
                                                             child: Text('Not Found'),
                                                           );
@@ -376,13 +373,10 @@ class _ActiveDidState extends State<Active_Did> {
   }
 
   void _scrollListener(){
-    print("working");
     if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       _page = _page!+1;
       getCustomer().then((data) {
       });
-    } else {
-      print('Dont');
     }
   }
   void _custDetailDialog(String phone){

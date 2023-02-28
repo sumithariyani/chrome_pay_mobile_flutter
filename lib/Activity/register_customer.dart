@@ -252,8 +252,10 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                        child: Column(
                                          children: <Widget>[
                                            Container(
+                                             alignment: Alignment.centerLeft,
                                              child: TextField(
                                                controller: fullName,
+                                               textAlignVertical: TextAlignVertical.center,
                                                keyboardType: TextInputType.text,
                                                decoration: InputDecoration(
                                                  counterText: "",
@@ -307,6 +309,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                      margin: EdgeInsets.symmetric(horizontal: 8.0),
                                                      child: TextField(
                                                        controller: mobileNumber,
+                                                       textAlignVertical: TextAlignVertical.center,
                                                        keyboardType: TextInputType.phone,
                                                        maxLength: 10,
                                                        decoration: const InputDecoration(
@@ -482,6 +485,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              margin: EdgeInsets.only(top: 10.0),
                                              child: TextField(
                                                controller: email,
+                                               textAlignVertical: TextAlignVertical.center,
                                                keyboardType: TextInputType.text,
                                                decoration: InputDecoration(
                                                  counterText: "",
@@ -501,6 +505,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                              margin: EdgeInsets.only(top: 10.0),
                                              child: TextField(
                                                controller: city,
+                                               textAlignVertical: TextAlignVertical.center,
                                                keyboardType: TextInputType.text,
                                                decoration: InputDecoration(
                                                  counterText: "",
@@ -559,6 +564,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                            Container(
                                              child: TextField(
                                                controller: profession,
+                                               textAlignVertical: TextAlignVertical.center,
                                                keyboardType: TextInputType.text,
                                                decoration: InputDecoration(
                                                  counterText: "",
@@ -577,6 +583,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                            Container(
                                              child: TextField(
                                                controller: nameKin,
+                                               textAlignVertical: TextAlignVertical.center,
                                                keyboardType: TextInputType.text,
                                                decoration: InputDecoration(
                                                  counterText: "",
@@ -595,6 +602,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                            Container(
                                              child: TextField(
                                                controller: numberKin,
+                                               textAlignVertical: TextAlignVertical.center,
                                                maxLength: 10,
                                                keyboardType: TextInputType.number,
                                                decoration: InputDecoration(

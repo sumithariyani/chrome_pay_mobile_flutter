@@ -49,6 +49,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
    AgentPerformanceModel? _agentPerformanceModel;
 
   Future<void> getCustomer() async {
+    _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
     _chartsData.clear();
     _monthData.clear();
@@ -56,7 +57,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
     _agentPerformanceModel = await Services.AgentPer(prefs.getString('token').toString(),selectedFilter.toString());
     print("prefs!.getString(token).toString() ${prefs!.getString("token").toString()}");
     if(_agentPerformanceModel!.status == true){
-
+      _isPageLoading = false;
       if(_agentPerformanceModel!.year!=null){
 
         print("object");
@@ -377,7 +378,9 @@ class _AgentPerformanceState extends State<AgentPerformance> {
 
                      if(_monthData!.isNotEmpty) Container(
                        child: Expanded(child:
-                           Padding(
+                           _isPageLoading ? Center(
+                             child: CircularProgressIndicator(),
+                           ):Padding(
                              padding: const EdgeInsets.only(right: 15.0),
                              child: LineChart(
                                monthData(),
@@ -386,15 +389,19 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                        ),
                      ),
 
-                   if(_chartsData!.isNotEmpty) Expanded(child:
-                       Padding(padding: const EdgeInsets.only(right: 15.0),
+                   if(_chartsData!.isNotEmpty) Expanded(
+                       child: _isPageLoading ? Center(
+                     child: CircularProgressIndicator(),
+                   ):Padding(padding: const EdgeInsets.only(right: 15.0),
                          child: LineChart(
                            yearData(),
                          ),)
                    ),
 
-                   if(_dayData!.isNotEmpty) Expanded(child:
-                   Padding(padding: const EdgeInsets.only(right: 15.0),
+                   if(_dayData!.isNotEmpty) Expanded(
+                       child: _isPageLoading ? Center(
+                         child: CircularProgressIndicator(),
+                       ): Padding(padding: const EdgeInsets.only(right: 15.0),
                      child: LineChart(
                        weekData(),
                      ),)
