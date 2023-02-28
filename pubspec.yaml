@@ -54,6 +54,7 @@ dependencies:
   permission_handler: ^10.2.0
   cunning_document_scanner: ^1.1.2
   geocoding: ^2.0.5
+  date_time_format: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -135,8 +136,28 @@ flutter:
     - images/verify.png
     - images/Agency-03.png
     - images/Agency-04.png
+    - images/Agency-06.png
     - images/pending-04.png
     - images/check mark-04.png
+    - images/Splash_image.png
+    - images/Agency---06-06.png
+    - images/Agency---06-07.png
+    - images/Agency---06-08.png
+    - images/Agency---06-09.png
+    - images/Agency---06-10.png
+    - images/Agency---06-11.png
+    - images/Agency---06-12.png
+    - images/Agency---06-13.png
+    - images/Agency---06-14.png
+    - images/Agency---06-15.png
+    - images/Agency---06-16.png
+    - images/Agency---06-17.png
+    - images/popup-03.png
+    - images/popup-04.png
+    - images/popup-05.png
+    - images/popup-06.png
+    - images/popup-07.png
+    - images/popup-08.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -157,5 +178,8 @@ flutter:
      - family: OpensansRegular
        fonts:
          - asset: fonts/OpenSans-Bold.ttf
+     - family:  OpensansSemiBold
+       fonts:
+         - asset: fonts/OpenSans-SemiBold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

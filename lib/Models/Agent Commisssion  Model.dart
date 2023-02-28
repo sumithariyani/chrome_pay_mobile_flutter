@@ -47,6 +47,8 @@ class Filter {
     this.commissionId,
     this.createdAt,
     this.updatedAt,
+    this.Date,
+    this.Time,
     this.v,
   });
 
@@ -59,6 +61,8 @@ class Filter {
   String? commissionId;
   String? createdAt;
   String? updatedAt;
+  String? Date;
+  String? Time;
   int? v;
 
   factory Filter.fromJson(Map<String, dynamic> json) => Filter(
@@ -71,6 +75,8 @@ class Filter {
     commissionId: json["commissionID"] == null ? null : json["commissionID"],
     createdAt: json["createdAt"] == null ? null : json["createdAt"],
     updatedAt: json["updatedAt"] == null ? null : json["updatedAt"],
+    Date: json["Date"] == null ? null : json["Date"],
+    Time: json["Time"] == null ? null : json["Time"],
     v: json["__v"] == null ? null : json["__v"],
   );
 
@@ -84,6 +90,8 @@ class Filter {
     "commissionID": commissionId == null ? null : [commissionId],
     "createdAt": createdAt == null ? null : createdAt,
     "updatedAt": updatedAt == null ? null : updatedAt,
+    "Date": Date == null ? null : Date,
+    "Time": Time == null ? null : Time,
     "__v": v == null ? null : v,
   };
 }

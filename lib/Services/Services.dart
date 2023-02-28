@@ -68,31 +68,14 @@ class Services {
     http.Response response = await http.post(Uri.parse(Login), body: params);
     print(response.body);
 
-    if (response.statusCode == 200){
-
-      if (response.body.contains("false")){
-        Fluttertoast.showToast(msg: "",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
-      }
-      else if (response.body.contains("agent")) {
-        Fluttertoast.showToast(msg: "This is Agent",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
-      }
-      else if (response.body.contains("customer")) {
-        Fluttertoast.showToast(msg: "This is Customer",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
-      }else {
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      LoginModel user = LoginModel.fromJson(data);
+      return user;
+    }else {
         print(response.body);
         throw Exception('Failed');
       }
-    }
-    var data = jsonDecode(response.body);
-    LoginModel user = LoginModel.fromJson(data);
-    return user;
-    // return LoginModel();
   }
 
   static Future<ForgotPasswordModel> ForgotPass(String email) async{

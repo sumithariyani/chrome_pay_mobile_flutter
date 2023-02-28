@@ -1,0 +1,278 @@
+PODS:
+  - camera_avfoundation (0.0.1):
+    - Flutter
+  - document_scanner_flutter (0.0.1):
+    - Flutter
+    - WeScan (>= 0.9)
+  - Firebase/CoreOnly (10.3.0):
+    - FirebaseCore (= 10.3.0)
+  - firebase_core (2.5.0):
+    - Firebase/CoreOnly (= 10.3.0)
+    - Flutter
+  - FirebaseCore (10.3.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Logger (~> 7.8)
+  - FirebaseCoreInternal (10.3.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - geolocator_apple (1.2.0):
+    - Flutter
+  - google_maps_flutter_ios (0.0.1):
+    - Flutter
+    - GoogleMaps
+  - google_ml_kit (0.5.1):
+    - Flutter
+    - GoogleMLKit/BarcodeScanning
+    - GoogleMLKit/FaceDetection
+    - GoogleMLKit/ImageLabeling
+    - GoogleMLKit/ImageLabelingCustom
+    - GoogleMLKit/TextRecognition
+  - GoogleDataTransport (9.2.0):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleMaps (5.2.0):
+    - GoogleMaps/Maps (= 5.2.0)
+  - GoogleMaps/Base (5.2.0)
+  - GoogleMaps/Maps (5.2.0):
+    - GoogleMaps/Base
+  - GoogleMLKit/BarcodeScanning (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitBarcodeScanning (~> 2.2.0)
+  - GoogleMLKit/FaceDetection (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitFaceDetection (~> 2.2.0)
+  - GoogleMLKit/ImageLabeling (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitImageLabeling (~> 2.2.0)
+  - GoogleMLKit/ImageLabelingCustom (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitImageLabelingCustom (~> 2.2.0)
+  - GoogleMLKit/MLKitCore (3.2.0):
+    - MLKitCommon (~> 8.0.0)
+  - GoogleMLKit/TextRecognition (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognition (~> 1.4.0-beta6)
+  - GoogleToolboxForMac/DebugUtils (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - GoogleToolboxForMac/Defines (2.3.2)
+  - GoogleToolboxForMac/Logger (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
+  - GoogleUtilities/Environment (7.11.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.11.0):
+    - GoogleUtilities/Environment
+  - "GoogleUtilities/NSData+zlib (7.11.0)"
+  - GoogleUtilities/UserDefaults (7.11.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilitiesComponents (1.1.0):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.7.2)
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - MLImage (1.0.0-beta3)
+  - MLKitBarcodeScanning (2.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitVision (~> 4.2)
+  - MLKitCommon (8.0.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - GoogleUtilitiesComponents (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.12)
+  - MLKitFaceDetection (2.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitVision (~> 4.2)
+  - MLKitImageLabeling (2.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitImageLabelingCommon (~> 4.2)
+    - MLKitVision (~> 4.2)
+    - MLKitVisionKit (~> 5.2)
+  - MLKitImageLabelingCommon (4.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitVision (~> 4.2)
+  - MLKitImageLabelingCustom (2.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitImageLabelingCommon (~> 4.2)
+    - MLKitVision (~> 4.2)
+    - MLKitVisionKit (~> 5.2)
+  - MLKitObjectDetectionCommon (4.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitVision (~> 4.2)
+  - MLKitTextRecognition (1.4.0-beta6):
+    - MLKitCommon (~> 8.0)
+    - MLKitTextRecognitionCommon (= 1.0.0-beta6)
+    - MLKitVision (~> 4.2)
+  - MLKitTextRecognitionCommon (1.0.0-beta6):
+    - MLKitCommon (~> 8.0)
+    - MLKitVision (~> 4.2)
+  - MLKitVision (4.2.0):
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 1.1)
+    - MLImage (= 1.0.0-beta3)
+    - MLKitCommon (~> 8.0)
+    - Protobuf (~> 3.12)
+  - MLKitVisionKit (5.2.0):
+    - MLKitCommon (~> 8.0)
+    - MLKitImageLabelingCommon (~> 4.2)
+    - MLKitObjectDetectionCommon (~> 4.2)
+    - MLKitVision (~> 4.2)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - package_info_plus (0.4.5):
+    - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - printing (1.0.0):
+    - Flutter
+  - PromisesObjC (2.1.1)
+  - Protobuf (3.21.12)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - tflite_flutter (0.1.0):
+    - Flutter
+  - Toast (4.0.0)
+  - WeScan (1.7.0)
+
+DEPENDENCIES:
+  - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
+  - document_scanner_flutter (from `.symlinks/plugins/document_scanner_flutter/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
+  - google_ml_kit (from `.symlinks/plugins/google_ml_kit/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - printing (from `.symlinks/plugins/printing/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreInternal
+    - GoogleDataTransport
+    - GoogleMaps
+    - GoogleMLKit
+    - GoogleToolboxForMac
+    - GoogleUtilities
+    - GoogleUtilitiesComponents
+    - GTMSessionFetcher
+    - MLImage
+    - MLKitBarcodeScanning
+    - MLKitCommon
+    - MLKitFaceDetection
+    - MLKitImageLabeling
+    - MLKitImageLabelingCommon
+    - MLKitImageLabelingCustom
+    - MLKitObjectDetectionCommon
+    - MLKitTextRecognition
+    - MLKitTextRecognitionCommon
+    - MLKitVision
+    - MLKitVisionKit
+    - nanopb
+    - PromisesObjC
+    - Protobuf
+    - Toast
+    - WeScan
+
+EXTERNAL SOURCES:
+  camera_avfoundation:
+    :path: ".symlinks/plugins/camera_avfoundation/ios"
+  document_scanner_flutter:
+    :path: ".symlinks/plugins/document_scanner_flutter/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
+  google_maps_flutter_ios:
+    :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
+  google_ml_kit:
+    :path: ".symlinks/plugins/google_ml_kit/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
+  printing:
+    :path: ".symlinks/plugins/printing/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+  tflite_flutter:
+    :path: ".symlinks/plugins/tflite_flutter/ios"
+
+SPEC CHECKSUMS:
+  camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
+  document_scanner_flutter: cbbff63c2e3060e0593729cea2596120b62e794c
+  Firebase: f92fc551ead69c94168d36c2b26188263860acd9
+  firebase_core: f95c8bbe65213d406d592573ad42a12d64849cb8
+  FirebaseCore: 988754646ab3bd4bdcb740f1bfe26b9f6c0d5f2a
+  FirebaseCoreInternal: 29b76f784d607df8b2a1259d73c3f04f1210137b
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
+  geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
+  google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
+  google_ml_kit: e59224afa40468a45d43fcc4ded1370fbfe8ee32
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
+  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
+  GoogleMLKit: 0017a6a8372e1a182139b9def4d89be5d87ca5a7
+  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
+  GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
+  GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
+  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
+  MLImage: 489dfec109f21da8621b28d476401aaf7a0d4ff4
+  MLKitBarcodeScanning: d92fe1911001ec36870162c5a0eb206f612b7169
+  MLKitCommon: f6da6c5659618c070b50a80db01248ebe2964175
+  MLKitFaceDetection: 9f29d8d0bb38911281407e24e74d2e5da812ba8d
+  MLKitImageLabeling: 3a7c9b4ba2550c8a37d392c74b7d75c4c39aaa4c
+  MLKitImageLabelingCommon: 48a3d85b80a993edb168576f94192338e046a836
+  MLKitImageLabelingCustom: 4d3d01cb80d27a30bb713662b75afca4af4d8922
+  MLKitObjectDetectionCommon: 9fd75e357db52714013d9dda97a9f35e7b5d7d5b
+  MLKitTextRecognition: f6fda8923564f6cebe2bb952a1adb0414e1d731b
+  MLKitTextRecognitionCommon: 0c720ee45ffedb3a34f0e8b95764d2f57a108e71
+  MLKitVision: 96c96571190b7f63eddf4a12068ce8a8689e0d2c
+  MLKitVisionKit: bd7f84af2da356322872182b1f5bdf66f68e4584
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
+  path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
+  printing: eafa00acb682c0ca029d4d98d0798f55a1e27102
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Protobuf: 120350fc38646e2dedc26f49ecba778184ea1de2
+  shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
+  tflite_flutter: 9157a660578930a99728974f247369af1c3595d5
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
+
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
+
+COCOAPODS: 1.11.3

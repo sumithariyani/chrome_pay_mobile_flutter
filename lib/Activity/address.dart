@@ -98,8 +98,10 @@ class MapSampleState extends State<MapSample> {
     return position;
   }
 
+  var completeAddress;
   @override
   void initState() {
+    _handlePressButton();
     _currentLocation();
     super.initState();
     getAsync();
@@ -156,11 +158,17 @@ class MapSampleState extends State<MapSample> {
     debugPrint('location: ${position.latitude}');
      addresses = await
     placemarkFromCoordinates(position.latitude,position.longitude);
+// addresses.first.thoroughfare
+     setState(() {
+       first = addresses?.first;
+       completeAddress = first?.name + ", "+ first.thoroughfare+", "+first.locality + ", "
+           +first.administrativeArea + ", "+first.country;
+       print("AHGDGHSDGFSDJKAGH addresses ${completeAddress}");
+       // print("AHGDGHSDGFSDJKAGH first ${first}");
+       // print("AHGDGHSDGFSDJKAGH ${first?.name} : ${first?.administrativeArea}");
+     });
 
-     first = addresses?.first;
-    print("AHGDGHSDGFSDJKAGH addresses ${addresses}");
-    print("AHGDGHSDGFSDJKAGH first ${first}");
-    print("AHGDGHSDGFSDJKAGH ${first?.name} : ${first?.administrativeArea}");
+    return addresses;
   }
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
@@ -259,7 +267,7 @@ class MapSampleState extends State<MapSample> {
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: Text('Address : ${first}',
+                    child: Text('Address : ${completeAddress}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold
                       ),),
@@ -292,14 +300,7 @@ class MapSampleState extends State<MapSample> {
                       height: 50,
                       child: MaterialButton(
                         onPressed: () {
-                          if(detail?.result?.formattedAddress != null){
                             register();
-                          }else{
-                            Fluttertoast.showToast(msg: "Search city first",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER);
-                          }
-
                         },
                         textColor: Colors.white,
                         child: const Padding(
@@ -316,17 +317,9 @@ class MapSampleState extends State<MapSample> {
         ],
 
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: const Text('To the lake!'),
-      //   icon: const Icon(Icons.directions_boat),
-      // ),
     );
   }
 
-  // void navigaterUser(){
-  //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => DocumentScanner(),));
-  // }
 
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
@@ -334,6 +327,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _handlePressButton() async {
+    print("objectnbvcxzxcvbn");
     Prediction? p = await PlacesAutocomplete.show(
         context: context,
         apiKey: kGoogleApiKey,

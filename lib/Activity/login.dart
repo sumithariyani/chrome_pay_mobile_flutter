@@ -21,28 +21,31 @@ class _LoginFormState extends State <Login> {
   bool _isHidden = true;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
+  bool _isPageLoading = false;
   late LoginModel loginModel;
   Future<void> LoginMethod(String Email, String Password)  async {
     loginModel = await Services.LoginCredentials(Email, Password);
 
     SharedPreferences custPrefs = await SharedPreferences.getInstance();
-
+    setState(() {
+      _isPageLoading = true;
+    });
     if (loginModel.status!=false){
       prefs?.setString('loginStatus', loginModel.Login_status.toString());
       setState(() {
+
         if (loginModel.Login_status!.matchAsPrefix("agent") != null){
-          print("agent true");
           prefs?.setString('ID', loginModel.ID.toString());
           prefs?.setString('orgID', loginModel.orgID.toString());
           prefs?.setString('token', loginModel.token.toString());
           prefs?.setBool("agentislogin", true);
+          prefs?.setString("name", loginModel.name.toString());
+          prefs?.setString("image", loginModel.image.toString());
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => Agent(),));
         }
         if (loginModel.Login_status!.matchAsPrefix("customer") != null){
-          print("customer true");
           prefs?.setString('custID', loginModel.ID.toString());
           prefs?.setString('cust_token', loginModel.token.toString());
           prefs?.setBool('custislogin', true);
@@ -59,9 +62,9 @@ class _LoginFormState extends State <Login> {
         }
       });
     }
-    // setState(() {
-    //
-    // });
+    setState(() {
+      _isPageLoading = false;
+    });
   }
   getAsync() async {
   try{
@@ -81,15 +84,6 @@ class _LoginFormState extends State <Login> {
   }
   @override
   Widget build(BuildContext context) {
-    var id = prefs?.getString("ID");
-    var org = prefs?.getString("orgID");
-    var token = prefs?.getString("token");
-    bool? islogin = prefs?.getBool("agentislogin");
-
-    print("id ${id}");
-    print("org ${org}");
-    print("token ${token}");
-    print("islogin ${islogin}");
 
     return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -145,6 +139,7 @@ class _LoginFormState extends State <Login> {
                                   ) ,
                                 ),
                                 Container(
+                                  alignment: Alignment.center,
                                   margin: EdgeInsets.fromLTRB(10, 50, 10, 0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,7 +164,7 @@ class _LoginFormState extends State <Login> {
                                         ),
                                       ),
                                       Container(
-                                        alignment: Alignment.bottomCenter,
+                                        alignment: Alignment.center,
                                         margin: EdgeInsets.only(top: 10),
                                         child: TextField(
                                           controller: password,
@@ -232,7 +227,9 @@ class _LoginFormState extends State <Login> {
                                     Color(0xff0B527E),
                                   ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
                               ),
-                              child: ButtonTheme(
+                              child: _isPageLoading ? Center(
+                                child: CircularProgressIndicator(),
+                              ): ButtonTheme(
                                 minWidth: 400,
                                 height: 50,
                                 child: MaterialButton(
@@ -251,7 +248,6 @@ class _LoginFormState extends State <Login> {
                                           gravity: ToastGravity.BOTTOM);
                                     }else{
                                       LoginMethod(email.text.trim(), password.text.trim());
-                                      print("print"+email.text+password.text);
                                     }
                                   },
                                   textColor: Colors.white,
