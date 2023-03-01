@@ -70,11 +70,15 @@ class _ActiveDidState extends State<Active_Did> {
       Fluttertoast.showToast(msg: "${_verifyCustViewOtpModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
-      Navigator.push(
+      Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => CustomerProfile(id!)
           )
       );
+    }else{
+      Fluttertoast.showToast(msg: "${_verifyCustViewOtpModel?.msg}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
     }
   }
   @override

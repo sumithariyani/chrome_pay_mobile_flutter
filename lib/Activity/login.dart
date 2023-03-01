@@ -167,6 +167,7 @@ class _LoginFormState extends State <Login> {
                                         alignment: Alignment.center,
                                         margin: EdgeInsets.only(top: 10),
                                         child: TextField(
+                                          textAlignVertical: TextAlignVertical.center,
                                           controller: password,
                                           obscureText: _isHidden,
                                           keyboardType: TextInputType.text,

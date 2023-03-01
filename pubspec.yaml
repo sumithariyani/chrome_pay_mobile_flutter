@@ -158,6 +158,28 @@ flutter:
     - images/popup-06.png
     - images/popup-07.png
     - images/popup-08.png
+    - images/icon-03-03.png
+    - images/icons-01.png
+    - images/icons-02.png
+    - images/icons-03.png
+    - images/icons-04.png
+    - images/icons-05.png
+    - images/icons-06.png
+    - images/icons-07.png
+    - images/icons-08.png
+    - images/icons-09.png
+    - images/icons-10.png
+    - images/icons-11.png
+    - images/icons-12.png
+    - images/icons-13.png
+    - images/icons-14.png
+    - images/icons-15.png
+    - images/icons-16.png
+    - images/icons-17.png
+    - images/icons-18.png
+    - images/icons-19.png
+    - images/icons-20.png
+    - images/icons-21.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
