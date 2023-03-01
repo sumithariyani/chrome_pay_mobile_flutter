@@ -65,8 +65,8 @@ class LinkedServices extends StatefulWidget {
        Fluttertoast.showToast(msg: "${_verifyLinkedServiceOtpModel?.msg}",
            toastLength: Toast.LENGTH_SHORT,
            gravity: ToastGravity.CENTER);
-       Navigator.of(context).pushAndRemoveUntil(
-           MaterialPageRoute(builder: (context) => Active_Did() ), (route) => false);
+       Navigator.of(context).pushReplacement(
+           MaterialPageRoute(builder: (context) => Active_Did() ));
      }
      else {
        Fluttertoast.showToast(msg: "${_verifyLinkedServiceOtpModel?.msg}",
@@ -87,148 +87,161 @@ class LinkedServices extends StatefulWidget {
                   .of(context)
                   .size
                   .height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5.0),
-                          margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                          child: Image.asset('images/login_stuff_03.png',
-                            height: 20,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(5.0),
+                              margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                              child: Image.asset('images/login_stuff_03.png',
+                                height: 20,
+                              ),
+                            ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5.0),
+                            margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
+                            child: Text('Linked Service',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18
+                              ),),
+                          )
+                        ],
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          // height: MediaQuery.of(context).size.height,
+                          child:  Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.only(
+                                            top: 20.0, bottom: 10.0),
+                                        child: Image.asset(
+                                          'images/popup-05.png',
+                                          height: 180,),
+                                      ),
+                                      Center(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
+                                              child: Text('DID Number',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16,
+                                                fontFamily: "Opensans"),),
+                                            ),
+                                            Card(
+                                              // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                              elevation: 10,
+                                              color: Colors.white,
+                                              shadowColor: Colors.black,
+                                              child: Container(
+                                                height: 50,
+                                                margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.white),
+                                                    borderRadius: BorderRadius.all(
+                                                        Radius.circular(5.0)),
+                                                ),
+                                                child: TextFormField(
+                                                  controller: mobileNumber,
+                                                  maxLength: 10,
+                                                  keyboardType: TextInputType
+                                                      .phone,
+                                                  decoration: InputDecoration(
+                                                      border: InputBorder.none,
+                                                      counterText: "",
+                                                      hintText: "DID-Ref"
+                                                  ),
+                                                  style: TextStyle(fontSize: 18.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 5.0),
-                        margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
-                        child: Text('Linked Service',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18
-                          ),),
+                        alignment: Alignment.bottomCenter,
+                        margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(40.0)),
+                            gradient: LinearGradient(colors: [
+                              Color(0xff0B527E),
+                              Color(0xff2CABBB),
+                            ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)
+                        ),
+                        child: ButtonTheme(
+                          minWidth: 400,
+                          height: 50,
+                          child: MaterialButton(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onPressed: () {
+                              scan();
+                            },
+                            textColor: Colors.white,
+                            child: const Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text('Update',
+                                style: const TextStyle(fontSize: 18,),),
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      // height: MediaQuery.of(context).size.height,
-                      child:  Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.only(
-                                        top: 20.0, bottom: 10.0),
-                                    child: Image.asset(
-                                      'images/popup-05.png',
-                                      height: 180,),
-                                  ),
-                                  Center(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
-                                          child: Text('DID Number',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16,
-                                            fontFamily: "Opensans"),),
-                                        ),
-                                        Card(
-                                          // margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                          elevation: 10,
-                                          color: Colors.white,
-                                          shadowColor: Colors.black,
-                                          child: Container(
-                                            height: 50,
-                                            margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.white),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5.0)),
-                                            ),
-                                            child: TextFormField(
-                                              controller: mobileNumber,
-                                              maxLength: 10,
-                                              keyboardType: TextInputType
-                                                  .phone,
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  counterText: "",
-                                                  hintText: "DID-Ref"
-                                              ),
-                                              style: TextStyle(fontSize: 18.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(40.0)),
-                        gradient: LinearGradient(colors: [
-                          Color(0xff0B527E),
-                          Color(0xff2CABBB),
-                        ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight)
-                    ),
-                    child: ButtonTheme(
-                      minWidth: 400,
-                      height: 50,
-                      child: MaterialButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onPressed: () {
-                          scan();
-                        },
-                        textColor: Colors.white,
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text('Update',
-                            style: const TextStyle(fontSize: 18,),),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
             )
 

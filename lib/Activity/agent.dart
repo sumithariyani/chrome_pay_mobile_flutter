@@ -49,7 +49,9 @@ class _AgentDashBoard extends State<Agent> {
       colors: <Color>[Color(0xff0B527E),
         Color(0xff2CABBB),],
     ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
-    List<Widget> routes = [Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
+    List<Widget> routes = [
+     Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
+
     var names =  ['Active\n D-ID`s', 'Pending Approval', 'Agent Commission', 'Agent Performance',
       'Agency\n Banking', 'Settings'];
 
@@ -310,11 +312,11 @@ class _AgentDashBoard extends State<Agent> {
     showDialog(context: context,
         barrierDismissible: false,
        builder: (BuildContext dialogContext){
-         return StatefulBuilder(builder: (dialogContext, setState) {
-      return MyDialog();
-    });
+         return MyDialog();
      });
   }
+
+
 
 }
 
@@ -442,16 +444,15 @@ class _MyDialogState extends State<MyDialog> {
                                height: 20,),
                            ),
                          ),
-                         Expanded(
-                           child: Container(
+                         Container(
                              margin: EdgeInsets.only(left: 10.0),
                              child: Text("Create New D-ID",
+                               textAlign: TextAlign.center,
                                style: TextStyle(
                                    fontFamily: 'OpensansRegular',
                                    foreground: Paint()..shader = linearGradient),
                              ),
                            ),
-                         )
                        ],
                      ),
                    ),
@@ -496,16 +497,15 @@ class _MyDialogState extends State<MyDialog> {
                                height: 20,),
                            ),
                          ),
-                         Expanded(
-                           child: Container(
-                             alignment: Alignment.center,
+                        Container(
+                             // alignment: Alignment.center,
                              margin: EdgeInsets.only(left: 5.0),
                              child: Text("Link D-ID to New Services",
+                               textAlign: TextAlign.center,
                                style: TextStyle(fontFamily: 'OpensansRegular',
                                    foreground: Paint()..shader = linearGradient),
                              ),
                            ),
-                         )
                        ],
                      ),
                    ),
