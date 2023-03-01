@@ -382,7 +382,7 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                              child: CircularProgressIndicator(),
                            ):Padding(
                              padding: const EdgeInsets.only(right: 15.0),
-                             child: LineChart(
+                             child:LineChart(
                                monthData(),
                              ),
                            ),

@@ -49,12 +49,15 @@ class _AgencyBankingState extends State<AgencyBanking> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
 
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AgencyBanking2(),));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AgencyBanking2("${_verifyAgencyBankingOtpModel?.data?.iDphoto}","${_verifyAgencyBankingOtpModel?.data?.fullname}"),));
+      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
 
     }else{
       Fluttertoast.showToast(msg: "${_verifyAgencyBankingOtpModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
+      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
+
     }
   }
 
@@ -69,173 +72,182 @@ class _AgencyBankingState extends State<AgencyBanking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-          children: [
-            Container(
-              alignment: Alignment.topRight,
-              child: Image.asset('images/login_stuff_31.png',
-                height: 200,
-                width: 150,),
-            ),
-            Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(5.0),
-                              margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
-                              child: Image.asset('images/login_stuff_03.png',
-                                height: 20,
+      body:Container(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5.0),
+                        margin: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                        child: Image.asset('images/login_stuff_03.png',
+                          height: 20,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 5.0),
+                      margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
+                      child: Text('Agency Banking',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18
+                        ),),
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    // height: MediaQuery.of(context).size.height,
+                    child: Card(
+                      margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(
+                              10.0))
+                      ),
+                      color: Colors.white,
+                      shadowColor: Colors.black,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.transparent),
+                              child: Container(
+                                width: 80,
+                                height: 80,
+                                margin: EdgeInsets.only(left: 8.0),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(colors: [
+                                      Color(0xff0B527E),
+                                      Color(0xff2CABBB),
+                                    ],begin: Alignment.bottomLeft, end: Alignment.topRight)
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  child: Image.asset("images/icon-03-03.png",
+                                    height: 50,),
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 5.0),
-                            margin: EdgeInsets.fromLTRB(15, 40, 0, 0),
-                            child: Text('Agency Banking',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18
-                              ),),
-                          )
-                        ],
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          // height: MediaQuery.of(context).size.height,
-                          child: Card(
-                            margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
-                            elevation: 10,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                    10.0))
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
+                              child: Text('DID-Ref & Mobile No.',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: "OpensansSemiBold"),),
                             ),
-                            color: Colors.white,
-                            shadowColor: Colors.black,
-                            child: Container(
-                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.only(
-                                            top: 20.0, bottom: 10.0),
-                                        child: Image.asset(
-                                          'images/icon_12.png',
-                                          height: 70,),
-                                      ),
-                                      Center(
-                                        child: Container(
-                                              height: 50,
-                                              margin: EdgeInsets.only(top: 5.0),
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.grey),
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(5.0)),
-                                                  color: Color(0xff5f8fa)
-                                              ),
-                                              child: TextFormField(
-                                                controller: mobileNumber,
-                                                maxLength: 10,
-                                                keyboardType: TextInputType
-                                                    .phone,
-                                                decoration: InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                        borderSide: BorderSide
-                                                            .none,
-                                                        borderRadius: BorderRadius
-                                                            .circular(10.0)
-                                                    ),
-                                                    counterText: "",
-                                                    hintText: "DID-Ref & Mobile number"
-                                                ),
-                                                style: TextStyle(fontSize: 18.0),
-                                              ),
-                                            ),
-                                      ),
-                                    ],
+                            Center(
+                              child: Card(
+                                elevation: 10,
+                                color: Colors.white,
+                                shadowColor: Colors.black,
+                                child: Container(
+                                  height: 50,
+                                  margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                  alignment: Alignment.center,
+                                  child: TextFormField(
+                                    controller: mobileNumber,
+                                    maxLength: 10,
+                                    keyboardType: TextInputType
+                                        .phone,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        counterText: "",
+                                        hintText: "DID-Ref & Mobile number"
+                                    ),
+                                    style: TextStyle(fontSize: 18.0),
                                   ),
                                 ),
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(40.0)),
-                            gradient: LinearGradient(colors: [
-                              Color(0xff2CABBB),
-                              Color(0xff0B527E),
-                            ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter)
-                        ),
-                        child: ButtonTheme(
-                          minWidth: 400,
-                          height: 50,
-                          child: MaterialButton(
-                            onPressed: () {
-                              sendOtp();
-                            },
-                            textColor: Colors.white,
-                            child: const Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Text('Next',
-                                style: const TextStyle(fontSize: 18,),),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ]
-      ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  margin: const EdgeInsets.fromLTRB(30, 20, 30, 10),
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(40.0)),
+                      gradient: LinearGradient(colors: [
+                        Color(0xff0B527E),
+                        Color(0xff2CABBB),
+                      ],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight)
+                  ),
+                  child: ButtonTheme(
+                    minWidth: 400,
+                    height: 50,
+                    child: MaterialButton(
+                      onPressed: () {
+                        sendOtp();
+                      },
+                      textColor: Colors.white,
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text('Next',
+                          style: const TextStyle(fontSize: 18,),),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      )
     );
   }
 
   void _verifyDialog(){
-    showDialog(context: context, builder: (context){
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (context){
       return Container(
         child: Dialog(
           child: SingleChildScrollView(
@@ -251,6 +263,7 @@ class _AgencyBankingState extends State<AgencyBanking> {
                 children: [
                   InkWell(
                     onTap: (){
+                      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -539,4 +552,290 @@ class _AgencyBankingState extends State<AgencyBanking> {
       );
     });
   }
+  _agencyBakingDialog() {
+    showDialog(context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.transparent,
+        builder: (BuildContext dialogContext){
+          return StatefulBuilder(builder: (dialogContext, setState){
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 0.0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 300,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(40.0)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Color(0xff0B527E),
+                            Color(0xff2CABBB),
+                          ],begin: Alignment.topLeft, end: Alignment.topRight),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)
+                          )
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10.0, top: 10),
+                              child: Text('Select one of them',
+                                style: TextStyle(fontSize: 18,
+                                    color: Colors.white,
+                                    fontFamily: 'OpensansSemiBold'),
+                              ),
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  setState(() {
+                                    // Navigator.of(context).pop();
+                                  });
+                                },
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Image.asset('images/popup-06.png',
+                                    width: 20,
+                                    height: 20,),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    Spacer(),
+                    Column(
+                      children: [
+                        Card(
+                          margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shadowColor: Colors.black,
+                          child: InkWell(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onTap: (){
+                              // Navigator.of(context).pushReplacement(
+                              //     MaterialPageRoute(builder:
+                              //         (context)=>  RegisterCustomer("","")
+                              //     )
+                              // );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  color: Colors.white
+                              ),
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        gradient: LinearGradient(colors: [
+                                          Color(0xff0B527E),
+                                          Color(0xff2CABBB),
+                                        ],begin: Alignment.bottomLeft, end: Alignment.topRight)
+                                    ),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      child: Image.asset("images/icon-03-03.png",
+                                        height: 20,),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    child: Text("DID-Ref & mobile no.",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: 'OpensansRegular'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            );
+          });
+        });
+  }
+
 }
+
+class AgencyDialog extends StatefulWidget {
+  @override
+  _AgencyDialogState createState() => _AgencyDialogState();
+
+}
+
+class _AgencyDialogState extends State<AgencyBanking> {
+
+  TextEditingController mobileNumber = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 0.0,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 300,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+                Radius.circular(40.0)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Color(0xff0B527E),
+                      Color(0xff2CABBB),
+                    ],begin: Alignment.topLeft, end: Alignment.topRight),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)
+                    )
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10.0, top: 10),
+                        child: Text('Select one of them',
+                          style: TextStyle(fontSize: 18,
+                              color: Colors.white,
+                              fontFamily: 'OpensansSemiBold'),
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                            setState(() {
+                              // Navigator.of(context).pop();
+                            });
+                          },
+                          child: Container(
+                            alignment: Alignment.topRight,
+                            padding: EdgeInsets.all(10.0),
+                            child: Image.asset('images/popup-06.png',
+                              width: 20,
+                              height: 20,),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+
+              Spacer(),
+              Column(
+                children: [
+                  Card(
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    elevation: 10,
+                    color: Colors.transparent,
+                    shadowColor: Colors.black,
+                    child: InkWell(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      onTap: (){
+                        // Navigator.of(context).pushReplacement(
+                        //     MaterialPageRoute(builder:
+                        //         (context)=>  RegisterCustomer("","")
+                        //     )
+                        // );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            color: Colors.white
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(colors: [
+                                    Color(0xff0B527E),
+                                    Color(0xff2CABBB),
+                                  ],begin: Alignment.bottomLeft, end: Alignment.topRight)
+                              ),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset("images/icon-03-03.png",
+                                  height: 20,),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 10.0),
+                              child: TextFormField(
+                                controller: mobileNumber,
+                                maxLength: 10,
+                                keyboardType: TextInputType
+                                    .phone,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    counterText: "",
+                                    hintText: "DID-Ref"
+                                ),
+                                style: TextStyle(fontSize: 18.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+

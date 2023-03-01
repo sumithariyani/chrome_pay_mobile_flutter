@@ -49,7 +49,9 @@ class _AgentDashBoard extends State<Agent> {
       colors: <Color>[Color(0xff0B527E),
         Color(0xff2CABBB),],
     ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
-    List<Widget> routes = [Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
+    List<Widget> routes = [
+     Active_Did(), AwatingDid(), AgentCommission(), AgentPerformance(), AgencyBanking(), Setting()];
+
     var names =  ['Active\n D-ID`s', 'Pending Approval', 'Agent Commission', 'Agent Performance',
       'Agency\n Banking', 'Settings'];
 
@@ -115,15 +117,7 @@ class _AgentDashBoard extends State<Agent> {
                                         elevation: 10,
                                         color: Colors.transparent,
                                         shadowColor: Colors.black,
-                                        child: InkWell(
-                                          highlightColor: Colors.transparent,
-                                          onTap: () {
-                                            // Navigator.of(context).push(MaterialPageRoute(
-                                            //   builder: (context) => RegisterCustomer("",""),
-                                            // ));
-                                            _dialog();
-                                          },
-                                          child: Container(
+                                        child:  Container(
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                                 color: Colors.white
@@ -158,21 +152,27 @@ class _AgentDashBoard extends State<Agent> {
                                                                     fontSize: 12),
                                                             ),
                                                           ),
-                                                          Container(
-                                                            width: 120,
-                                                            alignment: Alignment.center,
-                                                            margin: const EdgeInsets.fromLTRB(50, 20, 30, 10),
-                                                            decoration: const BoxDecoration(
-                                                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                                                                gradient: LinearGradient(colors: [
-                                                                  Color(0xff0B527E),
-                                                                  Color(0xff2CABBB),
-                                                                ],begin: Alignment.bottomLeft,end: Alignment.topRight)
-                                                            ),
-                                                            child:  Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              child: Text('Create Digital ID', style: const TextStyle(fontSize: 12,
-                                                              color: Colors.white),),
+                                                          InkWell(
+                                                            highlightColor: Colors.transparent,
+                                                            onTap: () {
+                                                              _dialog();
+                                                            },
+                                                            child: Container(
+                                                              width: 120,
+                                                              alignment: Alignment.center,
+                                                              margin: const EdgeInsets.fromLTRB(50, 20, 30, 10),
+                                                              decoration: const BoxDecoration(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                                                  gradient: LinearGradient(colors: [
+                                                                    Color(0xff0B527E),
+                                                                    Color(0xff2CABBB),
+                                                                  ],begin: Alignment.bottomLeft,end: Alignment.topRight)
+                                                              ),
+                                                              child:  Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Text('Create Digital ID', style: const TextStyle(fontSize: 12,
+                                                                color: Colors.white),),
+                                                              ),
                                                             ),
                                                           )
                                                         ],
@@ -182,7 +182,6 @@ class _AgentDashBoard extends State<Agent> {
                                               ],
                                             ),
                                           ),
-                                        ),
                                     ),
                                       ),
                                       Card(
@@ -310,11 +309,11 @@ class _AgentDashBoard extends State<Agent> {
     showDialog(context: context,
         barrierDismissible: false,
        builder: (BuildContext dialogContext){
-         return StatefulBuilder(builder: (dialogContext, setState) {
-      return MyDialog();
-    });
+         return MyDialog();
      });
   }
+
+
 
 }
 
@@ -442,16 +441,15 @@ class _MyDialogState extends State<MyDialog> {
                                height: 20,),
                            ),
                          ),
-                         Expanded(
-                           child: Container(
-                             margin: EdgeInsets.only(left: 10.0),
+                         Container(
+                             margin: EdgeInsets.only(left: 5.0),
                              child: Text("Create New D-ID",
+                               textAlign: TextAlign.center,
                                style: TextStyle(
                                    fontFamily: 'OpensansRegular',
                                    foreground: Paint()..shader = linearGradient),
                              ),
                            ),
-                         )
                        ],
                      ),
                    ),
@@ -496,16 +494,15 @@ class _MyDialogState extends State<MyDialog> {
                                height: 20,),
                            ),
                          ),
-                         Expanded(
-                           child: Container(
-                             alignment: Alignment.center,
+                        Container(
+                             // alignment: Alignment.center,
                              margin: EdgeInsets.only(left: 5.0),
                              child: Text("Link D-ID to New Services",
+                               textAlign: TextAlign.center,
                                style: TextStyle(fontFamily: 'OpensansRegular',
                                    foreground: Paint()..shader = linearGradient),
                              ),
                            ),
-                         )
                        ],
                      ),
                    ),

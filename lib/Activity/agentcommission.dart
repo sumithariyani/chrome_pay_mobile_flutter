@@ -25,28 +25,29 @@ class _AgentCommissionState extends State<AgentCommission> {
 
   Future<void> getCustomer(int page) async {
     print("calaghhggj");
-    _isPageLoading = true;
+    setState(() {
+      _isPageLoading = true;
+    });
+
     prefs = await SharedPreferences.getInstance();
     agentCommissionModel = await Services.CommissionList(prefs?.getString("token").toString()??"",
         page, selectedFromDate??"", selectedToDate??"");
+    for (int i = 0; i<agentCommissionModel.filter!.length; i++){
+      customerList.add(agentCommissionModel.filter![i]);
+    }
+    setState(() {
+
+    });
 
     setState(() {
       _isPageLoading = false;
-      for (int i = 0; i<agentCommissionModel.filter!.length; i++){
-        customerList.add(agentCommissionModel.filter![i]);
-      }
     });
   }
 
   @override
   void initState() {
-
-    if(fromDate == null || toDate == null){
-      print("object success");
-      getCustomer(_page);
-    }
-    print("objectfromDate${fromDate}");
     super.initState();
+      getCustomer(_page);
     getAsync();
     _scrollController.addListener(_scrollListener) ;
     }
