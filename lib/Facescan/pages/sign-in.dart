@@ -162,6 +162,7 @@ class SignInState extends State<SignIn> {
   _onFlipPressed() async {
     setState(() {
       isloadbutton=false;
+      loading = true;
     });
     print("isflip $isflip");
     changeCamera();
