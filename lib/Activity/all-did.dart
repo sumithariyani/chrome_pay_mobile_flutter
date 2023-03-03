@@ -38,8 +38,6 @@ class _ActiveDidState extends State<Active_Did> {
   CustomerViewOtpModel? _customerViewOtpModel;
   VerifyCustViewOtpModel? _verifyCustViewOtpModel;
 
-  get dialogContext => null;
-
   Future<void> getCustomer() async {
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
@@ -77,18 +75,16 @@ class _ActiveDidState extends State<Active_Did> {
           MaterialPageRoute(builder: (context) => CustomerProfile(id!)
           )
       );
-      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
     }else{
       Fluttertoast.showToast(msg: "${_verifyCustViewOtpModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
-      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
     }
   }
   @override
   void initState() {
-    super.initState();
     getCustomer();
+    super.initState();
     getAsync();
     _scrollController.addListener(_scrollListener) ;
   }
@@ -388,10 +384,7 @@ class _ActiveDidState extends State<Active_Did> {
     }
   }
   void _custDetailDialog(String phone){
-    showDialog(
-      barrierDismissible: false,
-        context: context,
-        builder: (context){
+    showDialog(context: context, builder: (context){
       return Container(
         child: Dialog(
           child: SingleChildScrollView(
@@ -407,12 +400,6 @@ class _ActiveDidState extends State<Active_Did> {
                 children: [
                   InkWell(
                     onTap: (){
-                      _otp1.clear();
-                      _otp2.clear();
-                      _otp3.clear();
-                      _otp4.clear();
-                      _otp5.clear();
-                      _otp6.clear();
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -680,6 +667,7 @@ class _ActiveDidState extends State<Active_Did> {
                               child: MaterialButton(
                                 onPressed: () {
                                   _verifyCustOtp(phone);
+                                  Navigator.pop(context);
                                 },
                                 textColor: Colors.white,
                                 child: const Padding(

@@ -34,9 +34,9 @@ class CameraDetectionPreview extends StatelessWidget {
                     Container(
                       alignment: Alignment.topCenter,
                       child: Container(
-                        margin: const EdgeInsets.only(top: 200),
-                        height: width/2,
-                        width: width/2,
+                        margin: const EdgeInsets.only(top: 150),
+                        height: width/1.3,
+                        width: width/1.3,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: Colors.transparent,
@@ -47,14 +47,13 @@ class CameraDetectionPreview extends StatelessWidget {
                     Container(
                       alignment: Alignment.topCenter,
                       child: Container(
-                        margin: const EdgeInsets.only(top: 200),
-                        height: width/2,
-                        width: width/2,
+                        margin: const EdgeInsets.only(top: 150),
+                        height: width/1.3,
+                        width: width/1.3,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: Colors.transparent,
                             border: Border.all(color: Colors.red, width: 2.0)),
-
                       ),
                     ),
                     if (_faceDetectorService.faceDetected)
