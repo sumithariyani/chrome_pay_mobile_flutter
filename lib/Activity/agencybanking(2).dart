@@ -1,3 +1,4 @@
+import 'package:chrome_pay_mobile_flutter/Activity/moreservices..dart';
 import 'package:flutter/material.dart';
 
 class AgencyBanking2 extends StatefulWidget{
@@ -15,6 +16,7 @@ class _AgencyBankingState extends State<AgencyBanking2>{
 
 var images = ['images/icons-06.png', 'images/icons-05.png', 'images/icons-07.png',
   'images/icons-04.png', 'images/icons-03.png', 'images/icons-02.png'];
+
 var names =  ['Profile', 'Transfer', 'Micro Loans', 'Bills', 'Airtime', 'Cash In/\nCash Out'];
 
 var backgroundImages = ["images/icons-17.png", "images/icons-19.png", "images/icons-18.png",
@@ -250,25 +252,29 @@ Widget build(BuildContext context) {
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                          margin: const EdgeInsets.fromLTRB(30, 10, 30, 30),
                           decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(10.0)),
                               gradient: LinearGradient(colors: [
-                                Color(0xff2CABBB),
                                 Color(0xff0B527E),
-                              ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                                Color(0xff2CABBB),
+                              ],begin: Alignment.centerLeft,end: Alignment.centerRight)
                           ),
                           child: ButtonTheme(
                             minWidth: 400,
-                            height: 50,
+                            height: 60,
                             child: MaterialButton(
                               onPressed: () {
-                                // verifyOtp();
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => MoreService()
+                                    )
+                                );
                               },
                               textColor: Colors.white,
                               child: const Padding(
                                 padding: EdgeInsets.all(10.0),
-                                child: const Text('Verify DID', style: const TextStyle(fontSize: 18,),),
+                                child: const Text('More Services', style: const TextStyle(fontSize: 18,),),
                               ),
                             ),
                           ),

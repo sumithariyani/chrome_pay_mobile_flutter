@@ -299,7 +299,7 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
                                                        items: countryCodes.
                                                        map((item) => DropdownMenuItem<String>(
                                                          value: item,
-                                                           child: Text(item, style: const TextStyle(fontSize: 15),)
+                                                           child: Text(item, style: const TextStyle(fontSize: 15))
                                                        ))
                                                            .toList(),
                                                        onChanged: (item) => setState(() => selectedCode = item),

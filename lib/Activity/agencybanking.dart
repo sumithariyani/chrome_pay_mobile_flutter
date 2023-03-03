@@ -50,11 +50,14 @@ class _AgencyBankingState extends State<AgencyBanking> {
           gravity: ToastGravity.BOTTOM);
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AgencyBanking2("${_verifyAgencyBankingOtpModel?.data?.iDphoto}","${_verifyAgencyBankingOtpModel?.data?.fullname}"),));
+      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
 
     }else{
       Fluttertoast.showToast(msg: "${_verifyAgencyBankingOtpModel?.msg}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
+      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
+
     }
   }
 
@@ -241,7 +244,10 @@ class _AgencyBankingState extends State<AgencyBanking> {
   }
 
   void _verifyDialog(){
-    showDialog(context: context, builder: (context){
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (context){
       return Container(
         child: Dialog(
           child: SingleChildScrollView(
@@ -257,6 +263,7 @@ class _AgencyBankingState extends State<AgencyBanking> {
                 children: [
                   InkWell(
                     onTap: (){
+                      _otp1.clear(); _otp2.clear(); _otp3.clear(); _otp4.clear(); _otp5.clear(); _otp6.clear();
                       Navigator.pop(context);
                     },
                     child: Container(

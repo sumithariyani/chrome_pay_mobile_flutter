@@ -181,6 +181,11 @@ flutter:
     - images/icons-19.png
     - images/icons-20.png
     - images/icons-21.png
+    - images/new pages-06.png
+    - images/new pages-07.png
+    - images/new pages-08.png
+    - images/change password-02.png
+    - images/change password-03.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -2,6 +2,7 @@ import 'package:chrome_pay_mobile_flutter/Activity/all-did.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Profile%20Model.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Agent%20Update%20Model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Services/Services.dart';
@@ -52,7 +53,7 @@ class _EditProfileState extends State<EditProfile>{
 
     if(agentUpdateModel?.status==true){
       print('ho0');
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Active_Did()), (route) => false);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Active_Did()));
     }
     setState(() {
     });
@@ -77,16 +78,7 @@ class _EditProfileState extends State<EditProfile>{
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-       body: Stack(
-         children: <Widget>[
-           Container(
-             alignment: Alignment.topRight,
-             child: Image.asset('images/login_stuff_31.png',
-               height: 200,
-               width: 150,
-             ),
-           ),
-           Container(
+       body: Container(
              width: MediaQuery.of(context).size.width,
              height: MediaQuery.of(context).size.height,
              child: Column(
@@ -123,14 +115,7 @@ class _EditProfileState extends State<EditProfile>{
                  Expanded(
                      child: Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Card(
-                        margin: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-                        elevation: 10.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10.0))
-                        ),
-                        color: Colors.white,
-                        shadowColor: Colors.black,
+                       margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                         child: SingleChildScrollView(
                           child: Container(
                             margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -138,221 +123,305 @@ class _EditProfileState extends State<EditProfile>{
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  child: Text('Full Name',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
-                                ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: const Color(0x0ff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: fullName,
-                                    keyboardType: TextInputType.name,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      counterText: "",
-                                      hintText: "${agentProfileModel?.filter?.name}"
+                                InkWell(
+                                  onTap: (){
+                                    Fluttertoast.showToast(msg: "Coming Soon");
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent
                                     ),
-                                    style: TextStyle(fontSize: 18.0),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  child: Text('Phone',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
-                                ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: mobileNumber,
-                                    keyboardType: TextInputType.phone,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      margin: EdgeInsets.only(left: 8.0),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(colors: [
+                                            Color(0xff0B527E),
+                                            Color(0xff2CABBB),
+                                          ],begin: Alignment.centerLeft, end: Alignment.centerRight)
                                       ),
-                                      counterText: "",
-                                      hintText: "${agentProfileModel?.filter?.phone}"
-                                    ),
-                                    style: TextStyle(fontSize: 18.0),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  child: Text('Email',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
-                                ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: email,
-                                    keyboardType: TextInputType.emailAddress,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
+                                      child: CircleAvatar(
+                                        radius: 60,
+                                        backgroundColor: Colors.transparent,
+                                        child: Image.asset("images/new pages-06.png",
+                                          height: 40,
+                                          alignment: Alignment.center,),
                                       ),
-                                      counterText: "",
-                                      hintText: "${agentProfileModel?.filter?.email}"
                                     ),
-                                    style: TextStyle(fontSize: 18.0),
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  child: Text('Address',
+                                  margin: EdgeInsets.only(bottom: 10.0),
+                                  child: Text("Contact Info",
                                   style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
+                                    fontSize: 20,
+                                    fontFamily: "OpensansSemiBold"
+                                  ),),
                                 ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: address,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      counterText: "",
-                                      hintText: "${agentProfileModel?.filter?.address}"
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.white,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          // margin: EdgeInsets.only(top: 5.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(0.0),
+                                            child: Text('Full Name',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 10),),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(0.0),
+                                          child: TextFormField(
+                                            controller: fullName,
+                                            keyboardType: TextInputType
+                                                .name,
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                counterText: "",
+                                                hintText: "Full Name"
+                                            ),
+                                            style: TextStyle(fontSize: 16.0),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    style: TextStyle(fontSize: 18.0),
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  child: Text('City',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
-                                ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: citty,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      counterText: "",
-                                      hintText: "${agentProfileModel?.filter?.city}"
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Text('Phone',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10),),
+                                        ),
+                                        TextFormField(
+                                          controller: mobileNumber,
+                                          maxLength: 10,
+                                          keyboardType: TextInputType
+                                              .phone,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              counterText: "",
+                                              hintText: "Mobile number"
+                                          ),
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
-                                    style: TextStyle(fontSize: 18.0),
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  child: Text('Country',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
-                                ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: coutry,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      counterText: "",
-                                      hintText: "${agentProfileModel?.filter?.country}"
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Text('Email',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10),),
+                                        ),
+                                        TextFormField(
+                                          controller: email,
+                                          maxLength: 10,
+                                          keyboardType: TextInputType
+                                              .phone,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              counterText: "",
+                                              hintText: "Emil"
+                                          ),
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
-                                    style: TextStyle(fontSize: 18.0),
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  child: Text('PostalCode',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                  fontSize: 15),),
+                                  margin: EdgeInsets.only(bottom: 10.0, top: 15.0),
+                                  child: Text("Address",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: "OpensansSemiBold"
+                                    ),),
                                 ),
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xff5f8fa)
-                                  ),
-                                  child: TextField(
-                                    controller: postalcode,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      counterText: "",
-                                      hintText: "Postal Code"
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Text('Postal Code',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10),),
+                                        ),
+                                        TextFormField(
+                                          controller: postalcode,
+                                          maxLength: 10,
+                                          keyboardType: TextInputType
+                                              .phone,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              counterText: "",
+                                              hintText: "Postal Code"
+                                          ),
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
-                                    style: TextStyle(fontSize: 18.0),
+                                  ),
+                                ),
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Text('Address',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10),),
+                                        ),
+                                        TextFormField(
+                                          controller: address,
+                                          maxLength: 10,
+                                          keyboardType: TextInputType
+                                              .phone,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              counterText: "",
+                                              hintText: "Address"
+                                          ),
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Text('City',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10),),
+                                        ),
+                                        TextFormField(
+                                          controller: citty,
+                                          maxLength: 10,
+                                          keyboardType: TextInputType
+                                              .phone,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              counterText: "",
+                                              hintText: "City"
+                                          ),
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
+                                    height: 60,
+                                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Text('Country',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10),),
+                                        ),
+                                        TextFormField(
+                                          controller: coutry,
+                                          maxLength: 10,
+                                          keyboardType: TextInputType
+                                              .phone,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              counterText: "",
+                                              hintText: "Country"
+                                          ),
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ),
+
                      )
                  ),
                  Container(
@@ -385,8 +454,6 @@ class _EditProfileState extends State<EditProfile>{
                ],
              ),
            )
-         ],
-       )
    );
   }
 

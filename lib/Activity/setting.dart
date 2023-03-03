@@ -54,15 +54,7 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            alignment: Alignment.topRight,
-            child: Image.asset('images/login_stuff_31.png',
-              height: 200,
-              width: 150),
-          ),
-          Container(
+      body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: Column(
@@ -116,12 +108,12 @@ class _SettingState extends State<Setting> {
                           },
                           child: Card(
                             color: Colors.transparent,
-                            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            elevation: 5,
+                            margin: EdgeInsets.fromLTRB(20, 0, 20, 30),
+                            elevation: 10,
                             shadowColor: Colors.black,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 50,
+                              height: 60,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 color: Colors.white
@@ -131,17 +123,46 @@ class _SettingState extends State<Setting> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
+                                      margin: EdgeInsets.only(top: 5.0),
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.transparent
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        margin: EdgeInsets.only(left: 8.0),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xff0B527E),
+                                              Color(0xff2CABBB),
+                                            ],begin: Alignment.bottomLeft, end: Alignment.topRight)
+                                        ),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: Image.asset("images/new pages-06.png",
+                                            height: 20,
+                                          alignment: Alignment.center,),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
                                       margin: EdgeInsets.symmetric(horizontal: 10.0),
                                       alignment: Alignment.center,
                                       child: Text('Edit Profile',
-                                        style: TextStyle(fontWeight: FontWeight.w500),),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: "OpensansSemiBold"
+                                        ),),
                                     ),
                                     Spacer(),
                                     Container(
                                         alignment: Alignment.centerRight,
                                         margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                        child: Image.asset('images/login_stuff_11.png',
-                                          height: 30,)
+                                        child: Icon(
+                                          Icons.arrow_forward_ios)
                                     )
                                   ],
                                 )
@@ -159,31 +180,58 @@ class _SettingState extends State<Setting> {
                           child: Card(
                             color: Colors.transparent,
                             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            elevation: 5,
+                            elevation: 10,
                             shadowColor: Colors.black,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 50,
+                              height: 60,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 color: Colors.white
                               ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 5.0),
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.transparent
+                                      ),
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 8.0),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                          gradient: LinearGradient(colors: [
+                                            Color(0xff0B527E),
+                                            Color(0xff2CABBB),
+                                          ],begin: Alignment.bottomLeft, end: Alignment.topRight)
+                                        ),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: Image.asset("images/new pages-07.png",
+                                            height: 30,),
+                                        ),
+                                      ),
+                                    ),
                                     Container(
                                       margin: EdgeInsets.symmetric(horizontal: 10.0),
                                       alignment: Alignment.center,
                                       child: Text('Change Password',
-                                        style: TextStyle(fontWeight: FontWeight.w500),),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: "OpensansSemiBold"
+                                        ),),
                                     ),
                                     Spacer(),
                                     Container(
                                         alignment: Alignment.centerRight,
                                         margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                        child: Image.asset('images/login_stuff_11.png',
-                                          height: 30,)
+                                        child: Icon(
+                                            Icons.arrow_forward_ios)
                                     )
                                   ],
                                 )
@@ -200,15 +248,15 @@ class _SettingState extends State<Setting> {
                       alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
                       decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           gradient: LinearGradient(colors: [
-                            Color(0xff2CABBB),
                             Color(0xff0B527E),
-                          ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                            Color(0xff2CABBB),
+                          ],begin: Alignment.topLeft,end: Alignment.bottomRight)
                       ),
                       child: ButtonTheme(
                         minWidth: 400,
-                        height: 50,
+                        height: 60,
                         child: MaterialButton(
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
@@ -220,7 +268,19 @@ class _SettingState extends State<Setting> {
                           textColor: Colors.white,
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Text('Log Out', style: TextStyle(fontSize: 18,),),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 5.0),
+                                  child: Image.asset("images/new pages-08.png",
+                                    height: 20,),
+                                ),
+                                Text('Log Out', style: TextStyle(fontSize: 18,
+                                fontFamily: "OpensansSemiBold"),),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -231,8 +291,6 @@ class _SettingState extends State<Setting> {
               ],
             ),
           )
-        ],
-      ),
     );
   }
 

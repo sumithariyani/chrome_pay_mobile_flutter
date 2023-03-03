@@ -117,29 +117,7 @@ class _AgentDashBoard extends State<Agent> {
                                         elevation: 10,
                                         color: Colors.transparent,
                                         shadowColor: Colors.black,
-                                        child: InkWell(
-                                          highlightColor: Colors.transparent,
-                                          onTap: () {
-                                            // Navigator.of(context).push(MaterialPageRoute(
-                                            //   builder: (context) => RegisterCustomer("",""),
-                                            // ));
-                                            // Navigator.of(context).push(MaterialPageRoute(
-                                            //   builder: (context) =>
-                                            //       MapSample(
-                                            //           "imageUrl",
-                                            //           "fullName.text",
-                                            //          " _phone.toString()",
-                                            //           "_dob.toString()",
-                                            //           "_radioVal.toString()",
-                                            //           "email.text.replaceAll(" ", "")",
-                                            //           "city.text",
-                                            //           "selectedNationality.toString()",
-                                            //           "profession.text",
-                                            //           "nameKin.text",
-                                            //           "numberKin.text"),));
-                                            _dialog();
-                                          },
-                                          child: Container(
+                                        child:  Container(
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                                 color: Colors.white
@@ -174,21 +152,27 @@ class _AgentDashBoard extends State<Agent> {
                                                                     fontSize: 12),
                                                             ),
                                                           ),
-                                                          Container(
-                                                            width: 120,
-                                                            alignment: Alignment.center,
-                                                            margin: const EdgeInsets.fromLTRB(50, 20, 30, 10),
-                                                            decoration: const BoxDecoration(
-                                                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                                                                gradient: LinearGradient(colors: [
-                                                                  Color(0xff0B527E),
-                                                                  Color(0xff2CABBB),
-                                                                ],begin: Alignment.bottomLeft,end: Alignment.topRight)
-                                                            ),
-                                                            child:  Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              child: Text('Create Digital ID', style: const TextStyle(fontSize: 12,
-                                                              color: Colors.white),),
+                                                          InkWell(
+                                                            highlightColor: Colors.transparent,
+                                                            onTap: () {
+                                                              _dialog();
+                                                            },
+                                                            child: Container(
+                                                              width: 120,
+                                                              alignment: Alignment.center,
+                                                              margin: const EdgeInsets.fromLTRB(50, 20, 30, 10),
+                                                              decoration: const BoxDecoration(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                                                  gradient: LinearGradient(colors: [
+                                                                    Color(0xff0B527E),
+                                                                    Color(0xff2CABBB),
+                                                                  ],begin: Alignment.bottomLeft,end: Alignment.topRight)
+                                                              ),
+                                                              child:  Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Text('Create Digital ID', style: const TextStyle(fontSize: 12,
+                                                                color: Colors.white),),
+                                                              ),
                                                             ),
                                                           )
                                                         ],
@@ -198,7 +182,6 @@ class _AgentDashBoard extends State<Agent> {
                                               ],
                                             ),
                                           ),
-                                        ),
                                     ),
                                       ),
                                       Card(
@@ -459,7 +442,7 @@ class _MyDialogState extends State<MyDialog> {
                            ),
                          ),
                          Container(
-                             margin: EdgeInsets.only(left: 10.0),
+                             margin: EdgeInsets.only(left: 5.0),
                              child: Text("Create New D-ID",
                                textAlign: TextAlign.center,
                                style: TextStyle(

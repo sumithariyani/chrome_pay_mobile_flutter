@@ -13,6 +13,9 @@ class ChangePassword extends StatefulWidget {
 
 class _ChangePasswordState extends State<ChangePassword>{
 
+  bool _isHidden = true;
+  bool _isHiddenNew = true;
+  bool _isHiddenConfirm = true;
   TextEditingController oldPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
@@ -43,16 +46,7 @@ class _ChangePasswordState extends State<ChangePassword>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.topRight,
-              child: Image.asset('images/login_stuff_31.png',
-                height: 200,
-                width: 150,
-              ),
-            ),
-            Container(
+        body: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Column(
@@ -89,113 +83,138 @@ class _ChangePasswordState extends State<ChangePassword>{
                   Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        child: Card(
-                          margin: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))
-                          ),
-                          color: Colors.white,
-                          shadowColor: Colors.black,
-                          child: SingleChildScrollView(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5.0),
-                                    child: Text('Old Password',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 15),),
-                                  ),
-                                  Container(
+                        margin: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                        child: SingleChildScrollView(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 5.0, left: 5.0, bottom: 5.0),
+                                  child: Text('Old Password',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15),),
+                                ),
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
                                     height: 50,
-                                    margin: EdgeInsets.only(top: 5.0),
+                                    margin: EdgeInsets.only(top: 5.0, left: 10.0),
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                        color: const Color(0x0ff5f8fa)
-                                    ),
-                                    child: TextField(
+                                    child: TextFormField(
                                       controller: oldPassword,
-                                      keyboardType: TextInputType.name,
+                                      maxLength: 10,
+                                      obscureText: _isHidden,
+                                      keyboardType: TextInputType
+                                          .phone,
                                       decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.circular(10.0)
-                                          ),
+                                          border: InputBorder.none,
                                           counterText: "",
-                                          hintText: "Old Password"
+                                          hintText: "Old Password",
+                                        suffix: InkWell(
+                                          onTap: _togglePasswordView,
+                                          child: Container(
+                                            margin: EdgeInsets.only(right: 5.0),
+                                            child: _isHidden
+                                            ? Image.asset("images/change password-02.png",
+                                            height: 20,):
+                                                Image.asset("images/change password-03.png",
+                                                height: 20,)
+                                          ),
+                                        )
                                       ),
                                       style: TextStyle(fontSize: 18.0),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 10.0),
-                                    child: Text('New Password',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 15),),
-                                  ),
-                                  Container(
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 20.0, left: 5.0, bottom: 5.0),
+                                  child: Text('New Password',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15),),
+                                ),
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
                                     height: 50,
-                                    margin: EdgeInsets.only(top: 5.0),
+                                    margin: EdgeInsets.only(top: 5.0, left: 10.0),
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                        color: Color(0xff5f8fa)
-                                    ),
-                                    child: TextField(
+                                    child: TextFormField(
                                       controller: newPassword,
-                                      keyboardType: TextInputType.text,
+                                      maxLength: 10,
+                                      obscureText: _isHiddenNew,
+                                      keyboardType: TextInputType
+                                          .phone,
                                       decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.circular(10.0)
-                                          ),
+                                          border: InputBorder.none,
                                           counterText: "",
-                                          hintText: "New Password"
+                                          hintText: "New Password",
+                                          suffix: InkWell(
+                                            onTap: _togglePasswordViewNew,
+                                            child: Container(
+                                                margin: EdgeInsets.only(right: 5.0),
+                                                child: _isHiddenNew
+                                                    ? Image.asset("images/change password-02.png",
+                                                  height: 20,):
+                                                Image.asset("images/change password-03.png",
+                                                  height: 20,)
+                                            ),
+                                          )
                                       ),
                                       style: TextStyle(fontSize: 18.0),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 10.0),
-                                    child: Text('Confirm Password',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 15),),
-                                  ),
-                                  Container(
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 20.0, left: 5.0, bottom: 5.0),
+                                  child: Text('Confirm Password',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15),),
+                                ),
+                                Card(
+                                  elevation: 5,
+                                  color: Colors.white,
+                                  shadowColor: Colors.black,
+                                  child: Container(
                                     height: 50,
-                                    margin: EdgeInsets.only(top: 5.0),
+                                    margin: EdgeInsets.only(top: 5.0, left: 10.0),
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                        color: Color(0xff5f8fa)
-                                    ),
-                                    child: TextField(
+                                    child: TextFormField(
                                       controller: confirmPassword,
-                                      keyboardType: TextInputType.emailAddress,
+                                      maxLength: 10,
+                                      obscureText: _isHiddenConfirm,
+                                      keyboardType: TextInputType
+                                          .phone,
                                       decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.circular(10.0)
-                                          ),
+                                          border: InputBorder.none,
                                           counterText: "",
-                                          hintText: "ConfirmPassword"
+                                          hintText: "Confirm Password",
+                                          suffix: InkWell(
+                                            onTap: _togglePasswordViewConfirm,
+                                            child: Container(
+                                                margin: EdgeInsets.only(right: 5.0),
+                                                child: _isHiddenConfirm
+                                                    ? Image.asset("images/change password-02.png",
+                                                  height: 20,):
+                                                Image.asset("images/change password-03.png",
+                                                  height: 20,)
+                                            ),
+                                          )
                                       ),
                                       style: TextStyle(fontSize: 18.0),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -207,9 +226,9 @@ class _ChangePasswordState extends State<ChangePassword>{
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(40.0)),
                         gradient: LinearGradient(colors: [
-                          Color(0xff2CABBB),
                           Color(0xff0B527E),
-                        ],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                          Color(0xff2CABBB),
+                        ],begin: Alignment.topLeft,end: Alignment.bottomRight)
                     ),
                     child: ButtonTheme(
                       minWidth: 400,
@@ -223,7 +242,8 @@ class _ChangePasswordState extends State<ChangePassword>{
                         textColor: Colors.white,
                         child: const Padding(
                           padding: EdgeInsets.all(10.0),
-                          child: const Text('Update', style: const TextStyle(fontSize: 18,),),
+                          child: const Text('Update', style: const TextStyle(fontSize: 18,
+                          fontFamily: "OpensansSemiBold"),),
                         ),
                       ),
                     ),
@@ -231,9 +251,24 @@ class _ChangePasswordState extends State<ChangePassword>{
                 ],
               ),
             )
-          ],
-        )
     );
+  }
+
+  void _togglePasswordView(){
+    setState((){
+      _isHidden = !_isHidden;
+    });
+  }
+  void _togglePasswordViewNew(){
+    setState((){
+      _isHiddenNew = !_isHiddenNew;
+    });
+  }
+
+  void _togglePasswordViewConfirm(){
+    setState((){
+      _isHiddenConfirm = !_isHiddenConfirm;
+    });
   }
 
 }
