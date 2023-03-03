@@ -25,9 +25,11 @@ class _AgentCommissionState extends State<AgentCommission> {
 
   Future<void> getCustomer(int page) async {
     print("calaghhggj");
-    setState(() {
-      _isPageLoading = true;
-    });
+    if(page<=1) {
+      setState(() {
+        _isPageLoading = true;
+      });
+    }
 
     prefs = await SharedPreferences.getInstance();
     agentCommissionModel = await Services.CommissionList(prefs?.getString("token").toString()??"",
@@ -35,13 +37,15 @@ class _AgentCommissionState extends State<AgentCommission> {
     for (int i = 0; i<agentCommissionModel.filter!.length; i++){
       customerList.add(agentCommissionModel.filter![i]);
     }
-    setState(() {
+    if(page<=1) {
+      setState(() {
+        _isPageLoading = false;
+      });
+    }else{
+      setState(() {
 
-    });
-
-    setState(() {
-      _isPageLoading = false;
-    });
+      });
+    }
   }
 
   @override
