@@ -3,9 +3,9 @@ import 'package:camera/camera.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
 import 'package:flutter/services.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
 class FaceDetectorService {
   CameraService _cameraService = locator<CameraService>();
@@ -18,21 +18,32 @@ class FaceDetectorService {
   bool get faceDetected => _faces.isNotEmpty;
 
   void initialize() {
-    _faceDetector = GoogleMlKit.vision.faceDetector(
-      FaceDetectorOptions(
-        mode: FaceDetectorMode.accurate,
+    _faceDetector = FaceDetector(
+      options: FaceDetectorOptions(
         enableContours: true,
         enableClassification: true,
+        enableTracking: true,
         enableLandmarks: true,
-        enableTracking: true
+        performanceMode: FaceDetectorMode.accurate
       ),
     );
+    // _faceDetector = GoogleMlKit.vision.faceDetector(
+    //   FaceDetectorOptions(
+    //     mode: FaceDetectorMode.accurate,
+    //     enableContours: true,
+    //     enableClassification: true,
+    //     enableLandmarks: true,
+    //     enableTracking: true
+    //   ),
+    // );
   }
 
   Future<List<Face>> detectFacesFromImage(CameraImage image) async {
     InputImageData _firebaseImageMetadata = InputImageData(
-      imageRotation: _cameraService.cameraRotation ?? InputImageRotation.Rotation_0deg,
-      inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw) ?? InputImageFormat.NV21,
+      // imageRotation: _cameraService.cameraRotation ?? InputImageRotation.Rotation_0deg,
+      imageRotation: _cameraService.cameraRotation ?? InputImageRotation.rotation0deg,
+      // inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw) ?? InputImageFormat.NV21,
+      inputImageFormat: InputImageFormatValue.fromRawValue(image.format.raw) ?? InputImageFormat.nv21,
       size: Size(image.width.toDouble(), image.height.toDouble()),
       planeData: image.planes.map(
             (Plane plane) {

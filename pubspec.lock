@@ -21,10 +21,10 @@ packages:
     dependency: "direct main"
     description:
       name: awesome_snackbar_content
-      sha256: d4037edcd41208bb9868e6ec3fe16288adf694f96cf827e5c826c83f3250869c
+      sha256: dc63adf86eadb0a4e9e1d9994c3fe09a7b0552076e87152fc292705ec506c80e
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -81,22 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-  charts_common:
-    dependency: transitive
-    description:
-      name: charts_common
-      sha256: "7b8922f9b0d9b134122756a787dab1c3946ae4f3fc5022ff323ba0014998ea02"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.12.0"
-  charts_flutter_new:
-    dependency: "direct main"
-    description:
-      name: charts_flutter_new
-      sha256: c8c106c5d6acd145d6969f85aa65412ccf2c27bbb0177ec11c10a285a286524a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.12.0"
   clock:
     dependency: transitive
     description:
@@ -153,14 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  date_time_format:
-    dependency: "direct main"
-    description:
-      name: date_time_format
-      sha256: dc47de14c95a7511e98ca429e1ebfd98c339badb496c9f2aaf56a70d07c7c0bf
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   equatable:
     dependency: transitive
     description:
@@ -400,14 +376,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.20-nullsafety.5"
-  google_ml_kit:
-    dependency: "direct main"
+  google_mlkit_commons:
+    dependency: transitive
     description:
-      name: google_ml_kit
-      sha256: "1bfe11253fdcb5da7903ec465c8144517969e9fd1bbb1f87a5010c9648641e91"
+      name: google_mlkit_commons
+      sha256: af63771903947d5523d9e991a939a4b8bf994f11661c9b9c8a71d7d3997115f8
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.3"
+    version: "0.2.0"
+  google_mlkit_face_detection:
+    dependency: "direct main"
+    description:
+      name: google_mlkit_face_detection
+      sha256: db3a14db32640cf279a24202140958a2b017925eedae7e2cdf69dab98e92c23b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   http:
     dependency: "direct main"
     description:
@@ -473,13 +457,13 @@ packages:
     source: hosted
     version: "2.6.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
-      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
       url: "https://pub.dev"
     source: hosted
-    version: "0.17.0"
+    version: "0.18.0"
   js:
     dependency: transitive
     description:
@@ -504,14 +488,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: "04094f2eb032cbb06c6f6e8d3607edcfcb0455e2bb6cbc010cb01171dcb64e6d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   matcher:
     dependency: transitive
     description:
@@ -633,7 +609,7 @@ packages:
     source: hosted
     version: "2.0.7"
   permission_handler:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: permission_handler
       sha256: "33c6a1253d1f95fd06fa74b65b7ba907ae9811f9d5c1d3150e51417d04b8d6a8"

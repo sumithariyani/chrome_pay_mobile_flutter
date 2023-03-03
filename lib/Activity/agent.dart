@@ -123,6 +123,20 @@ class _AgentDashBoard extends State<Agent> {
                                             // Navigator.of(context).push(MaterialPageRoute(
                                             //   builder: (context) => RegisterCustomer("",""),
                                             // ));
+                                            // Navigator.of(context).push(MaterialPageRoute(
+                                            //   builder: (context) =>
+                                            //       MapSample(
+                                            //           "imageUrl",
+                                            //           "fullName.text",
+                                            //          " _phone.toString()",
+                                            //           "_dob.toString()",
+                                            //           "_radioVal.toString()",
+                                            //           "email.text.replaceAll(" ", "")",
+                                            //           "city.text",
+                                            //           "selectedNationality.toString()",
+                                            //           "profession.text",
+                                            //           "nameKin.text",
+                                            //           "numberKin.text"),));
                                             _dialog();
                                           },
                                           child: Container(

@@ -139,10 +139,6 @@ void naviagteUser(BuildContext context) async {
   }
   else if (status == true ) {
     if(type?.matchAsPrefix("agent") != null){
-    // Navigator.of(context).pushReplacement(MaterialPageRoute(
-    //   builder: (context) => DocumentScanner("9131087223","v@gmail.com",0,"indore"),
-    // )
-    // );
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => Agent(),
     )

@@ -78,7 +78,6 @@ class Month {
     October: json["October"],
     November: json["November"],
     December: json["December"],
-
   );
 
   Map<String, dynamic> toJson() => {

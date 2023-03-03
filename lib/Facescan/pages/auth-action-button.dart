@@ -63,20 +63,20 @@ class _AuthActionButtonState extends State<AuthActionButton> {
     }
   }
 
-  Future<FaceData2?> _predictUser() async {
-    FaceData2? userAndPass = await _mlService.predict();
-    return userAndPass;
-  }
+  // Future<FaceData2?> _predictUser() async {
+  //   FaceData2? userAndPass = await _mlService.predict();
+  //   return userAndPass;
+  // }
 
   Future onTap() async {
     try {
       bool faceDetected = await widget.onPressed();
       if (faceDetected) {
         if (widget.isLogin) {
-          var user = await _predictUser();
-          if (user != null) {
-            this.predictedUser = user;
-          }
+          // var user = await _predictUser();
+          // if (user != null) {
+          //   this.predictedUser = user;
+          // }
         }
         PersistentBottomSheetController bottomSheetController =
         Scaffold.of(context)

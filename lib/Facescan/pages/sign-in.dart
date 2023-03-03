@@ -19,7 +19,8 @@ import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_servic
 import 'package:chrome_pay_mobile_flutter/Facescan/services/ml_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -105,23 +106,25 @@ class SignInState extends State<SignIn> {
       if(_faceDetectorService.faceDetected) {
         Face face = _faceDetectorService.faces[0];
         double? leftEyeOpenProbability = face.leftEyeOpenProbability;
-        if (leftEyeOpenProbability! < 0.2) {
-          // left eye is likely closed
-          if (isopen) {
-            countbling++;
-            print("leftEyeOpenProbability $countbling");
-            isopen = false;
+        if(leftEyeOpenProbability!=null) {
+          if (leftEyeOpenProbability! < 0.2) {
+            // left eye is likely closed
+            if (isopen) {
+              countbling++;
+              print("leftEyeOpenProbability $countbling");
+              isopen = false;
+            }
+          } else {
+            if (!isopen) {
+              countbling++;
+              print("leftEyeOpenProbability $countbling");
+              isopen = true;
+            }
+            // left eye is likely open
           }
-        } else {
-          if (!isopen) {
-            countbling++;
-            print("leftEyeOpenProbability $countbling");
-            isopen = true;
-          }
-          // left eye is likely open
         }
       }
-      FaceData2? user = await _mlService.predict();
+      // FaceData2? user = await _mlService.predict();
 
       processing = false;
     });

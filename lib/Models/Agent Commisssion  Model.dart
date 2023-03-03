@@ -95,29 +95,3 @@ class Filter {
     "__v": v == null ? null : v,
   };
 }
-
-// enum AgentId { THE_638455_C05_F12_C279_FE18_E346 }
-//
-// final agentIdValues = EnumValues({
-//   "638455c05f12c279fe18e346": AgentId.THE_638455_C05_F12_C279_FE18_E346
-// });
-
-// enum CommissionId { THE_638455_C05_F12_C279_FE18_E348 }
-//
-// final commissionIdValues = EnumValues({
-//   "638455c05f12c279fe18e348": CommissionId.THE_638455_C05_F12_C279_FE18_E348
-// });
-//
-// class EnumValues<T> {
-//   Map<String, T> map;
-//   Map<T, String> reverseMap;
-//
-//   EnumValues(this.map);
-//
-//   Map<T, String> get reverse {
-//     if (reverseMap == null) {
-//       reverseMap = map.map((k, v) => new MapEntry(v, k));
-//     }
-//     return reverseMap;
-//   }
-// }

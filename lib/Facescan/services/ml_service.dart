@@ -7,7 +7,10 @@ import 'package:camera/camera.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/models/GetUserStore.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/models/UserStore.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/services/image_converter.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as imglib;
 import 'package:http/http.dart' as http;
@@ -58,7 +61,9 @@ class MLService {
     List input = _preProcess(cameraImage, face);
 
     input = input.reshape([1, 112, 112, 3]);
-    List output = List.generate(1, (index) => List.filled(192, 0));
+    // List output = List.generate(1, (index) => List.filled(192, 0));
+
+       List output = List.filled(1 * 192, null, growable: true).reshape([1, 192]);
     // print("userss ${output}");
     this._interpreter?.run(input, output);
     output = output.reshape([192]);
@@ -150,10 +155,16 @@ class MLService {
         "facedata": facelist
       }
     };
-    print('state'+params.toString());
-    http.Response responce = await http.post(Uri.parse("http://ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/Store_Face_Data"),headers: {"Content-Type": "application/json"}, body: json.encode(params));
+    SharedPreferences? prefs = await SharedPreferences.getInstance();
+    String token="";
+    token = prefs!.getString("token").toString();
     // print('state'+params.toString());
-    print('state'+responce.body);
+    http.Response responce = await http.post(Uri.parse("${Services.BaseUrl}v1/DID/Store_Face_Data"),
+        headers: {"Content-Type": "application/json",
+        "Authorization":"Bearer ${token}"
+        }, body: json.encode(params));
+    // print('state'+params.toString());
+    print('statestore'+responce.body);
 
     if (responce.statusCode == 200) {
       var data = jsonDecode(responce.body);
@@ -166,9 +177,14 @@ class MLService {
     }
   }
   static Future<List<GetData>?> GetStorefaces() async {
-
-    http.Response responce = await http.get(Uri.parse("http://ec2-13-233-63-235.ap-south-1.compute.amazonaws.com:3300/Get_Face_Data"));
-    print('state'+responce.body);
+    SharedPreferences? prefs = await SharedPreferences.getInstance();
+    String token="";
+    token = prefs!.getString("token").toString();
+    http.Response responce = await http.get(Uri.parse("${Services.BaseUrl}v1/DID/Get_Face_Data"),
+        headers: {"Content-Type": "application/json",
+          "Authorization":"Bearer ${token}"
+        });
+    print('stateget'+responce.body);
 
     if (responce.statusCode == 200){
       var data = jsonDecode(responce.body);

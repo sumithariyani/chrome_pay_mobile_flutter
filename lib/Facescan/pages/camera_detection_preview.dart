@@ -4,7 +4,7 @@ import 'package:chrome_pay_mobile_flutter/Facescan/pages/face_detector_painter.d
 import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_service.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraDetectionPreview extends StatelessWidget {
   CameraDetectionPreview({Key? key}) : super(key: key);

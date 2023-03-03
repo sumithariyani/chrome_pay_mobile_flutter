@@ -1,10 +1,9 @@
 import 'dart:core';
 import 'dart:math';
-import 'package:charts_flutter_new/flutter.dart' as charts;
+// import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Models/Agent Performance Model.dart';
 import '../Services/Services.dart';
 
@@ -42,18 +41,20 @@ class _AgentPerformanceState extends State<AgentPerformance> {
   String? selectedFilter = 'Month';
   bool _isPageLoading = false;
 
-  static List<charts.Series<Sales,int>> _chartsData=[];
-  static List <charts.Series<_Month,int>> _monthData=[];
-  late List<charts.Series<_Day,String>> _dayData=[];
+  // static List<charts.Series<Sales,int>> _chartsData=[];
+  // static List <charts.Series<_Month,int>> _monthData=[];
+  // late List<charts.Series<_Day,String>> _dayData=[];
   var data;
    AgentPerformanceModel? _agentPerformanceModel;
-
+   bool isload1=false;
+   bool isload2=false;
+   bool isload3=false;
   Future<void> getCustomer() async {
     _isPageLoading = true;
     prefs = await SharedPreferences.getInstance();
-    _chartsData.clear();
-    _monthData.clear();
-    _dayData.clear();
+    // _chartsData.clear();
+    // _monthData.clear();
+    // _dayData.clear();
     _agentPerformanceModel = await Services.AgentPer(prefs.getString('token').toString(),selectedFilter.toString());
     print("prefs!.getString(token).toString() ${prefs!.getString("token").toString()}");
     if(_agentPerformanceModel!.status == true){
@@ -73,14 +74,15 @@ class _AgentPerformanceState extends State<AgentPerformance> {
         Sales(2026, _agentPerformanceModel?.year?.year9),
       ];
 
-       _chartsData = [
-        charts.Series(
-          id: "Years",
-          data: _data,
-          domainFn: (Sales sales,__) => int.parse(sales.year.toString()),
-          measureFn: (Sales sales,__) => int.parse(sales.sales.toString()),
-        )
-      ];
+        isload1=true;
+      //  _chartsData = [
+      //   charts.Series(
+      //     id: "Years",
+      //     data: _data,
+      //     domainFn: (Sales sales,__) => int.parse(sales.year.toString()),
+      //     measureFn: (Sales sales,__) => int.parse(sales.sales.toString()),
+      //   )
+      // ];
     }
       if(_agentPerformanceModel!.month!=null){
         data = [
@@ -111,14 +113,15 @@ class _AgentPerformanceState extends State<AgentPerformance> {
           _Month(11, _agentPerformanceModel?.month?.November),
           _Month(12, _agentPerformanceModel?.month?.December),
       ];
-       _monthData = [
-        charts.Series(
-          id: "Month",
-          data: _monthdata,
-          domainFn: (_Month month,__) => month.month!.toInt(),
-          measureFn: (_Month month,__) => int.parse(month.sales.toString()),
-        )
-      ];
+        isload2=true;
+      //  _monthData = [
+      //   charts.Series(
+      //     id: "Month",
+      //     data: _monthdata,
+      //     domainFn: (_Month month,__) => month.month!.toInt(),
+      //     measureFn: (_Month month,__) => int.parse(month.sales.toString()),
+      //   )
+      // ];
     }
       if(_agentPerformanceModel!.day!=null){
 
@@ -132,14 +135,15 @@ class _AgentPerformanceState extends State<AgentPerformance> {
           _Day('Sun', _agentPerformanceModel?.day?.sunday),
       ];
 
-       _dayData = [
-        charts.Series(
-          id: "Day",
-          data: _data,
-          domainFn: (_Day day,__) => day.day.toString(),
-          measureFn: (_Day day,__) => int.parse(day.sales.toString()),
-        ),
-      ];
+        isload3=true;
+      //  _dayData = [
+      //   charts.Series(
+      //     id: "Day",
+      //     data: _data,
+      //     domainFn: (_Day day,__) => day.day.toString(),
+      //     measureFn: (_Day day,__) => int.parse(day.sales.toString()),
+      //   ),
+      // ];
     }
     }
     setState(() {
@@ -376,7 +380,8 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                    ),
                  ),
 
-                     if(_monthData!.isNotEmpty) Container(
+                     // if(_monthData!.isNotEmpty) Container(
+                     if(isload2) Container(
                        child: Expanded(child:
                            _isPageLoading ? Center(
                              child: CircularProgressIndicator(),
@@ -389,7 +394,8 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                        ),
                      ),
 
-                   if(_chartsData!.isNotEmpty) Expanded(
+                   // if(_chartsData!.isNotEmpty) Expanded(
+                   if(isload1) Expanded(
                        child: _isPageLoading ? Center(
                      child: CircularProgressIndicator(),
                    ):Padding(padding: const EdgeInsets.only(right: 15.0),
@@ -398,7 +404,8 @@ class _AgentPerformanceState extends State<AgentPerformance> {
                          ),)
                    ),
 
-                   if(_dayData!.isNotEmpty) Expanded(
+                   // if(_dayData!.isNotEmpty) Expanded(
+                   if(isload3) Expanded(
                        child: _isPageLoading ? Center(
                          child: CircularProgressIndicator(),
                        ): Padding(padding: const EdgeInsets.only(right: 15.0),

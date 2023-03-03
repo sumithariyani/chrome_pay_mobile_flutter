@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
 import 'package:chrome_pay_mobile_flutter/Facescan/pages/sign-in.dart';
-import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
-import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_service.dart';
-import 'package:chrome_pay_mobile_flutter/Facescan/services/ml_service.dart';
+// import 'package:chrome_pay_mobile_flutter/Facescan/locator.dart';
+// import 'package:chrome_pay_mobile_flutter/Facescan/pages/sign-in.dart';
+// import 'package:chrome_pay_mobile_flutter/Facescan/services/camera.service.dart';
+// import 'package:chrome_pay_mobile_flutter/Facescan/services/face_detector_service.dart';
+// import 'package:chrome_pay_mobile_flutter/Facescan/services/ml_service.dart';
 import 'package:chrome_pay_mobile_flutter/Models/Image%20Upload%20Model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,9 +30,9 @@ class RegisterCustomer extends StatefulWidget{
 }
 
 class _RegisterCustomerState extends State <RegisterCustomer>{
-  MLService _mlService = locator<MLService>();
-  FaceDetectorService _mlKitService = locator<FaceDetectorService>();
-  CameraService _cameraService = locator<CameraService>();
+  // MLService _mlService = locator<MLService>();
+  // FaceDetectorService _mlKitService = locator<FaceDetectorService>();
+  // CameraService _cameraService = locator<CameraService>();
   bool loading = false;
   File? selectedImage;
   String base64Image = "";
@@ -67,9 +68,9 @@ class _RegisterCustomerState extends State <RegisterCustomer>{
   }
   _initializeServices() async {
     setState(() => loading = true);
-    await _cameraService.initialize(CameraLensDirection.front);
-    await _mlService.initialize();
-    _mlKitService.initialize();
+    // await _cameraService.initialize(CameraLensDirection.front);
+    // await _mlService.initialize();
+    // _mlKitService.initialize();
     setState(() => loading = false);
   }
 

@@ -27,9 +27,11 @@ class Data {
   String? sId;
   String? createdAt;
   String? updatedAt;
-  int? iV;
+  // int? iV;
 
-  Data({this.faceData, this.sId, this.createdAt, this.updatedAt, this.iV});
+  Data({this.faceData, this.sId, this.createdAt, this.updatedAt
+    // , this.iV
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     faceData = json['Face_data'] != null
@@ -38,7 +40,7 @@ class Data {
     sId = json['_id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
+    // iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
@@ -49,7 +51,7 @@ class Data {
     data['_id'] = this.sId;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    // data['__v'] = this.iV;
     return data;
   }
 }
@@ -64,14 +66,18 @@ class FaceData {
   FaceData.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     password = json['password'];
-    facedata = json['facedata'].cast<double>();
+
+    facedata =  List<double>.from(json["facedata"].map((x) => x.toDouble()));
+    // facedata = json['facedata'].cast<double>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['username'] = this.username;
     data['password'] = this.password;
-    data['facedata'] = this.facedata;
+
+    data['facedata'] = List<dynamic>.from(facedata!.map((x) => x));
+    // data['facedata'] = this.facedata;
     return data;
   }
 }

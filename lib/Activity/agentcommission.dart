@@ -2,7 +2,7 @@ import 'package:chrome_pay_mobile_flutter/Models/Agent%20Commisssion%20%20Model.
 import 'package:chrome_pay_mobile_flutter/Services/Services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:date_time_format/date_time_format.dart';
+import 'package:intl/intl.dart';
 
 
 class AgentCommission extends StatefulWidget {
@@ -278,6 +278,7 @@ class _AgentCommissionState extends State<AgentCommission> {
                           itemBuilder:(context, index) {
                             Filter filter = customerList[index];
                             var date = DateTime.parse("${filter.Date}");
+                            var time = "${filter.Time}";
                             if (customerList.length != null){
                               return Card(
                                 color: Colors.transparent,
@@ -319,13 +320,14 @@ class _AgentCommissionState extends State<AgentCommission> {
                                                 children: [
                                                   Padding(
                                                     padding: const EdgeInsets.all(8.0),
-                                                    child: Text(DateTimeFormat.format(date, format: DateTimeFormats.commonLogFormat).substring(0,6).replaceAll("/", " "),
+                                                    child: Text(
+                                                      "${DateFormat('dd/MMMM').format(date).substring(0,6).replaceAll("/", " ")}",
                                                       textAlign: TextAlign.center,
                                                       style: TextStyle(color: Colors.white,
                                                           fontWeight: FontWeight.w500),),
                                                   ),
                                                   Container(
-                                                      child: Text("11:45AM",
+                                                      child: Text( "${time}",
                                                         style: TextStyle(color: Colors.white,
                                                         fontSize: 10.0 ),
                                                       )
